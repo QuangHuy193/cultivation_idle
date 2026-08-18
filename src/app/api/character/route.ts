@@ -1,0 +1,95 @@
+import { NextResponse } from "next/server";
+
+import Character from "@/lib/models/Character";
+import "@/lib/models/Realm";
+import "@/lib/models/Equip";
+import "@/lib/models/Item";
+import "@/lib/models/Skill";
+import { addBreakthroughInfo, characterPopulate } from "@/lib/helper";
+import connectDB from "@/lib/db/db";
+
+function generateRandomName() {
+  const randomSuffix = Math.floor(1000000000 + Math.random() * 9000000000);
+
+  return `user${randomSuffix}`;
+}
+
+export async function POST(request: Request) {
+  try {
+    await connectDB();
+
+    const { userId } = await request.json();
+
+    if (!userId) {
+      return NextResponse.json(
+        {
+          message: "Vui lòng gửi userId",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    let character = await Character.findOne({
+      userId,
+    })
+      .populate(characterPopulate)
+      .lean();
+
+    if (!character) {
+      const createdCharacter = await Character.create({
+        userId,
+
+        name: generateRandomName(),
+
+        realmId: "luyenkhi",
+        realmLevel: 1,
+
+        cultivation: 0,
+        cultivationPerSecond: 1,
+
+        spiritStone: 0,
+
+        stats: {
+          hp: 100,
+          attack: 10,
+          defense: 5,
+        },
+
+        equipments: {},
+
+        inventory: {
+          equips: [],
+          items: [],
+        },
+      });
+
+      character = await Character.findById(createdCharacter._id)
+        .populate("realmId")
+        .populate(characterPopulate)
+        .lean();
+    }
+
+    return NextResponse.json(
+      {
+        message: "Lấy hoặc tạo character thành công",
+        character: addBreakthroughInfo(character),
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error("Create/get character error:", error);
+
+    return NextResponse.json(
+      {
+        message: "Lỗi máy chủ khi xử lý character",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
