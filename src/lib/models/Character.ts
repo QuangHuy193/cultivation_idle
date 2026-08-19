@@ -1,5 +1,48 @@
 import { InferSchemaType, Schema, model, models } from "mongoose";
 
+const cultivationPerSecondSchema = new Schema(
+  {
+    base: {
+      type: Number,
+      default: 1,
+    },
+
+    fromMap: {
+      type: Number,
+      default: 0,
+    },
+
+    fromItem: {
+      type: Number,
+      default: 0,
+    },
+
+    fromVip: {
+      type: Number,
+      default: 0,
+    },
+  },
+  {
+    _id: false,
+  },
+);
+
+const currentMapSchema = new Schema(
+  {
+    map: {
+      type: String,
+      ref: "Map",
+    },
+    stage: {
+      type: Number,
+      default: 1,
+    },
+  },
+  {
+    _id: false,
+  },
+);
+
 const CharacterSchema = new Schema(
   {
     userId: {
@@ -30,8 +73,8 @@ const CharacterSchema = new Schema(
     },
 
     cultivationPerSecond: {
-      type: Number,
-      default: 1,
+      type: cultivationPerSecondSchema,
+      default: {},
     },
 
     spiritStone: {
@@ -96,6 +139,11 @@ const CharacterSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Equip",
       },
+    },
+
+    currentMap: {
+      type: currentMapSchema,
+      default:{}
     },
 
     inventory: {

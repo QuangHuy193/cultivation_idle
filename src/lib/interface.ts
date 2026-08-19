@@ -102,6 +102,18 @@ export interface Realm {
   updatedAt: string;
 }
 
+export interface CultivationPerSecond {
+  base: number;
+  fromMap: number;
+  fromItem: number;
+  fromVip: number;
+}
+
+export interface CurrentMap {
+  map: string;
+  stage: number;
+}
+
 export interface CharacterResponse {
   _id: string;
   userId: string;
@@ -109,7 +121,8 @@ export interface CharacterResponse {
   realmId?: Realm;
   realmLevel?: number;
   cultivation: number;
-  cultivationPerSecond: number;
+  currentMap: CurrentMap;
+  cultivationPerSecond: CultivationPerSecond;
   spiritStone: number;
   stats: CharacterStats;
   finalStats?: CharacterStats;
@@ -121,4 +134,41 @@ export interface CharacterResponse {
   canBreakthrough?: boolean;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface MonstersResponse {
+  monsterId: {
+    _id: string;
+    name: string;
+    rarity: string;
+    icon: string;
+    stats: {
+      hp: number;
+      attack: number;
+      defense: number;
+    };
+    expReward: number;
+    spiritStoneReward: number;
+    dropTable: Array<{ itemId: string; chance: number }>;
+  };
+  weight: number;
+}
+
+export interface MapsResponse {
+  _id: string;
+  name: string;
+  icon: string;
+  order: number;
+  maxStage: number;
+  requiredRealm: string;
+  monsterStatMultiplier: number;
+  rewardMultiplier: number;
+  cultivationPerSecondBouns: number;
+  monsters: MonstersResponse[];
+}
+
+export interface ProgressMapResponse {
+  currentMapId: string;
+  currentStage: number;
+  maps: MapsResponse[];
 }

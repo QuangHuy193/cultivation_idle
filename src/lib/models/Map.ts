@@ -5,7 +5,20 @@ const MapSchema = new Schema({
 
   name: String,
 
+  icon: String,
+
   order: Number,
+
+  maxStage: {
+    type: Number,
+    default: 10,
+  },
+
+  // bouns khi hoàn thành
+  cultivationPerSecondBouns: {
+    type: Number,
+    default: 1,
+  },
 
   requiredRealm: {
     type: String,
