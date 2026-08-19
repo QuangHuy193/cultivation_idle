@@ -5,10 +5,16 @@ import Image from "next/image";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import SkillInfo from "./alert/SkillInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
+import { equipSkillAPI } from "@/app/axios/characterAPI";
 
 export default function KyNangTab() {
-  const { character } = useCharacterStore();
-  const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
+  const { character,updateCharacter } = useCharacterStore();
+  const {
+    itemInfoToggle,
+    setItemInfoToggle,
+    equipSkillSelect,
+    setEquipSkillSelect,
+  } = useToggleStore();
 
   // lấy dl từ equippedSkills để hiện các skill đang trang bị (hiện "eq" ở phần inventory)
   const equippedSkillSet = new Set(
@@ -22,6 +28,19 @@ export default function KyNangTab() {
         <h3 className="mb-3 text-center font-semibold text-zinc-700">
           Kỹ năng đang trang bị
         </h3>
+        {equipSkillSelect.active && (
+          <div
+            className="mb-3 rounded-lg bg-yellow-100 border border-yellow-400 p-2
+            text-center text-sm font-medium "
+          >
+            <div className="relative">
+              <span>Chọn 1 ô kỹ năng để trang bị</span>
+              <span className="absolute right-0 text-red-500 font-bolds text-xl">
+                X
+              </span>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => {
@@ -36,8 +55,32 @@ export default function KyNangTab() {
             return (
               <div
                 key={index}
-                className="aspect-square rounded-xl border-2 border-amber-300 bg-amber-50
-                overflow-hidden flex items-center justify-center"
+                className={`aspect-square rounded-xl border-2 border-amber-300 bg-amber-50
+                overflow-hidden flex items-center justify-center ${
+                  equipSkillSelect.active
+                    ? "border-yellow-400 ring-4 ring-yellow-300 animate-pulse"
+                    : "border-amber-300"
+                }`}
+                onClick={async () => {
+                  if (!equipSkillSelect.active) return;
+
+                  try {
+                    const res = await equipSkillAPI(
+                      character._id,
+                      equipSkillSelect.skillId,
+                      index + 1,
+                    );
+
+                    updateCharacter(res);
+
+                    setEquipSkillSelect({
+                      active: false,
+                      skillId: "",
+                    });
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
               >
                 {equippedSkill ? (
                   <Image
@@ -47,6 +90,7 @@ export default function KyNangTab() {
                     height={64}
                     className="object-contain"
                     onClick={() => {
+                      if (equipSkillSelect.active) return;
                       setItemInfoToggle({
                         open: true,
                         item: skillData?.skillId || null,

@@ -55,3 +55,27 @@ export async function breakthroughAPI(
   const res = await api.post(`/api/character/${characterId}/breakthrough`);
   return res.data as CharacterResponse;
 }
+
+// trang bị kỹ năng
+export async function equipSkillAPI(
+  characterId: string,
+  skillId: string,
+  slot: number,
+): Promise<CharacterResponse> {
+  const res = await api.post(`/api/character/${characterId}/skill/equip`, {
+    skillId,
+    slot,
+  });
+  return res.data as CharacterResponse;
+}
+
+// gỡ trang bị kỹ năng
+export async function unequipSkillAPI(
+  characterId: string,
+  skillId: string,
+): Promise<CharacterResponse> {
+  const res = await api.post(`/api/character/${characterId}/skill/unequip`, {
+    skillId,
+  });
+  return res.data as CharacterResponse;
+}

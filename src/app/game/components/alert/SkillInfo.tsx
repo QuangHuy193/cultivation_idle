@@ -1,7 +1,9 @@
 "use client";
+import { equipSkillAPI, unequipSkillAPI } from "@/app/axios/characterAPI";
 import { rarityColorText, rarityTextMap } from "@/lib/constants";
 import { Skill } from "@/lib/interface";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 
 interface SkillInfoProps {
@@ -19,8 +21,19 @@ const SkillInfo = ({
   isEquipped,
   onClose,
 }: SkillInfoProps) => {
+  const { setEquipSkillSelect } = useToggleStore();
   const { character, updateCharacter } = useCharacterStore();
-  // console.log(skill.levels);
+
+  const unequipSkillApi = async () => {
+    try {
+      const res = await unequipSkillAPI(character._id, skill._id);
+      updateCharacter(res);
+      onClose?.();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div
@@ -74,6 +87,7 @@ const SkillInfo = ({
             </button>
             {isEquipped ? (
               <button
+              onClick={unequipSkillApi}
                 className="flex-1 py-2 rounded-xl bg-amber-600 
                 text-white transition font-medium"
               >
@@ -81,6 +95,14 @@ const SkillInfo = ({
               </button>
             ) : (
               <button
+                onClick={() => {
+                  setEquipSkillSelect({
+                    active: true,
+                    skillId: skill._id,
+                  });
+
+                  onClose?.();
+                }}
                 className="flex-1 py-2 rounded-xl bg-emerald-600
                 text-white transition font-medium"
               >
