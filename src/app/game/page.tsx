@@ -2,12 +2,10 @@
 
 import { renderContent, TABS } from "@/lib/constants";
 
-
 import { useState } from "react";
 
 export default function GamePage() {
   const [activeTab, setActiveTab] = useState("dongphu");
-
 
   return (
     <main className="h-screen overflow-hidden text-zinc-800 sm:min-h-screen sm:py-8">
@@ -21,7 +19,7 @@ export default function GamePage() {
                 onClick={() => setActiveTab(tab.key)}
                 className={`flex h-12 w-12 items-center justify-center rounded-full text-lg transition ${
                   isActive
-                    ? `bg-gradient-to-r ${tab.accent} text-white shadow-md`
+                    ? `bg-linear-to-r ${tab.accent} text-white shadow-md`
                     : "bg-zinc-100 text-zinc-700"
                 }`}
                 title={tab.label}

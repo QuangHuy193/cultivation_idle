@@ -3,6 +3,7 @@ import DongPhuTab from "@/app/game/components/DongPhuTab";
 import NhanVatTab from "@/app/game/components/NhanVatTab";
 import TheGioiTab from "@/app/game/components/TheGioiTab";
 import KyNangTab from "@/app/game/components/KyNangTab";
+import BattleTab from "@/app/battle/components/BattleTab";
 
 export const TABS = [
   {
@@ -34,7 +35,13 @@ export const TABS = [
     label: "Thế giới",
     icon: "🌍",
     accent: "from-emerald-500 to-lime-400",
-  },
+  },  
+  // {
+  //   key: "chiendau",
+  //   label: "Thế giới",
+  //   icon: "xxx",
+  //   accent: "from-emerald-500 to-lime-400",
+  // },  
 ] as const;
 
 export const renderContent = (activeTab: string) => {
@@ -49,6 +56,8 @@ export const renderContent = (activeTab: string) => {
       return <KyNangTab />;
     case "nhanvat":
       return <NhanVatTab />;
+    // case "chiendau":
+    //   return <BattleTab />;
     default:
       return <DongPhuTab />;
   }

@@ -1,14 +1,27 @@
 "use client";
 
 import { progressMapAPI } from "@/app/axios/characterAPI";
+import { showWarning } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 import { useEffect } from "react";
 
 export default function TheGioiTab() {
   const { character } = useCharacterStore();
   const { progressMap, setProgressMap } = useMapStore();
+
+  const router = useRouter();
+
+  const pushBattle = () => {
+    if (true) {
+      router.push("/battle");
+    } else {
+      showWarning("Bạn chưa hoàn thành bản đồ trước đó");
+    }
+  };
 
   useEffect(() => {
     const mapProgressApi = async () => {
@@ -44,7 +57,10 @@ export default function TheGioiTab() {
               key={map._id}
               className={`flex ${isLeft ? "justify-start" : "justify-end"}`}
             >
-              <div className="relative h-fit flex justify-center flex-col items-center">
+              <div
+                onClick={pushBattle}
+                className="relative h-fit flex justify-center flex-col items-center"
+              >
                 {curMap && (
                   <Image
                     src="/chars/char.webp"
