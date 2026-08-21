@@ -27,8 +27,7 @@ export default function TheGioiTab() {
     const mapProgressApi = async () => {
       try {
         const res = await progressMapAPI(character._id);
-        setProgressMap(res);
-        console.log(res);
+        setProgressMap(res);      
       } catch (error) {
         console.log(error);
       }

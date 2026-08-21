@@ -3,7 +3,9 @@ import DongPhuTab from "@/app/game/components/DongPhuTab";
 import NhanVatTab from "@/app/game/components/NhanVatTab";
 import TheGioiTab from "@/app/game/components/TheGioiTab";
 import KyNangTab from "@/app/game/components/KyNangTab";
-import BattleTab from "@/app/battle/components/BattleTab";
+
+export const defaultCharacter = "/chars/char.webp";
+export const defaultBgCharacter = "/bg_chars/bg_kiem_tien.webp";
 
 export const TABS = [
   {
@@ -11,37 +13,42 @@ export const TABS = [
     label: "Nhân vật",
     icon: "🧘",
     accent: "from-rose-500 to-pink-400",
+    display: true,
   },
   {
     key: "kynang",
     label: "Kỹ năng",
     icon: "📕",
     accent: "from-sky-500 to-cyan-400",
+    display: true,
   },
   {
     key: "dongphu",
     label: "Động phủ",
     icon: "🏡",
     accent: "from-amber-500 to-orange-400",
+    display: true,
   },
   {
     key: "bicanh",
     label: "Bí cảnh",
     icon: "🌀",
     accent: "from-violet-500 to-fuchsia-400",
+    display: true,
   },
   {
     key: "thegioi",
     label: "Thế giới",
     icon: "🌍",
     accent: "from-emerald-500 to-lime-400",
-  },  
+    display: true,
+  },
   // {
   //   key: "chiendau",
   //   label: "Thế giới",
   //   icon: "xxx",
   //   accent: "from-emerald-500 to-lime-400",
-  // },  
+  // },
 ] as const;
 
 export const renderContent = (activeTab: string) => {

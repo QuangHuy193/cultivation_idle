@@ -3,7 +3,7 @@
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import TuiDoTab from "./TuiDoTab";
 import Image from "next/image";
-import { equipmentSlots, rarityColorBg, realmStyles } from "@/lib/constants";
+import { defaultCharacter, equipmentSlots, rarityColorBg, realmStyles } from "@/lib/constants";
 import EquipmentInfo from "./alert/EquipmentInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
@@ -67,7 +67,7 @@ export default function NhanVatTab() {
             <Image
               height={50}
               width={50}
-              src="/chars/char.webp"
+              src={defaultCharacter}
               alt="Nhân vật"
               className="w-60 h-70 object-contain rounded-lg"
             />

@@ -172,3 +172,36 @@ export interface ProgressMapResponse {
   currentStage: number;
   maps: MapsResponse[];
 }
+
+///
+export interface BattleSkill {
+  skillId: string;
+  currentCooldown: number;
+}
+
+export interface BattleMonster {
+  id: string;
+  name: string;
+  icon: string;
+
+  hp: number;
+  maxHp: number;
+
+  attack: number;
+  defense: number;
+}
+
+export interface BattleState {
+  turn: number;
+
+  playerHp: number;
+  playerMaxHp: number;
+
+  monster: BattleMonster;
+
+  skills: BattleSkill[];
+
+  battleStatus: string; //"fighting" | "win" | "lose"
+
+  logs: string[];
+}

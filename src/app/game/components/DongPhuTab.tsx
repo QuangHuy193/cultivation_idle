@@ -1,7 +1,7 @@
 "use client";
 
 import { breakthroughAPI } from "@/app/axios/characterAPI";
-import { realmStyles } from "@/lib/constants";
+import { defaultBgCharacter, realmStyles } from "@/lib/constants";
 import { CharacterService } from "@/lib/services/character.service";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import Image from "next/image";
@@ -35,8 +35,7 @@ export default function DongPhuTab() {
     <section
       className="relative h-full w-full overflow-hidden"
       style={{
-        backgroundImage: "url('/background_home.webp')",
-        //backgroundImage: "url('/monsters/monster_1.webp')",
+        backgroundImage: `url('${defaultBgCharacter}')`,       
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
