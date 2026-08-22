@@ -5,15 +5,17 @@ import Image from "next/image";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
 import { SquarePause } from "lucide-react";
-import PauseAlert from "./alert/PauseAlert";
+import PauseAlert from "../alert/PauseAlert";
 import { useBattleStore } from "@/lib/useStore/useBattleStore";
 import { useEffect } from "react";
 import { showError, showSuccess } from "@/lib/toast";
 import { defaultCharacter } from "@/lib/constants";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
 const BattleTab = () => {
   const { character } = useCharacterStore();
   const { progressMap } = useMapStore();
+  const { isOpenPause, setIsOpenPause, tabState, setTabState } = useToggleStore();
   const { setBattle, battle, addLog, updateBattle, updateBattleStatus } =
     useBattleStore();
 
@@ -71,7 +73,7 @@ const BattleTab = () => {
     if (battle.battleStatus === "lose" || battle.playerHp <= 0) {
       return battle;
     }
-    
+
     const newLogs: string[] = [];
     updateBattle((battle) => {
       const newSkills = [...battle.skills];
@@ -232,8 +234,22 @@ const BattleTab = () => {
 
   return (
     <section className="h-full w-full flex flex-col overflow-hidden">
-      {/* <PauseAlert/> */}
-      <SquarePause className="fixed w-8 h-8 top-2 right-2" />
+      {/*  pause  */}
+      <SquarePause
+        onClick={() => setIsOpenPause(true)}
+        className="fixed w-8 h-8 top-2 right-2 z-99"
+      />
+      {isOpenPause && (
+        <PauseAlert
+          onContinue={() => {
+            setIsOpenPause(false);
+          }}
+          onExit={() => {            
+            setTabState(tabState.prevousTab, "dongphu")
+            setIsOpenPause(false);}}
+          onRestart={() => {}}
+        />
+      )}
       <div className="flex h-full flex-col flex-7/12">
         {/* battle area */}
         <div

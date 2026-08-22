@@ -4,7 +4,7 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import TuiDoTab from "./TuiDoTab";
 import Image from "next/image";
 import { defaultCharacter, equipmentSlots, rarityColorBg, realmStyles } from "@/lib/constants";
-import EquipmentInfo from "./alert/EquipmentInfo";
+import EquipmentInfo from "../alert/EquipmentInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
 export default function NhanVatTab() {

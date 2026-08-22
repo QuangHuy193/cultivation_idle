@@ -1,23 +1,23 @@
 "use client";
 
 import { progressMapAPI } from "@/app/axios/characterAPI";
+import { defaultCharacter } from "@/lib/constants";
 import { showWarning } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 import { useEffect } from "react";
 
 export default function TheGioiTab() {
   const { character } = useCharacterStore();
   const { progressMap, setProgressMap } = useMapStore();
-
-  const router = useRouter();
+  const { tabState, setTabState } = useToggleStore();
 
   const pushBattle = () => {
     if (true) {
-      router.push("/battle");
+      setTabState("chiendau", tabState.activeTab);
     } else {
       showWarning("Bạn chưa hoàn thành bản đồ trước đó");
     }
@@ -27,7 +27,7 @@ export default function TheGioiTab() {
     const mapProgressApi = async () => {
       try {
         const res = await progressMapAPI(character._id);
-        setProgressMap(res);      
+        setProgressMap(res);
       } catch (error) {
         console.log(error);
       }
@@ -62,7 +62,7 @@ export default function TheGioiTab() {
               >
                 {curMap && (
                   <Image
-                    src="/chars/char.webp"
+                    src={defaultCharacter}
                     alt="Nhân vật"
                     width={80}
                     height={80}

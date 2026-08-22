@@ -5,7 +5,7 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { MAX_ITEM_SLOTS } from "@/lib/constants";
 import Image from "next/image";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import ItemInfo from "./alert/ItemInfo";
+import ItemInfo from "../alert/ItemInfo";
 
 export default function TuiDoTab() {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();

@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCharacterAPI } from "@/app/axios/characterAPI";
-import SignInForm from "@/app/game/components/form/SignInForm";
+import SignInForm from "@/app/components/form/SignInForm";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useUserStore } from "@/lib/useStore/useUserStore";
-import Loading from "./game/components/Loading";
+import Loading from "./components/tabs/Loading";
 
 export default function Home() {
   const [showLogin, setShowLogin] = useState(false);

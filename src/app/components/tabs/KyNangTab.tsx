@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import SkillInfo from "./alert/SkillInfo";
+import SkillInfo from "../alert/SkillInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { equipSkillAPI } from "@/app/axios/characterAPI";
 

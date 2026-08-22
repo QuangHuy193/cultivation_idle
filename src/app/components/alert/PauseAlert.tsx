@@ -1,13 +1,18 @@
 import { LogOut, RefreshCw, Play } from "lucide-react";
 
-const PauseAlert = () => {
+interface PauseAlertProp {
+  onContinue: () => void;
+  onExit: () => void;
+  onRestart: () => void;
+}
+
+const PauseAlert = ({ onContinue, onExit, onRestart }: PauseAlertProp) => {
   return (
     <div
       className="
       fixed inset-0 z-50
       bg-black/40 backdrop-blur-sm
-      flex items-center justify-center
-    "
+      flex items-center justify-center"
     >
       <div
         className="
@@ -21,6 +26,7 @@ const PauseAlert = () => {
       >
         {/* Thoát */}
         <button
+          onClick={onExit}
           className="
           group
           flex flex-col items-center gap-2
@@ -43,6 +49,7 @@ const PauseAlert = () => {
         </button>
         {/* Chơi lại */}
         <button
+          onClick={onRestart}
           className="
           group
           flex flex-col items-center gap-2
@@ -66,6 +73,7 @@ const PauseAlert = () => {
 
         {/* Tiếp tục */}
         <button
+          onClick={onContinue}
           className="
           group
           flex flex-col items-center gap-2

@@ -1,11 +1,12 @@
-import BiCanhTab from "@/app/game/components/BiCanhTab";
-import DongPhuTab from "@/app/game/components/DongPhuTab";
-import NhanVatTab from "@/app/game/components/NhanVatTab";
-import TheGioiTab from "@/app/game/components/TheGioiTab";
-import KyNangTab from "@/app/game/components/KyNangTab";
+import BiCanhTab from "@/app/components/tabs/BiCanhTab";
+import DongPhuTab from "@/app/components/tabs/DongPhuTab";
+import NhanVatTab from "@/app/components/tabs/NhanVatTab";
+import TheGioiTab from "@/app/components/tabs/TheGioiTab";
+import KyNangTab from "@/app/components/tabs/KyNangTab";
+import BattleTab from "@/app/components/tabs/BattleTab";
 
-export const defaultCharacter = "/chars/char.webp";
-export const defaultBgCharacter = "/bg_chars/bg_kiem_tien.webp";
+export const defaultCharacter = "/chars/am_tu.webp";
+export const defaultBgCharacter = "/bg_chars/bg_am_tu.webp";
 
 export const TABS = [
   {
@@ -43,12 +44,13 @@ export const TABS = [
     accent: "from-emerald-500 to-lime-400",
     display: true,
   },
-  // {
-  //   key: "chiendau",
-  //   label: "Thế giới",
-  //   icon: "xxx",
-  //   accent: "from-emerald-500 to-lime-400",
-  // },
+  {
+    key: "chiendau",
+    label: "",
+    icon: "",
+    accent: "",
+    display: false,
+  },
 ] as const;
 
 export const renderContent = (activeTab: string) => {
@@ -63,8 +65,8 @@ export const renderContent = (activeTab: string) => {
       return <KyNangTab />;
     case "nhanvat":
       return <NhanVatTab />;
-    // case "chiendau":
-    //   return <BattleTab />;
+    case "chiendau":
+      return <BattleTab />;
     default:
       return <DongPhuTab />;
   }

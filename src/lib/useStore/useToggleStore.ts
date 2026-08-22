@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { Equip, Item, Skill } from "../interface";
 
 interface UserToggleState {
+  // quản lý các alert thông tin skill, equip, item
   itemInfoToggle: {
     open: boolean;
     state: "item" | "equip" | "unequip" | "";
@@ -9,10 +10,30 @@ interface UserToggleState {
     levelSKill?: number;
     shardSKill?: number;
   };
+  // quản lý hiện các slot khi trang bị skill
   equipSkillSelect: {
     active: boolean;
     skillId: string;
   };
+  // quản lý tab hiển thị
+  tabState: {
+    activeTab:
+      | "nhanvat"
+      | "kynang"
+      | "dongphu"
+      | "bicanh"
+      | "thegioi"
+      | "chiendau";
+    prevousTab:
+      | "nhanvat"
+      | "kynang"
+      | "dongphu"
+      | "bicanh"
+      | "thegioi"
+      | "chiendau";
+  };
+  // quản lý alert pause
+  isOpenPause: boolean;
   setItemInfoToggle: (payload: {
     open: boolean;
     state: "item" | "equip" | "unequip" | "";
@@ -21,25 +42,58 @@ interface UserToggleState {
     shardSKill?: number;
   }) => void;
   setEquipSkillSelect: (data: { active: boolean; skillId: string }) => void;
+  setTabState: (
+    activeTab:
+      | "nhanvat"
+      | "kynang"
+      | "dongphu"
+      | "bicanh"
+      | "thegioi"
+      | "chiendau",
+    prevousTab:
+      | "nhanvat"
+      | "kynang"
+      | "dongphu"
+      | "bicanh"
+      | "thegioi"
+      | "chiendau",
+  ) => void;
+  setIsOpenPause: (open: boolean) => void;
 }
 
 export const useToggleStore = create<UserToggleState>()((set) => ({
-  // quản lý các alert thông tin skill, equip, item
   itemInfoToggle: {
     open: false,
     state: "",
     item: null,
   },
-  // quản lý hiện các slot khi trang bị skill
+
   equipSkillSelect: {
     active: false,
     skillId: "",
   },
+
+  tabState: {
+    activeTab: "dongphu",
+    prevousTab: "dongphu",
+  },
+
+  isOpenPause: false,
+
   setItemInfoToggle: (payload) =>
     set({
       itemInfoToggle: {
         ...payload,
       },
     }),
+
   setEquipSkillSelect: (data) => set({ equipSkillSelect: { ...data } }),
+
+  setTabState: (activeTab, prevousTab) => {
+    set({ tabState: { activeTab, prevousTab } });
+  },
+
+  setIsOpenPause: (open) => {
+    set({ isOpenPause: open });
+  },
 }));
