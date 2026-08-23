@@ -3,9 +3,15 @@
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import TuiDoTab from "./TuiDoTab";
 import Image from "next/image";
-import { defaultCharacter, equipmentSlots, rarityColorBg, realmStyles } from "@/lib/constants";
+import {
+  defaultCharacter,
+  equipmentSlots,
+  rarityColorBg,
+  realmStyles,
+} from "@/lib/constants";
 import EquipmentInfo from "../alert/EquipmentInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
+import CharacterTabsBar from "../navbar/CharacterTabsBar";
 
 export default function NhanVatTab() {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
@@ -19,11 +25,9 @@ export default function NhanVatTab() {
       {/* Phần trên: Nhân vật và trang bị */}
       <section className="rounded-3xl border border-zinc-200 bg-zinc-50 p-5">
         <div className="mb-4 text-center">
-          <span
-            className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}
-          >
+          <span className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}>
             {character.realmId?.name} - Tầng {character.realmLevel}
-          </span>          
+          </span>
         </div>
 
         <div className="flex items-center justify-center gap-1">
@@ -67,7 +71,7 @@ export default function NhanVatTab() {
             <Image
               height={50}
               width={50}
-              src={defaultCharacter}
+              src={character.skinId.icon || defaultCharacter}
               alt="Nhân vật"
               className="w-60 h-70 object-contain rounded-lg"
             />
@@ -121,6 +125,10 @@ export default function NhanVatTab() {
               );
             })}
           </div>
+        </div>
+
+        <div>
+          <CharacterTabsBar />
         </div>
       </section>
 

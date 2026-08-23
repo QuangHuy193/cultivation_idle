@@ -114,10 +114,24 @@ export interface CurrentMap {
   stage: number;
 }
 
+export interface Skin {
+  _id: string;
+  name: string;
+  icon: string;
+  bg: string;
+  rarity: string;
+  price: {
+    number: number;
+    unity: string;
+  };
+  buffs: CharacterStats;
+}
+
 export interface CharacterResponse {
   _id: string;
   userId: string;
   name: string;
+  skinId: Skin;
   realmId?: Realm;
   realmLevel?: number;
   cultivation: number;

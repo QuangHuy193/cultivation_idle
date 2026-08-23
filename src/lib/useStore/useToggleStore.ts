@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Equip, Item, Skill } from "../interface";
+import { TabType } from "../constants";
 
 interface UserToggleState {
   // quản lý các alert thông tin skill, equip, item
@@ -17,20 +18,8 @@ interface UserToggleState {
   };
   // quản lý tab hiển thị
   tabState: {
-    activeTab:
-      | "nhanvat"
-      | "kynang"
-      | "dongphu"
-      | "bicanh"
-      | "thegioi"
-      | "chiendau";
-    prevousTab:
-      | "nhanvat"
-      | "kynang"
-      | "dongphu"
-      | "bicanh"
-      | "thegioi"
-      | "chiendau";
+    activeTab: TabType;
+    prevousTab: TabType;
   };
   // quản lý alert pause
   isOpenPause: boolean;
@@ -42,22 +31,7 @@ interface UserToggleState {
     shardSKill?: number;
   }) => void;
   setEquipSkillSelect: (data: { active: boolean; skillId: string }) => void;
-  setTabState: (
-    activeTab:
-      | "nhanvat"
-      | "kynang"
-      | "dongphu"
-      | "bicanh"
-      | "thegioi"
-      | "chiendau",
-    prevousTab:
-      | "nhanvat"
-      | "kynang"
-      | "dongphu"
-      | "bicanh"
-      | "thegioi"
-      | "chiendau",
-  ) => void;
+  setTabState: (activeTab: TabType, prevousTab: TabType) => void;
   setIsOpenPause: (open: boolean) => void;
 }
 

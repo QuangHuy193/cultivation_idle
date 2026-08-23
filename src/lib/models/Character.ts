@@ -56,6 +56,12 @@ const CharacterSchema = new Schema(
       required: true,
     },
 
+    skinId: {
+      type: String,
+      ref: "Skin",
+      default: "macdinh",
+    },
+
     realmId: {
       type: String,
       ref: "Realm",

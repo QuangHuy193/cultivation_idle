@@ -1,5 +1,6 @@
 export const characterPopulate = [
   { path: "realmId" },
+  { path: "skinId" },
   { path: "equipments.weapon" },
   { path: "equipments.helmet" },
   { path: "equipments.armor" },

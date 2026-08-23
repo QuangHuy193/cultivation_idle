@@ -4,11 +4,25 @@ import NhanVatTab from "@/app/components/tabs/NhanVatTab";
 import TheGioiTab from "@/app/components/tabs/TheGioiTab";
 import KyNangTab from "@/app/components/tabs/KyNangTab";
 import BattleTab from "@/app/components/tabs/BattleTab";
+import { Shirt } from "lucide-react";
+import SkinTab from "@/app/components/tabs/SkinTab";
 
-export const defaultCharacter = "/chars/am_tu.webp";
-export const defaultBgCharacter = "/bg_chars/bg_am_tu.webp";
+export const defaultCharacter = "/chars/mac_dinh.webp";
+export const defaultBgCharacter = "/bg_chars/bg_mac_dinh.webp";
 
-export const TABS = [
+export const TABSLABEL = {
+  nhanvat: "nhanvat",
+  kynang: "kynang",
+  dongphu: "dongphu",
+  bicanh: "bicanh",
+  thegioi: "thegioi",
+  chiendau: "chiendau",
+  trangphuc: "trangphuc",
+} as const;
+
+export type TabType = (typeof TABSLABEL)[keyof typeof TABSLABEL];
+
+export const MAINTABS = [
   {
     key: "nhanvat",
     label: "Nhân vật",
@@ -53,6 +67,16 @@ export const TABS = [
   },
 ] as const;
 
+export const CHARACTERTABS = [
+  {
+    key: "trangphuc",
+    label: "Trang phục",
+    icon: <Shirt className="w-5 h-5" />,
+    accent: "from-rose-500 to-pink-400",
+    display: true,
+  },
+] as const;
+
 export const renderContent = (activeTab: string) => {
   switch (activeTab) {
     case "dongphu":
@@ -67,6 +91,8 @@ export const renderContent = (activeTab: string) => {
       return <NhanVatTab />;
     case "chiendau":
       return <BattleTab />;
+    case "trangphuc":
+      return <SkinTab />;
     default:
       return <DongPhuTab />;
   }

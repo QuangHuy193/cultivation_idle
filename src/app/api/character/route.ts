@@ -5,6 +5,7 @@ import "@/lib/models/Realm";
 import "@/lib/models/Equip";
 import "@/lib/models/Item";
 import "@/lib/models/Skill";
+import "@/lib/models/Skin";
 import { addBreakthroughInfo, characterPopulate } from "@/lib/helper";
 import connectDB from "@/lib/db/db";
 
