@@ -60,4 +60,6 @@ const SkinSchema = new Schema(
   },
 );
 
-export default models.SkinSchema || model("Skin", SkinSchema);
+const Skin = models.Skin || model("Skin", SkinSchema);
+
+export default Skin;

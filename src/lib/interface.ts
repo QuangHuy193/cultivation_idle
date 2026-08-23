@@ -87,6 +87,7 @@ export interface CharacterInventoryItem {
   equips: Array<{ equipId: Equip }> | [];
   items: Array<{ itemId: Item; quantity: number }> | [];
   skills: Array<{ skillId: Skill; level: number; shard: number }> | [];
+  skins: Array<{ skinId: Skin }> | [];
 }
 
 export interface Realm {

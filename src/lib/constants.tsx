@@ -1,11 +1,11 @@
 import BiCanhTab from "@/app/components/tabs/BiCanhTab";
 import DongPhuTab from "@/app/components/tabs/DongPhuTab";
-import NhanVatTab from "@/app/components/tabs/NhanVatTab";
+import NhanVatTab from "@/app/components/tabs/nhan_vat/NhanVatTab";
 import TheGioiTab from "@/app/components/tabs/TheGioiTab";
 import KyNangTab from "@/app/components/tabs/KyNangTab";
 import BattleTab from "@/app/components/tabs/BattleTab";
 import { Shirt } from "lucide-react";
-import SkinTab from "@/app/components/tabs/SkinTab";
+import SkinTab from "@/app/components/tabs/skin/SkinTab";
 
 export const defaultCharacter = "/chars/mac_dinh.webp";
 export const defaultBgCharacter = "/bg_chars/bg_mac_dinh.webp";
@@ -71,7 +71,7 @@ export const CHARACTERTABS = [
   {
     key: "trangphuc",
     label: "Trang phục",
-    icon: <Shirt className="w-5 h-5" />,
+    icon: <Shirt className="w-6 h-6" />,
     accent: "from-rose-500 to-pink-400",
     display: true,
   },
@@ -211,3 +211,28 @@ export const realmStyles = {
     glow: "drop-shadow-[0_0_20px_rgba(251,146,60,1)] animate-realm-fire",
   },
 } as const;
+
+export const rarityCss: Record<string, { border: string; text: string }> = {
+  common: {
+    border: "border-gray-400",
+    text: "text-gray-400",
+  },
+  uncommon: {
+    border: "border-green-500",
+    text: "text-green-500",
+  },
+  rare: {
+    border: "border-blue-500",
+    text: "text-blue-500",
+  },
+  epic: {
+    border: "border-purple-500",
+    text: "text-purple-500",
+  },
+  legendary: {
+    border: "border-organe-500",
+    text: "text-organe-500",
+  },
+};
+
+export const SPIRITSTONE_ICON="/linh_thach.webp"

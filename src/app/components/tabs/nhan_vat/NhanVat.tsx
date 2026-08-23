@@ -1,7 +1,5 @@
 "use client";
-
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import TuiDoTab from "./TuiDoTab";
 import Image from "next/image";
 import {
   defaultCharacter,
@@ -9,11 +7,11 @@ import {
   rarityColorBg,
   realmStyles,
 } from "@/lib/constants";
-import EquipmentInfo from "../alert/EquipmentInfo";
+import EquipmentInfo from "../../alert/EquipmentInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import CharacterTabsBar from "../navbar/CharacterTabsBar";
+import CharacterTabsBar from "../../navbar/CharacterTabsBar";
 
-export default function NhanVatTab() {
+const NhanVat = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
   const { character } = useCharacterStore();
 
@@ -21,27 +19,26 @@ export default function NhanVatTab() {
     realmStyles[character.realmId?._id as keyof typeof realmStyles];
 
   return (
-    <div className="space-y-2">
-      {/* Phần trên: Nhân vật và trang bị */}
-      <section className="rounded-3xl border border-zinc-200 bg-zinc-50 p-5">
+    <section className="flex flex-col w-full h-full">
+      <div className="flex h-full flex-col justify-center">
         <div className="mb-4 text-center">
           <span className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}>
             {character.realmId?.name} - Tầng {character.realmLevel}
           </span>
         </div>
 
-        <div className="flex items-center justify-center gap-1">
+        <div className="flex items-center justify-between">
           {/* Trang bị bên trái (3 ô) */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-5">
             {equipmentSlots.slice(0, 3).map((slot) => {
               const equip = character.equipments?.[slot.key];
 
               return (
                 <div
                   key={slot.key}
-                  className={`w-14 h-14 rounded-lg 
-                    transition-colors flex items-center
-                    justify-center overflow-hidden ${equip ? rarityColorBg[equip.rarity] : "bg-zinc-100"}`}
+                  className={`w-16 h-16 rounded-lg 
+                      transition-colors flex items-center
+                      justify-center overflow-hidden ${equip ? rarityColorBg[equip.rarity] : "bg-zinc-100"}`}
                 >
                   {equip ? (
                     <Image
@@ -56,7 +53,7 @@ export default function NhanVatTab() {
                       }}
                       src={equip.icon}
                       alt={equip.name}
-                      className="w-12 h-12 object-contain"
+                      className="w-14 h-14 object-contain"
                     />
                   ) : (
                     <span className="text-xs text-zinc-400">{slot.label}</span>
@@ -73,9 +70,9 @@ export default function NhanVatTab() {
               width={50}
               src={character.skinId.icon || defaultCharacter}
               alt="Nhân vật"
-              className="w-60 h-70 object-contain rounded-lg"
+              className="h-full w-full object-contain rounded-lg"
             />
-            <div className="flex justify-between mt-1">
+            <div className="flex justify-between my-3">
               <div className="text-red-400">
                 ⚔️ {character.finalStats?.attack || character.stats.attack}
               </div>
@@ -89,17 +86,17 @@ export default function NhanVatTab() {
           </div>
 
           {/* Trang bị bên phải (3 ô) */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-5">
             {equipmentSlots.slice(3, 6).map((slot) => {
               const equip = character.equipments?.[slot.key];
 
               return (
                 <div
                   key={slot.key}
-                  className={`w-14 h-14 rounded-lg 
-                    transition-colors flex items-center
-                    justify-center overflow-hidden 
-                    ${equip ? rarityColorBg[equip.rarity] : "bg-zinc-100"}`}
+                  className={`w-16 h-16 rounded-lg 
+                      transition-colors flex items-center
+                      justify-center overflow-hidden 
+                      ${equip ? rarityColorBg[equip.rarity] : "bg-zinc-100"}`}
                 >
                   {equip ? (
                     <Image
@@ -107,7 +104,7 @@ export default function NhanVatTab() {
                       width={48}
                       src={equip.icon}
                       alt={equip.name}
-                      className="w-12 h-12 object-contain"
+                      className="w-14 h-14 object-contain"
                       onClick={() => {
                         setItemInfoToggle({
                           open: true,
@@ -126,11 +123,11 @@ export default function NhanVatTab() {
             })}
           </div>
         </div>
+      </div>
 
-        <div>
-          <CharacterTabsBar />
-        </div>
-      </section>
+      <div>
+        <CharacterTabsBar />
+      </div>
 
       {itemInfoToggle.open &&
         itemInfoToggle.state !== "item" &&
@@ -143,9 +140,8 @@ export default function NhanVatTab() {
             }
           />
         )}
-
-      {/* Phần dưới: Túi đồ */}
-      <TuiDoTab />
-    </div>
+    </section>
   );
-}
+};
+
+export default NhanVat;

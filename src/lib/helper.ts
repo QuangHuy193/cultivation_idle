@@ -10,6 +10,7 @@ export const characterPopulate = [
   { path: "inventory.equips.equipId" },
   { path: "inventory.items.itemId" },
   { path: "inventory.skills.skillId" },
+  { path: "inventory.skins.skinId" },
 ];
 
 export const equipmentPopulate = [

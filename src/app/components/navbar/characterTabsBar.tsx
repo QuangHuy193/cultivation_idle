@@ -4,7 +4,7 @@ import { useToggleStore } from "@/lib/useStore/useToggleStore";
 const CharacterTabsBar = () => {
   const { tabState, setTabState } = useToggleStore();
   return (
-    <div className="flex justify-center pt-2">
+    <div className="flex justify-center">
       {CHARACTERTABS.map((tab, ind) => {
         if (tab.display)
           return (

@@ -149,7 +149,7 @@ const CharacterSchema = new Schema(
 
     currentMap: {
       type: currentMapSchema,
-      default:{}
+      default: {},
     },
 
     inventory: {
@@ -197,6 +197,17 @@ const CharacterSchema = new Schema(
           },
         ],
         default: [],
+      },
+      skins: {
+        type: [
+          {
+            skinId: {
+              type: String,
+              ref: "Skin",
+              required: true,
+            },
+          },
+        ],
       },
     },
 

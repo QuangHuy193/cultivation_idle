@@ -46,7 +46,7 @@ export default function DongPhuTab() {
         className="absolute inset-0"
         style={{
           backgroundImage: `url('${
-            character.skinId.bg || defaultBgCharacter
+            character.skinId?.bg || defaultBgCharacter
           }')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
