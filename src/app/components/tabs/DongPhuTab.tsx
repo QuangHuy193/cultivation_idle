@@ -13,10 +13,11 @@ import Image from "next/image";
 import { useEffect } from "react";
 import UserInfo from "../alert/UserInfo";
 import { Menu } from "lucide-react";
+import RedeemCodeForm from "../form/RedeemCodeForm";
 
 export default function DongPhuTab() {
   const { character, updateCharacter } = useCharacterStore();
-  const { isOpenUserInfo, setIsOpenUserInfo } = useToggleStore();
+  const { alertUserInfo, setAalertUserInfo } = useToggleStore();
 
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
@@ -108,13 +109,14 @@ export default function DongPhuTab() {
             {character?.spiritStone || "0"}
           </span>
 
-          <span onClick={() => setIsOpenUserInfo(true)}>
+          <span onClick={() => setAalertUserInfo("menu")}>
             <Menu />
           </span>
         </div>
       </div>
 
-      {isOpenUserInfo && <UserInfo />}
+      {alertUserInfo === "menu" && <UserInfo />}
+      {alertUserInfo === "code" && <RedeemCodeForm />}
     </section>
   );
 }

@@ -23,8 +23,8 @@ interface UserToggleState {
   };
   // quản lý alert pause
   isOpenPause: boolean;
-  // quản lý alert user info
-  isOpenUserInfo: boolean;
+  // quản lý alert user. code, setting,...
+  alertUserInfo: "" | "menu" | "code" | "setting";
 
   setItemInfoToggle: (payload: {
     open: boolean;
@@ -36,7 +36,7 @@ interface UserToggleState {
   setEquipSkillSelect: (data: { active: boolean; skillId: string }) => void;
   setTabState: (activeTab: TabType, prevousTab: TabType) => void;
   setIsOpenPause: (open: boolean) => void;
-  setIsOpenUserInfo: (open: boolean) => void;
+  setAalertUserInfo: (alert: "" | "menu" | "code" | "setting") => void;
 }
 
 export const useToggleStore = create<UserToggleState>()((set) => ({
@@ -58,7 +58,7 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
 
   isOpenPause: false,
 
-  isOpenUserInfo: false,
+  alertUserInfo: "",
 
   setItemInfoToggle: (payload) =>
     set({
@@ -77,7 +77,7 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
     set({ isOpenPause: open });
   },
 
-  setIsOpenUserInfo: (open) => {
-    set({ isOpenUserInfo: open });
+  setAalertUserInfo: (alert) => {
+    set({ alertUserInfo: alert });
   },
 }));

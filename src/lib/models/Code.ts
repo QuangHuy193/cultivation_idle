@@ -70,4 +70,6 @@ const CodeSchema = new Schema(
 
 export type ICode = InferSchemaType<typeof CodeSchema>;
 
-export default models.Code || model("Code", CodeSchema);
+const Code = models.Code || model("Code", CodeSchema);
+
+export default Code;

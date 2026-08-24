@@ -1,3 +1,13 @@
+export const CLASS_COATING_SM =
+  "fixed inset-0 z-50 flex items-center justify-center bg-black/20";
+export const CLASS_COATING_L =
+  "fixed inset-0 z-50 flex items-center justify-center bg-black/40";
+export const CLASS_COATING_XL =
+  "fixed inset-0 z-50 flex items-center justify-center bg-black/60";
+
+export const CLASS_X_ALERT = `absolute -right-2 -top-2 flex h-9 w-9 items-center 
+justify-center rounded-full border-2 border-red-300 bg-white shadow-md`;
+
 export const RARITY_CSS: Record<
   string,
   { border: string; text: string; bg: string }

@@ -1,5 +1,10 @@
 "use client";
-import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
+import {
+  CLASS_COATING_SM,
+  CLASS_X_ALERT,
+  RARITY_CSS,
+  REALM_CSS,
+} from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
@@ -8,7 +13,7 @@ import Image from "next/image";
 
 const UserInfo = () => {
   const { character } = useCharacterStore();
-  const { setIsOpenUserInfo } = useToggleStore();
+  const { setAalertUserInfo } = useToggleStore();
 
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
@@ -17,19 +22,15 @@ const UserInfo = () => {
     RARITY_CSS[character.skinId.rarity] ?? RARITY_CSS["common"];
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 
-    backdrop-blur-sm"
-    >
+    <div className={CLASS_COATING_SM}>
       <div
         className="relative w-85 rounded-3xl border-2 border-yellow-700 
       bg-linear-to-b from-amber-100 to-yellow-50 p-5 shadow-2xl"
       >
         {/* nút tắt */}
         <button
-          onClick={() => setIsOpenUserInfo(false)}
-          className="absolute -right-2 -top-2 flex h-9 w-9 items-center justify-center rounded-full 
-          border-2 border-red-300 bg-white shadow-md"
+          onClick={() => setAalertUserInfo("")}
+          className={CLASS_X_ALERT}
         >
           <X className="h-5 w-5 text-red-500" />
         </button>
@@ -48,7 +49,7 @@ const UserInfo = () => {
               width={88}
               src={character.skinId.icon || DEFAULT_IMG_CHARACTER}
               alt={character.skinId.name || ""}
-              className="h-full w-full object-cover"
+              className="h-full w-full"
             />
           </div>
 
@@ -111,6 +112,7 @@ const UserInfo = () => {
         {/* Chức năng */}
         <div className="mt-5 grid grid-cols-2 gap-3">
           <button
+            onClick={() => setAalertUserInfo("code")}
             className="rounded-xl bg-linear-to-b from-yellow-400 to-yellow-600 py-2 
             font-semibold text-white shadow-md transition hover:scale-105"
           >
