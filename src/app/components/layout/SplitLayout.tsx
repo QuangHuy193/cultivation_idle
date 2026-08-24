@@ -14,10 +14,10 @@ const SplitLayout = ({
   percentBottom = `flex-6/12`,
 }: SplitLayoutProps) => {
   return (
-    <div className="space-y-2 flex flex-col w-full h-full">
+    <div className="gap-1 flex flex-col w-full h-full">
       <div className={`bg-zinc-50 p-5 ${percentTop}`}>{top}</div>
 
-      <div className={`bg-zinc-50 p-5 ${percentBottom}`}>{bottom}</div>
+      <div className={`relative bg-zinc-50 p-5 ${percentBottom} overflow-hidden`}>{bottom}</div>
     </div>
   );
 };

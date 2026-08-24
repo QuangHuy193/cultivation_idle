@@ -9,8 +9,8 @@ import PauseAlert from "../alert/PauseAlert";
 import { useBattleStore } from "@/lib/useStore/useBattleStore";
 import { useEffect } from "react";
 import { showError, showSuccess } from "@/lib/toast";
-import { defaultCharacter } from "@/lib/constants";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
+import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 
 const BattleTab = () => {
   const { character } = useCharacterStore();
@@ -299,7 +299,7 @@ const BattleTab = () => {
             </div>
 
             <Image
-              src={defaultCharacter}
+              src={DEFAULT_IMG_CHARACTER}
               alt="Nhân vật"
               width={130}
               height={130}

@@ -2,13 +2,14 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useSkinStore } from "@/lib/useStore/useSkinTab";
 import React, { useEffect } from "react";
 import SkinImage from "./SkinImage";
-import { rarityCss } from "@/lib/constants";
+import { RARITY_CSS } from "@/lib/constants/cssConstants";
+import { rarityTextMap } from "@/lib/constants";
 
 const SkinTabTop = () => {
   const { character } = useCharacterStore();
   const { owner, selectedSkin, setSelectedSkin } = useSkinStore();
 
-  const rarityC = rarityCss[selectedSkin.rarity] ?? rarityCss.common;
+  const rarityCss = RARITY_CSS[selectedSkin.rarity] ?? RARITY_CSS.common;
 
   useEffect(() => {
     if (character) {
@@ -29,10 +30,10 @@ const SkinTabTop = () => {
           <span
             className={`
         rounded-full px-3 py-1 text-sm font-bold
-        ${rarityC.text}
+        ${rarityCss.text}
       `}
           >
-            {selectedSkin.rarity.toUpperCase()}
+            {rarityTextMap(selectedSkin.rarity).toUpperCase()}
           </span>
         </div>
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { progressMapAPI } from "@/app/axios/characterAPI";
-import { defaultCharacter } from "@/lib/constants";
+import {  } from "@/lib/constants";
+import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { showWarning } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
@@ -62,7 +63,7 @@ export default function TheGioiTab() {
               >
                 {curMap && (
                   <Image
-                    src={defaultCharacter}
+                    src={DEFAULT_IMG_CHARACTER}
                     alt="Nhân vật"
                     width={80}
                     height={80}

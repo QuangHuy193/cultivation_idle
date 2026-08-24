@@ -6,7 +6,7 @@ import "@/lib/models/Equip";
 import "@/lib/models/Item";
 import "@/lib/models/Skill";
 
-import { equipmentPopulate } from "@/lib/helper";
+import { characterPopulate } from "@/lib/helper";
 
 export async function GET(
   request: Request,
@@ -17,12 +17,7 @@ export async function GET(
 
     const { id } = await params;
 
-    const character = await Character.findById(id)
-      .populate(equipmentPopulate)
-      .populate("inventory.equips.equipId")
-      .populate("inventory.items.itemId")
-      .populate("inventory.skills.skillId")
-      .lean();
+    const character = await Character.findById(id).populate(characterPopulate);
 
     if (!character) {
       return NextResponse.json(
@@ -54,7 +49,6 @@ export async function GET(
       finalStats,
       inventory: character.inventory,
     });
-    
   } catch (error) {
     console.error("Get inventory error:", error);
 

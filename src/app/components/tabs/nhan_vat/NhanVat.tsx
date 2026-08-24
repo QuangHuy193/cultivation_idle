@@ -1,22 +1,19 @@
 "use client";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import Image from "next/image";
-import {
-  defaultCharacter,
-  equipmentSlots,
-  rarityColorBg,
-  realmStyles,
-} from "@/lib/constants";
+import { equipmentSlots } from "@/lib/constants";
 import EquipmentInfo from "../../alert/EquipmentInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import CharacterTabsBar from "../../navbar/CharacterTabsBar";
+import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
+import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 
 const NhanVat = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
   const { character } = useCharacterStore();
 
   const realmStyle =
-    realmStyles[character.realmId?._id as keyof typeof realmStyles];
+    REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
 
   return (
     <section className="flex flex-col w-full h-full">
@@ -38,7 +35,7 @@ const NhanVat = () => {
                   key={slot.key}
                   className={`w-16 h-16 rounded-lg 
                       transition-colors flex items-center
-                      justify-center overflow-hidden ${equip ? rarityColorBg[equip.rarity] : "bg-zinc-100"}`}
+                      justify-center overflow-hidden ${equip ? RARITY_CSS[equip.rarity].bg : "bg-zinc-100"}`}
                 >
                   {equip ? (
                     <Image
@@ -68,7 +65,7 @@ const NhanVat = () => {
             <Image
               height={50}
               width={50}
-              src={character.skinId.icon || defaultCharacter}
+              src={character.skinId.icon || DEFAULT_IMG_CHARACTER}
               alt="Nhân vật"
               className="h-full w-full object-contain rounded-lg"
             />
@@ -96,7 +93,7 @@ const NhanVat = () => {
                   className={`w-16 h-16 rounded-lg 
                       transition-colors flex items-center
                       justify-center overflow-hidden 
-                      ${equip ? rarityColorBg[equip.rarity] : "bg-zinc-100"}`}
+                      ${equip ? RARITY_CSS[equip.rarity].bg : "bg-zinc-100"}`}
                 >
                   {equip ? (
                     <Image

@@ -208,6 +208,7 @@ const CharacterSchema = new Schema(
             },
           },
         ],
+        default: [],
       },
     },
 

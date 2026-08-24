@@ -25,7 +25,8 @@ export default function TuiDo() {
   );
 
   return (
-    <section className="rounded-[24px]  border border-zinc-200 bg-zinc-50 p-5">
+    <section className="absolute top-0 bottom-16.25 inset-0 rounded-3xl border 
+    border-zinc-200 bg-zinc-50 p-5 overflow-y-hidden">
       {/* Tab Navigation */}
       <div className="flex gap-2 mb-4 border-b border-zinc-200">
         <button
@@ -51,7 +52,7 @@ export default function TuiDo() {
       </div>
 
       {/* Content */}
-      <div className="max-h-50 overflow-y-auto pr-2">
+      <div className="overflow-y-scroll pr-1 h-full pb-10">
         {/* Equipment Tab */}
         {activeTab === "equipment" && (
           <div className="grid grid-cols-5 gap-3">

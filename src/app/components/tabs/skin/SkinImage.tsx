@@ -1,4 +1,6 @@
-import { rarityCss, SPIRITSTONE_ICON } from "@/lib/constants";
+
+import { RARITY_CSS } from "@/lib/constants/cssConstants";
+import { SPIRITSTONE_ICON } from "@/lib/constants/imageConstants";
 import { Skin } from "@/lib/interface";
 import { useSkinStore } from "@/lib/useStore/useSkinTab";
 import Image from "next/image";
@@ -11,7 +13,7 @@ interface SkinImageProps {
 const SkinImage = ({ skin, isHas }: SkinImageProps) => {
   const { setSelectedSkin } = useSkinStore();
 
-  const rarityCSS = rarityCss[skin.rarity] ?? rarityCss.common;
+  const rarityCSS = RARITY_CSS[skin.rarity] ?? RARITY_CSS.common;
   return (
     <div
       className={`flex w-full flex-col items-center rounded-2xl border-2 p-3 bg-white 

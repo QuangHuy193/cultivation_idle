@@ -7,9 +7,6 @@ import BattleTab from "@/app/components/tabs/BattleTab";
 import { Shirt } from "lucide-react";
 import SkinTab from "@/app/components/tabs/skin/SkinTab";
 
-export const defaultCharacter = "/chars/mac_dinh.webp";
-export const defaultBgCharacter = "/bg_chars/bg_mac_dinh.webp";
-
 export const TABSLABEL = {
   nhanvat: "nhanvat",
   kynang: "kynang",
@@ -137,102 +134,19 @@ export const VALID_SLOTS = [
   "boots",
 ];
 
-export const rarityColorText: Record<string, string> = {
-  common: "text-gray-500",
-  uncommon: "text-green-600",
-  rare: "text-blue-600",
-  epic: "text-purple-600",
-  legendary: "text-orange-500",
-};
-
-export const rarityColorBg: Record<string, string> = {
-  common: "bg-gray-300",
-  uncommon: "bg-green-600",
-  rare: "bg-blue-600",
-  epic: "bg-purple-600",
-  legendary: "bg-orange-500",
-};
-
-export const rarityText = [
-  {
-    key: "common",
-    label: "Thường",
-  },
-  {
-    key: "uncommon",
-    label: "Hiếm",
-  },
-  {
-    key: "rare",
-    label: "Đặc biệt",
-  },
-  {
-    key: "epic",
-    label: "Cực phẩm",
-  },
-  {
-    key: "legendary",
-    label: "Huyền thoại",
-  },
-];
-
 export const rarityTextMap = (rarity: string) => {
-  return rarityText.find((r) => r.key === rarity)?.label;
+  switch (rarity) {
+    case "common":
+      return "Thường";
+    case "uncommon":
+      return "Hiếm";
+    case "rare":
+      return "Đặc biệt";
+    case "epic":
+      return "Cực phẩm";
+    case "legendary":
+      return "Huyền thoại";
+    default:
+      return "Thường";
+  }
 };
-
-export const realmStyles = {
-  luyenkhi: {
-    text: "text-slate-300",
-    border: "border-slate-400",
-    glow: "",
-  },
-
-  trucco: {
-    text: "text-emerald-400",
-    border: "border-emerald-500",
-    glow: "drop-shadow-[0_0_8px_rgba(16,185,129,0.8)]",
-  },
-
-  kimdan: {
-    text: "text-yellow-400",
-    border: "border-yellow-500",
-    glow: "drop-shadow-[0_0_12px_rgba(250,204,21,0.9)]",
-  },
-
-  nguyenanh: {
-    text: "text-purple-400",
-    border: "border-purple-500",
-    glow: "drop-shadow-[0_0_15px_rgba(168,85,247,1)] animate-pulse",
-  },
-
-  hoathan: {
-    text: "text-orange-400",
-    border: "border-orange-500",
-    glow: "drop-shadow-[0_0_20px_rgba(251,146,60,1)] animate-realm-fire",
-  },
-} as const;
-
-export const rarityCss: Record<string, { border: string; text: string }> = {
-  common: {
-    border: "border-gray-400",
-    text: "text-gray-400",
-  },
-  uncommon: {
-    border: "border-green-500",
-    text: "text-green-500",
-  },
-  rare: {
-    border: "border-blue-500",
-    text: "text-blue-500",
-  },
-  epic: {
-    border: "border-purple-500",
-    text: "text-purple-500",
-  },
-  legendary: {
-    border: "border-organe-500",
-    text: "text-organe-500",
-  },
-};
-
-export const SPIRITSTONE_ICON="/linh_thach.webp"

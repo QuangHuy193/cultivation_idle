@@ -67,10 +67,9 @@ export async function POST(request: Request) {
       });
 
       character = await Character.findById(createdCharacter._id)
-        .populate("realmId")
         .populate(characterPopulate)
         .lean();
-    }
+    }    
 
     return NextResponse.json(
       {

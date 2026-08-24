@@ -1,6 +1,7 @@
 "use client";
 import { takeItemAPI } from "@/app/axios/characterAPI";
-import { rarityColorText, rarityTextMap } from "@/lib/constants";
+import {  rarityTextMap } from "@/lib/constants";
+import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { Item } from "@/lib/interface";
 import { showSuccess } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
@@ -40,7 +41,7 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
       >
         {/* Header */}
         <div
-          className={`px-4 py-3 text-center text-lg font-bold ${rarityColorText[item.rarity]}`}
+          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[item.rarity].text}`}
         >
           {item.name} - {rarityTextMap(item.rarity)}
         </div>

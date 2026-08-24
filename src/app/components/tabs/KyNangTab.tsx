@@ -6,9 +6,10 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import SkillInfo from "../alert/SkillInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { equipSkillAPI } from "@/app/axios/characterAPI";
+import { RARITY_CSS } from "@/lib/constants/cssConstants";
 
 export default function KyNangTab() {
-  const { character,updateCharacter } = useCharacterStore();
+  const { character, updateCharacter } = useCharacterStore();
   const {
     itemInfoToggle,
     setItemInfoToggle,
@@ -30,8 +31,7 @@ export default function KyNangTab() {
         </h3>
         {equipSkillSelect.active && (
           <div
-            className="mb-3 rounded-lg bg-yellow-100 border border-yellow-400 p-2
-            text-center text-sm font-medium "
+            className={`mb-3 rounded-lg bg-yellow-100 p-2 text-center text-sm font-medium`}
           >
             <div className="relative">
               <span>Chọn 1 ô kỹ năng để trang bị</span>
@@ -55,12 +55,13 @@ export default function KyNangTab() {
             return (
               <div
                 key={index}
-                className={`aspect-square rounded-xl border-2 border-amber-300 bg-amber-50
-                overflow-hidden flex items-center justify-center ${
-                  equipSkillSelect.active
-                    ? "border-yellow-400 ring-4 ring-yellow-300 animate-pulse"
-                    : "border-amber-300"
-                }`}
+                className={`aspect-square rounded-xl border-2 bg-amber-50 overflow-hidden 
+                  flex items-center justify-center ${
+                    equipSkillSelect.active
+                      ? "border-yellow-400 ring-4 ring-yellow-300 animate-pulse"
+                      : ""
+                  }
+                ${RARITY_CSS[skillData?.skillId.rarity ?? "common"].border}`}
                 onClick={async () => {
                   if (!equipSkillSelect.active) return;
 
@@ -120,8 +121,9 @@ export default function KyNangTab() {
             return (
               <button
                 key={ind}
-                className="relative aspect-square rounded-xl border border-zinc-300 bg-white
-                p-1 hover:border-amber-400 hover:shadow-md transition"
+                className={`relative aspect-square rounded-xl bg-white p-1 transition 
+                  border-2
+                  ${RARITY_CSS[skill?.skillId.rarity ?? "common"].border}`}
               >
                 {isEquipped && (
                   <span
@@ -137,7 +139,7 @@ export default function KyNangTab() {
                   alt={skill.skillId.name}
                   width={64}
                   height={64}
-                  className="h-full w-full object-contain"
+                  className={`h-full w-full object-contain`}
                   onClick={() => {
                     setItemInfoToggle({
                       open: true,
