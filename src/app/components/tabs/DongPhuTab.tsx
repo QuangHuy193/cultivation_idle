@@ -2,15 +2,22 @@
 
 import { breakthroughAPI } from "@/app/axios/characterAPI";
 import { REALM_CSS } from "@/lib/constants/cssConstants";
-import { DEFAULT_BG_CHARACTER, SPIRITSTONE_ICON } from "@/lib/constants/imageConstants";
+import {
+  DEFAULT_IMG_CHARACTER,
+  SPIRITSTONE_ICON,
+} from "@/lib/constants/imageConstants";
 import { CharacterService } from "@/lib/services/character.service";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 import { useEffect } from "react";
+import UserInfo from "../alert/UserInfo";
+import { Menu } from "lucide-react";
 
 export default function DongPhuTab() {
   const { character, updateCharacter } = useCharacterStore();
-  
+  const { isOpenUserInfo, setIsOpenUserInfo } = useToggleStore();
+
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
 
@@ -46,7 +53,7 @@ export default function DongPhuTab() {
         className="absolute inset-0"
         style={{
           backgroundImage: `url('${
-            character.skinId?.bg || DEFAULT_BG_CHARACTER
+            character.skinId?.icon || DEFAULT_IMG_CHARACTER
           }')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -55,6 +62,7 @@ export default function DongPhuTab() {
 
       {/* Nội dung */}
       <div className="relative z-10">
+        {/* tên nhân vật */}
         <div className="flex w-fit items-center gap-3 px-3 py-2 rounded-r-2xl">
           <div className="flex flex-col">
             <div className="border-b flex justify-center">
@@ -87,6 +95,7 @@ export default function DongPhuTab() {
           </div>
         </div>
 
+        {/* linh thạch */}
         <div className="fixed top-0 right-0 p-3 rounded-2xl flex items-center gap-2">
           <Image
             src={SPIRITSTONE_ICON}
@@ -98,8 +107,14 @@ export default function DongPhuTab() {
           <span className="text-xl text-cyan-500">
             {character?.spiritStone || "0"}
           </span>
+
+          <span onClick={() => setIsOpenUserInfo(true)}>
+            <Menu />
+          </span>
         </div>
       </div>
+
+      {isOpenUserInfo && <UserInfo />}
     </section>
   );
 }

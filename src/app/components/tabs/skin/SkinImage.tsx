@@ -1,7 +1,7 @@
-
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { SPIRITSTONE_ICON } from "@/lib/constants/imageConstants";
 import { Skin } from "@/lib/interface";
+import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useSkinStore } from "@/lib/useStore/useSkinTab";
 import Image from "next/image";
 
@@ -12,6 +12,9 @@ interface SkinImageProps {
 
 const SkinImage = ({ skin, isHas }: SkinImageProps) => {
   const { setSelectedSkin } = useSkinStore();
+  const { character } = useCharacterStore();
+
+  const isEQ = character.skinId._id === skin._id ? true : false;
 
   const rarityCSS = RARITY_CSS[skin.rarity] ?? RARITY_CSS.common;
   return (
@@ -42,12 +45,10 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
       <button
         className={`mt-3 w-full rounded-xl px-3 py-2 text-sm font-semibold text-white
           transition-all
-          ${isHas ? "bg-zinc-500" : "bg-yellow-400"}
+          ${!isHas ? "bg-yellow-400" : isEQ ? "bg-zinc-500" : "bg-blue-300"}
         `}
       >
-        {isHas ? (
-          "Đã có"
-        ) : (
+        {!isHas ? (
           <div className="flex justify-center gap-2 items-center">
             {skin.price.number}
             <Image
@@ -58,6 +59,10 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
               className="w-5 h-5"
             />
           </div>
+        ) : isEQ ? (
+          "Đã trang bị"
+        ) : (
+          "Trang bị"
         )}
       </button>
     </div>

@@ -16,12 +16,7 @@ const SkinSchema = new Schema(
       type: String,
       required: true,
     },
-
-    bg: {
-      type: String,
-      required: true,
-    },
-
+        
     rarity: {
       type: String,
       default: "common",

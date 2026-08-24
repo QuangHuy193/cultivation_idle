@@ -110,8 +110,16 @@ export interface CultivationPerSecond {
   fromVip: number;
 }
 
+export interface CurentMapMap {
+  _id: string;
+  name: string;
+  order: number;
+  icon: string;
+  maxStage: number;
+}
+
 export interface CurrentMap {
-  map: string;
+  map: CurentMapMap;
   stage: number;
 }
 
@@ -119,7 +127,6 @@ export interface Skin {
   _id: string;
   name: string;
   icon: string;
-  bg: string;
   rarity: string;
   price: {
     number: number;

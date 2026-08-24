@@ -1,5 +1,6 @@
 export const characterPopulate = [
   { path: "realmId" },
+  { path: "currentMap.map", select: "_id icon name order maxStage" },
   { path: "skinId" },
   { path: "equipments.weapon" },
   { path: "equipments.helmet" },
@@ -22,9 +23,7 @@ export const equipmentPopulate = [
   { path: "equipments.boots" },
 ];
 
-export const calculateCharacterStats = (
-  character: any
-) => {
+export const calculateCharacterStats = (character: any) => {
   let hp = character.stats.hp;
   let attack = character.stats.attack;
   let defense = character.stats.defense;
@@ -37,15 +36,13 @@ export const calculateCharacterStats = (
   }
 
   // bonus trang bị
-  Object.values(character.equipments || {}).forEach(
-    (equip) => {
-      if (!equip) return;
+  Object.values(character.equipments || {}).forEach((equip) => {
+    if (!equip) return;
 
-      hp += equip.stats?.hp || 0;
-      attack += equip.stats?.attack || 0;
-      defense += equip.stats?.defense || 0;
-    }
-  );
+    hp += equip.stats?.hp || 0;
+    attack += equip.stats?.attack || 0;
+    defense += equip.stats?.defense || 0;
+  });
 
   return {
     finalStats: {
@@ -57,11 +54,9 @@ export const calculateCharacterStats = (
 };
 
 export function addBreakthroughInfo(character: any) {
-  const breakthroughRequired =
-    character.realmId?.cultivationRequired ?? 0;
+  const breakthroughRequired = character.realmId?.cultivationRequired ?? 0;
 
-  const canBreakthrough =
-    character.cultivation >= breakthroughRequired;
+  const canBreakthrough = character.cultivation >= breakthroughRequired;
 
   return {
     ...character,

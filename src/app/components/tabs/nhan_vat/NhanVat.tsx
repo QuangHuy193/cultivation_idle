@@ -69,7 +69,7 @@ const NhanVat = () => {
               alt="Nhân vật"
               className="h-full w-full object-contain rounded-lg"
             />
-            <div className="flex justify-between my-3">
+            <div className="flex mt-2 justify-between gap-4">
               <div className="text-red-400">
                 ⚔️ {character.finalStats?.attack || character.stats.attack}
               </div>

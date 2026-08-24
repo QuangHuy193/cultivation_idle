@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import SkinImage from "./SkinImage";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { rarityTextMap } from "@/lib/constants";
+import CornerBadge from "../../badges/CornerBadge";
 
 const SkinTabTop = () => {
   const { character } = useCharacterStore();
@@ -18,7 +19,7 @@ const SkinTabTop = () => {
   }, [character]);
   return (
     <div className="flex gap-2">
-      <div className="flex-1">
+      <div className="flex-1">        
         <SkinImage skin={selectedSkin} isHas={owner} />
       </div>
 
