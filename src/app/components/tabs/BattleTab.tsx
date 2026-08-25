@@ -7,17 +7,23 @@ import { useMapStore } from "@/lib/useStore/useMapStore";
 import { SquarePause } from "lucide-react";
 import PauseAlert from "../alert/PauseAlert";
 import { useBattleStore } from "@/lib/useStore/useBattleStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { showError, showSuccess } from "@/lib/toast";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
+import { useSettingStore } from "@/lib/useStore/usseSetting";
+import { Log } from "@/lib/interface";
 
 const BattleTab = () => {
+  const [battleStart, setBattleStart] = useState(false);
+
   const { character } = useCharacterStore();
   const { progressMap } = useMapStore();
-  const { isOpenPause, setIsOpenPause, tabState, setTabState } = useToggleStore();
+  const { isOpenPause, setIsOpenPause, tabState, setTabState } =
+    useToggleStore();
   const { setBattle, battle, addLog, updateBattle, updateBattleStatus } =
     useBattleStore();
+  const { battleSpeed, setBattleSpeed } = useSettingStore();
 
   const currentMap = progressMap?.maps?.find(
     (map) => map._id === progressMap?.currentMapId,
@@ -43,13 +49,11 @@ const BattleTab = () => {
       maxHp:
         monster?.monsterId.stats.hp || 1 * currentMap?.monsterStatMultiplier,
 
-      attack:
-        monster?.monsterId.stats.attack ||
-        1 * currentMap?.monsterStatMultiplier,
+      atk:
+        monster?.monsterId.stats.atk || 1 * currentMap?.monsterStatMultiplier,
 
-      defense:
-        monster?.monsterId.stats.defense ||
-        1 * currentMap?.monsterStatMultiplier,
+      def:
+        monster?.monsterId.stats.def || 1 * currentMap?.monsterStatMultiplier,
     };
   }
 
@@ -74,7 +78,8 @@ const BattleTab = () => {
       return battle;
     }
 
-    const newLogs: string[] = [];
+    const newLogs: Log[] = [];
+
     updateBattle((battle) => {
       const newSkills = [...battle.skills];
       let totalDamage = 0;
@@ -91,17 +96,20 @@ const BattleTab = () => {
         if (!skillData) continue;
 
         const damgeOneSkill =
-          (character.finalStats?.attack *
+          (character.finalStats?.atk *
             skillData.skillId.levels[skillData.level].attackPower) /
             100 -
-          battle.monster.defense;
+          battle.monster.def;
 
         totalDamage += damgeOneSkill;
 
         if (battleSkill?.currentCooldown === 0) {
-          newLogs.push(
-            `Bạn dùng kỹ năng ${skillData.skillId.name} gây ${damgeOneSkill} sát thương`,
-          );
+          newLogs.push({
+            name: "Bạn",
+            enemyName: currentMonster?.name ?? "",
+            damge: damgeOneSkill,
+            skill: skillData.skillId.name,
+          });
         }
 
         newSkills[i] = {
@@ -142,16 +150,19 @@ const BattleTab = () => {
       }
 
       const monsterDamge =
-        battle.monster.attack * currentMap?.monsterStatMultiplier -
-        character.finalStats?.defense;
+        battle.monster.atk * currentMap?.monsterStatMultiplier -
+        character.finalStats?.def;
 
       const newPlayerHp = battle.playerHp - monsterDamge;
 
-      const newLogs: string[] = [];
+      const newLogs: Log[] = [];
 
-      newLogs.push(
-        `${battle.monster.name} gây cho bạn ${monsterDamge} sát thương`,
-      );
+      newLogs.push({
+        name: battle.monster.name,
+        enemyName: "Bạn",
+        damge: monsterDamge,
+        skill: "",
+      });
 
       if (newPlayerHp <= 0) {
         return {
@@ -217,20 +228,26 @@ const BattleTab = () => {
 
     if (battle.battleStatus === "win") {
       showSuccess("Bạn chiến thắng");
-      return;
     }
 
     if (battle.battleStatus === "lose") {
       showError("Bạn thất bại");
+    }
+  }, [battle?.battleStatus]);
+
+  useEffect(() => {
+    if (!battle || !battleStart) return;
+
+    if (battle.battleStatus === "win" || battle.battleStatus === "lose") {
       return;
     }
 
     const timer = setInterval(() => {
       battleTurn();
-    }, 4000);
+    }, 4000 / battleSpeed);
 
     return () => clearInterval(timer);
-  }, [battle?.battleStatus]);
+  }, [battleSpeed, battleStart, battle?.battleStatus]);
 
   return (
     <section className="h-full w-full flex flex-col overflow-hidden">
@@ -244,9 +261,10 @@ const BattleTab = () => {
           onContinue={() => {
             setIsOpenPause(false);
           }}
-          onExit={() => {            
-            setTabState(tabState.prevousTab, "dongphu")
-            setIsOpenPause(false);}}
+          onExit={() => {
+            setTabState(tabState.prevousTab, "dongphu");
+            setIsOpenPause(false);
+          }}
           onRestart={() => {}}
         />
       )}
@@ -262,15 +280,8 @@ const BattleTab = () => {
         >
           {/* map info */}
           <div
-            className="absolute top-3 left-1/2
-              -translate-x-1/2
-              rounded-xl
-              bg-black/50
-              px-4 py-2
-              text-center
-              text-white
-              backdrop-blur-sm
-            "
+            className="absolute top-3 left-1/2 -translate-x-1/2 rounded-xl
+            bg-black/50 px-4 py-2 text-center text-white backdrop-blur-sm"
           >
             <div className="font-semibold">{currentMap?.name}</div>
 
@@ -288,7 +299,10 @@ const BattleTab = () => {
                 {character.name}
               </div>
 
-              <div className="h-2 overflow-hidden rounded bg-zinc-800">
+              <div
+                className="h-2 overflow-hidden rounded bg-zinc-800 border 
+              border-green-500"
+              >
                 <div
                   className="h-full bg-green-500"
                   style={{
@@ -314,9 +328,12 @@ const BattleTab = () => {
                 {currentMonster?.name || "Quái vật"}
               </div>
 
-              <div className="h-2 overflow-hidden rounded bg-zinc-800">
+              <div
+                className="h-2 overflow-hidden rounded bg-zinc-800 border 
+              border-red-500"
+              >
                 <div
-                  className="h-full bg-red-500"
+                  className="h-full bg-red-500 "
                   style={{
                     width: `${
                       (battle.monster.hp / battle.monster.maxHp) * 100
@@ -336,20 +353,26 @@ const BattleTab = () => {
           </div>
 
           {/* speed button */}
-          <div
-            className="
-              absolute right-3 bottom-2"
-          >
+          <div className="absolute right-3 bottom-2">
             <button
-              className="
-                rounded-lg
-                bg-black/60
-                px-3 py-2
-                text-sm font-bold
-                text-white
-              "
+              className="rounded-lg bg-black/60 px-3 py-2 text-sm font-bold text-white"
+              onClick={() => {
+                switch (battleSpeed) {
+                  case 1:
+                    setBattleSpeed(2);
+                    break;
+                  case 2:
+                    setBattleSpeed(4);
+                    break;
+                  case 4:
+                    setBattleSpeed(1);
+                    break;
+                  default:
+                    break;
+                }
+              }}
             >
-              x1
+              x{battleSpeed}
             </button>
           </div>
         </div>
@@ -408,7 +431,10 @@ const BattleTab = () => {
                     </span>
                   </>
                 ) : (
-                  <div className="flex h-full items-center justify-center text-xs text-zinc-400">
+                  <div
+                    className="flex h-full items-center justify-center text-xs 
+                  text-zinc-400"
+                  >
                     Trống
                   </div>
                 )}
@@ -417,16 +443,46 @@ const BattleTab = () => {
           })}
         </div>
 
-        <div className="bg-white max-h-60 rounded-3xl p-4 flex flex-col gap-2 overflow-y-scroll">
+        <div
+          className="bg-white max-h-60 rounded-3xl p-4 flex flex-col gap-2 pb-16.25
+        overflow-y-scroll"
+        >
           {battle.logs &&
             battle.logs.map((log, ind) => {
               return (
                 <div key={ind} className="italic">
-                  {log}
+                  <span className="text-[#60a5fa]">{log.name}</span>
+
+                  {log.skill && (
+                    <>
+                      {" dùng "}
+                      <span className="text-[#facc15] font-bold">
+                        {log.skill}
+                      </span>
+                    </>
+                  )}
+
+                  {" gây "}
+                  <span className="text-[#ef4444] font-bold">{log.damge}</span>
+                  {" sát thương cho "}
+                  <span className="text-[#f87171]">{log.enemyName}</span>
                 </div>
               );
             })}
         </div>
+
+        {!battleStart && (
+          <div className="fixed w-full h-fit inset-x-0 bottom-16.25 flex justify-center">
+            <button
+              className=" px-5 py-2 bg-blue-500 rounded-2xl text-white"
+              onClick={() => {
+                setBattleStart(true);
+              }}
+            >
+              Chiến đấu
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

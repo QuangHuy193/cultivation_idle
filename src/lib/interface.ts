@@ -225,6 +225,13 @@ export interface BattleMonster {
   def: number;
 }
 
+export interface Log {
+  name: string;
+  enemyName: string;
+  damge: number;
+  skill: string;
+}
+
 export interface BattleState {
   turn: number;
 
@@ -237,5 +244,5 @@ export interface BattleState {
 
   battleStatus: string; //"fighting" | "win" | "lose"
 
-  logs: string[];
+  logs: [Log];
 }

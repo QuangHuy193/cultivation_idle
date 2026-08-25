@@ -13,15 +13,22 @@ const battleStateDefault = {
     icon: "",
     hp: 1,
     maxHp: 1,
-    attack: 1,
-    defense: 1,
+    atk: 1,
+    def: 1,
   },
 
   skills: [],
 
   battleStatus: "fighting",
 
-  logs: [],
+  logs: [
+    {
+      name: "",
+      enemyName: "",
+      damge: 0,
+      skill: "",
+    },
+  ],
 };
 
 interface UseBattleStore {
@@ -33,7 +40,12 @@ interface UseBattleStore {
 
   updateBattleStatus: (status: string) => void;
 
-  addLog: (log: string) => void;
+  addLog: (
+    name: string,
+    enemyName: string,
+    damge: number,
+    skill?: string,
+  ) => void;
 }
 
 export const useBattleStore = create<UseBattleStore>()((set) => ({
@@ -60,14 +72,22 @@ export const useBattleStore = create<UseBattleStore>()((set) => ({
       };
     }),
 
-  addLog: (log) =>
+  addLog: (name, enemyName, damge, skill) =>
     set((state) => {
       if (!state.battle) return state;
 
       return {
         battle: {
           ...state.battle,
-          logs: [...state.battle.logs, log].slice(-50),
+          logs: [
+            ...state.battle.logs,
+            {
+              name,
+              enemyName,
+              damge,
+              skill,
+            },
+          ].slice(-50),
         },
       };
     }),
