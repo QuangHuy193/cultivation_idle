@@ -33,12 +33,12 @@ const EquipSchema = new Schema(
         default: 0,
       },
 
-      attack: {
+      atk: {
         type: Number,
         default: 0,
       },
 
-      defense: {
+      def: {
         type: Number,
         default: 0,
       },

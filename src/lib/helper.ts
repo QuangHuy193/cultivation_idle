@@ -1,3 +1,5 @@
+import { ICharacter } from "./models/Character";
+
 export const characterPopulate = [
   { path: "realmId" },
   { path: "currentMap.map", select: "_id icon name order maxStage" },
@@ -23,34 +25,29 @@ export const equipmentPopulate = [
   { path: "equipments.boots" },
 ];
 
-export const calculateCharacterStats = (character: any) => {
-  let hp = character.stats.hp;
-  let attack = character.stats.attack;
-  let defense = character.stats.defense;
+export const calculateCharacterStats = (character: ICharacter) => {
+  const sources = [
+    character.stats?.base,
+    character.stats?.equips,
+    character.stats?.skins,
+    character.stats?.items,
+    character.stats?.realm,
+  ];
 
-  // bonus cảnh giới
-  if (character.realmId) {
-    hp += character.realmId.hpBonus;
-    attack += character.realmId.attackBonus;
-    defense += character.realmId.defenseBonus;
-  }
-
-  // bonus trang bị
-  Object.values(character.equipments || {}).forEach((equip) => {
-    if (!equip) return;
-
-    hp += equip.stats?.hp || 0;
-    attack += equip.stats?.attack || 0;
-    defense += equip.stats?.defense || 0;
-  });
-
-  return {
-    finalStats: {
-      hp,
-      attack,
-      defense,
+  const finalStats = sources.reduce(
+    (total, stat) => ({
+      hp: total.hp + (stat?.hp || 0),
+      atk: total.atk + (stat?.atk || 0),
+      def: total.def + (stat?.def || 0),
+    }),
+    {
+      hp: 0,
+      atk: 0,
+      def: 0,
     },
-  };
+  );
+
+  return { finalStats };
 };
 
 export function addBreakthroughInfo(character: any) {

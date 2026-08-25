@@ -4,6 +4,7 @@ import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 import { calculateCharacterStats, characterPopulate } from "@/lib/helper";
 import { VALID_SLOTS } from "@/lib/constants";
+import Equip from "@/lib/models/Equip";
 
 export async function POST(
   request: Request,
@@ -72,13 +73,20 @@ export async function POST(
     // trang bị đồ mới
     character.equipments[slot] = equipId;
 
+    const equip = await Equip.findOne({ _id: equipId });
+
+    // cập nhật chỉ số trang bị
+    character.stats.equips.atk += equip.stats.atk;
+    character.stats.equips.hp += equip.stats.hp;
+    character.stats.equips.def += equip.stats.def;
+
     // xóa khỏi túi
     character.inventory.equips.splice(equipIndex, 1);
 
     await character.save();
 
     const updatedCharacter = await Character.findById(id)
-      .populate(characterPopulate)     
+      .populate(characterPopulate)
       .lean();
 
     if (!updatedCharacter) {
@@ -88,8 +96,7 @@ export async function POST(
     const { finalStats } = calculateCharacterStats(updatedCharacter);
 
     return NextResponse.json({
-      equipments: updatedCharacter.equipments,
-      inventory: updatedCharacter.inventory,
+      ...updatedCharacter,
       finalStats,
     });
   } catch (error) {

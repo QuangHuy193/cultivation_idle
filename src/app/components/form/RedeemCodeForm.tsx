@@ -13,7 +13,7 @@ const RedeemCodeForm = () => {
   const [code, setCode] = useState("");
   const { userId } = useUserStore();
   const { setAalertUserInfo } = useToggleStore();
-  const { character } = useCharacterStore();
+  const { character, setCharacter } = useCharacterStore();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,8 +31,7 @@ const RedeemCodeForm = () => {
 
       if (res.success) {
         showSuccess(res.message);
-      } else {
-        console.log(res);
+        setCharacter(res.character);        
       }
     } catch (error) {
       showError(error?.message);
@@ -48,7 +47,7 @@ const RedeemCodeForm = () => {
       rounded-2xl relative"
       >
         <button
-          onClick={() => setAalertUserInfo("menu")}
+          onClick={() => setAalertUserInfo("")}
           className={CLASS_X_ALERT}
         >
           <X className="h-5 w-5 text-red-500" />

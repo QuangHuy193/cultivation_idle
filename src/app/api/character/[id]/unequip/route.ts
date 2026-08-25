@@ -4,6 +4,7 @@ import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 import { calculateCharacterStats, characterPopulate } from "@/lib/helper";
 import { VALID_SLOTS } from "@/lib/constants";
+import Equip from "@/lib/models/Equip";
 
 
 
@@ -59,6 +60,14 @@ export async function POST(
     });
 
     character.equipments[slot] = undefined;
+
+    const equip = await Equip.findOne({ _id: equippedItemId });
+
+    // cập nhật chỉ số trang bị
+    character.stats.equips.atk -= equip.stats.atk;
+    character.stats.equips.hp -= equip.stats.hp;
+    character.stats.equips.def -= equip.stats.def;
+
 
     await character.save();
 

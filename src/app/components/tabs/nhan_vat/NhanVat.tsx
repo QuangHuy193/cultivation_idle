@@ -11,7 +11,7 @@ import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 const NhanVat = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
   const { character } = useCharacterStore();
-
+  
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
 
@@ -71,13 +71,13 @@ const NhanVat = () => {
             />
             <div className="flex mt-2 justify-between gap-4">
               <div className="text-red-400">
-                ⚔️ {character.finalStats?.attack || character.stats.attack}
+                ⚔️ {character.finalStats?.atk || character.stats.base.atk}
               </div>
               <div className="text-green-400">
-                ❤️ {character.finalStats?.hp || character.stats.hp}
+                ❤️ {character.finalStats?.hp || character.stats.base.hp}
               </div>
               <div className="text-blue-400">
-                🛡️ {character.finalStats?.defense || character.stats.defense}
+                🛡️ {character.finalStats?.def || character.stats.base.def}
               </div>
             </div>
           </div>

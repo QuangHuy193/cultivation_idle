@@ -6,7 +6,11 @@ import "@/lib/models/Equip";
 import "@/lib/models/Item";
 import "@/lib/models/Skill";
 
-import { characterPopulate } from "@/lib/helper";
+import {
+  addBreakthroughInfo,
+  calculateCharacterStats,
+  characterPopulate,
+} from "@/lib/helper";
 
 export async function GET(
   request: Request,
@@ -30,24 +34,11 @@ export async function GET(
       );
     }
 
-    const finalStats = {
-      hp: character.stats.hp,
-      attack: character.stats.attack,
-      defense: character.stats.defense,
-    };
-
-    Object.values(character.equipments ?? {}).forEach((equip: any) => {
-      if (!equip) return;
-
-      finalStats.hp += equip.stats?.hp ?? 0;
-      finalStats.attack += equip.stats?.attack ?? 0;
-      finalStats.defense += equip.stats?.defense ?? 0;
-    });
+    const { finalStats } = calculateCharacterStats(character);
 
     return NextResponse.json({
-      equipments: character.equipments,
+      ...addBreakthroughInfo(character),
       finalStats,
-      inventory: character.inventory,
     });
   } catch (error) {
     console.error("Get inventory error:", error);

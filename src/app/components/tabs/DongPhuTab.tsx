@@ -18,7 +18,7 @@ import RedeemCodeForm from "../form/RedeemCodeForm";
 export default function DongPhuTab() {
   const { character, updateCharacter } = useCharacterStore();
   const { alertUserInfo, setAalertUserInfo } = useToggleStore();
-
+console.log(character);
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
 
@@ -34,11 +34,7 @@ export default function DongPhuTab() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  useEffect(() => {
-    CharacterService.loadInventory();
-  }, []);
+  };  
 
   return (
     <section

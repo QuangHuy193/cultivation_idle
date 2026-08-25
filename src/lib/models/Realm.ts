@@ -33,12 +33,12 @@ const RealmSchema = new Schema(
       default: 0,
     },
 
-    attackBonus: {
+    atkBonus: {
       type: Number,
       default: 0,
     },
 
-    defenseBonus: {
+    defBonus: {
       type: Number,
       default: 0,
     },

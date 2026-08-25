@@ -5,6 +5,11 @@ import "@/lib/models/User";
 import Code from "@/lib/models/Code";
 import CodeRedeem from "@/lib/models/CodeRedeem";
 import Character from "@/lib/models/Character";
+import {
+  addBreakthroughInfo,
+  calculateCharacterStats,
+  characterPopulate,
+} from "@/lib/helper";
 
 export async function POST(
   req: NextRequest,
@@ -101,6 +106,12 @@ export async function POST(
 
     await character.save();
 
+    const updateCharacter = await Character.findOne({ _id: characterId })
+      .populate(characterPopulate)
+      .lean();
+
+    const { finalStats } = calculateCharacterStats(updateCharacter);
+
     // ===== Lưu lịch sử đổi mã =====
 
     await CodeRedeem.create({
@@ -116,6 +127,10 @@ export async function POST(
     return NextResponse.json({
       success: true,
       message: "Đổi mã thành công.",
+      character: {
+        finalStats,
+        ...addBreakthroughInfo(updateCharacter),
+      },
     });
   } catch (error) {
     console.error(error);

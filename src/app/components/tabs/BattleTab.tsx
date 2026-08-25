@@ -349,7 +349,7 @@ const BattleTab = () => {
                 text-white
               "
             >
-              x2
+              x1
             </button>
           </div>
         </div>

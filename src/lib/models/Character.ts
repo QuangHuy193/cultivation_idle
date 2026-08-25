@@ -43,6 +43,98 @@ const currentMapSchema = new Schema(
   },
 );
 
+const statsSchema = new Schema(
+  {
+    base: {
+      hp: {
+        type: Number,
+        default: 100,
+      },
+
+      atk: {
+        type: Number,
+        default: 10,
+      },
+
+      def: {
+        type: Number,
+        default: 5,
+      },
+    },
+
+    equips: {
+      hp: {
+        type: Number,
+        default: 0,
+      },
+
+      atk: {
+        type: Number,
+        default: 0,
+      },
+
+      def: {
+        type: Number,
+        default: 0,
+      },
+    },
+
+    skins: {
+      hp: {
+        type: Number,
+        default: 0,
+      },
+
+      atk: {
+        type: Number,
+        default: 0,
+      },
+
+      def: {
+        type: Number,
+        default: 0,
+      },
+    },
+
+    items: {
+      hp: {
+        type: Number,
+        default: 0,
+      },
+
+      atk: {
+        type: Number,
+        default: 0,
+      },
+
+      def: {
+        type: Number,
+        default: 0,
+      },
+    },
+
+    realm: {
+      hp: {
+        type: Number,
+        default: 0,
+      },
+
+      atk: {
+        type: Number,
+        default: 0,
+      },
+
+      def: {
+        type: Number,
+        default: 0,
+      },
+    },
+  },
+  {
+    _id: false,
+  },
+);
+
 const CharacterSchema = new Schema(
   {
     userId: {
@@ -89,20 +181,8 @@ const CharacterSchema = new Schema(
     },
 
     stats: {
-      hp: {
-        type: Number,
-        default: 100,
-      },
-
-      attack: {
-        type: Number,
-        default: 10,
-      },
-
-      defense: {
-        type: Number,
-        default: 5,
-      },
+      type: statsSchema,
+      
     },
 
     equippedSkills: {

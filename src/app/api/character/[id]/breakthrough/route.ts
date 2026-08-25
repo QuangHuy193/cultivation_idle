@@ -9,6 +9,7 @@ import "@/lib/models/Item";
 import "@/lib/models/Skill";
 
 import {
+  addBreakthroughInfo,
   calculateCharacterStats,
   characterPopulate,
 } from "@/lib/helper";
@@ -35,9 +36,7 @@ export async function POST(
       );
     }
 
-    const currentRealm = await Realm.findById(
-      character.realmId,
-    );
+    const currentRealm = await Realm.findById(character.realmId);
 
     if (!currentRealm) {
       return NextResponse.json(
@@ -51,10 +50,7 @@ export async function POST(
     }
 
     // Kiểm tra đủ tu vi chưa
-    if (
-      character.cultivation <
-      currentRealm.cultivationRequired
-    ) {
+    if (character.cultivation < currentRealm.cultivationRequired) {
       return NextResponse.json(
         {
           message: "Chưa đủ tu vi đột phá",
@@ -66,14 +62,10 @@ export async function POST(
     }
 
     // Trừ tu vi
-    character.cultivation -=
-      currentRealm.cultivationRequired;
+    character.cultivation -= currentRealm.cultivationRequired;
 
     // Tăng tầng trong cảnh giới
-    if (
-      character.realmLevel <
-      currentRealm.maxLevel
-    ) {
+    if (character.realmLevel < currentRealm.maxLevel) {
       character.realmLevel += 1;
 
       await character.save();
@@ -81,13 +73,12 @@ export async function POST(
       // Sang cảnh giới mới
       const nextRealm = await Realm.findOne({
         order: currentRealm.order + 1,
-      });
+      });    
 
       if (!nextRealm) {
         return NextResponse.json(
           {
-            message:
-              "Đã đạt cảnh giới cao nhất",
+            message: "Đã đạt cảnh giới cao nhất",
           },
           {
             status: 400,
@@ -98,19 +89,22 @@ export async function POST(
       character.realmId = nextRealm._id;
       character.realmLevel = 1;
 
+      // tăng chỉ số cơ bản của cảnh giới
+      character.stats.realm.atk = nextRealm.atkBonus;
+      character.stats.realm.hp = nextRealm.hpBonus;
+      character.stats.realm.def = nextRealm.defBonus;
+
       await character.save();
     }
 
-    const updatedCharacter =
-      await Character.findById(id)
-        .populate(characterPopulate)
-        .lean();
+    const updatedCharacter = await Character.findById(id)
+      .populate(characterPopulate)
+      .lean();
 
     if (!updatedCharacter) {
       return NextResponse.json(
         {
-          message:
-            "Không tìm thấy nhân vật sau khi cập nhật",
+          message: "Không tìm thấy nhân vật sau khi cập nhật",
         },
         {
           status: 404,
@@ -118,23 +112,12 @@ export async function POST(
       );
     }
 
-    const { finalStats } =
-      calculateCharacterStats(updatedCharacter);
-
-    const realm =
-      updatedCharacter.realmId as any;
+    const { finalStats } = calculateCharacterStats(updatedCharacter);
 
     return NextResponse.json({
-      ...updatedCharacter,
+      ...addBreakthroughInfo(updatedCharacter),
 
       finalStats,
-
-      breakthroughRequired:
-        realm?.cultivationRequired ?? 0,
-
-      canBreakthrough:
-        updatedCharacter.cultivation >=
-        (realm?.cultivationRequired ?? Infinity),
     });
   } catch (error) {
     console.error(error);

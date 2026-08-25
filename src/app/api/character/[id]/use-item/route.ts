@@ -3,7 +3,11 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 import Item from "@/lib/models/Item";
-import { addBreakthroughInfo, characterPopulate } from "@/lib/helper";
+import {
+  addBreakthroughInfo,
+  calculateCharacterStats,
+  characterPopulate,
+} from "@/lib/helper";
 
 export async function POST(
   request: Request,
@@ -46,11 +50,11 @@ export async function POST(
 
     // ===== Buff chỉ số =====
 
-    character.stats.hp += item.buff?.statBonus?.hp || 0;
+    character.stats.items.hp += item.buff.statBonus.hp;
 
-    character.stats.attack += item.buff?.statBonus?.attack || 0;
+    character.stats.items.atk += item.buff.statBonus.atk;
 
-    character.stats.defense += item.buff?.statBonus?.defense || 0;
+    character.stats.items.def += item.buff.statBonus.def;
 
     // ===== Buff tu vi =====
 
@@ -75,14 +79,11 @@ export async function POST(
       .populate(characterPopulate)
       .lean();
 
-    const characterWithBreakthroughInfo = addBreakthroughInfo(updatedCharacter);
+    const { finalStats } = calculateCharacterStats(updatedCharacter);
 
     return NextResponse.json({
-      cultivation: updatedCharacter.cultivation,
-      stats: updatedCharacter.stats,
-      inventory: updatedCharacter.inventory,
-      breakthroughRequired: characterWithBreakthroughInfo.breakthroughRequired,
-      canBreakthrough: characterWithBreakthroughInfo.canBreakthrough,
+      ...addBreakthroughInfo(updatedCharacter),
+      finalStats,
     });
   } catch (error) {
     console.error(error);

@@ -14,8 +14,8 @@ const MonsterSchema = new Schema({
 
   stats: {
     hp: Number,
-    attack: Number,
-    defense: Number,
+    atk: Number,
+    def: Number,
   },
 
   realmReward: {

@@ -73,7 +73,7 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
             <div className="flex justify-between">
               <span className="text-zinc-600">⚔️ Công kích</span>
               <span className="font-semibold text-red-600">
-                +{equip.stats.attack}
+                +{equip.stats.atk}
               </span>
             </div>
 
@@ -87,7 +87,7 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
             <div className="flex justify-between">
               <span className="text-zinc-600">🛡️ Phòng thủ</span>
               <span className="font-semibold text-blue-600">
-                +{equip.stats.defense}
+                +{equip.stats.def}
               </span>
             </div>
           </div>

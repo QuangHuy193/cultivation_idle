@@ -12,8 +12,8 @@ export interface Equip {
 interface Buff {
   statBonus: {
     hp: number;
-    attack: number;
-    defense: number;
+    atk: number;
+    def: number;
   };
   realmBonus: {
     realm: number;
@@ -52,9 +52,21 @@ export interface SignInResponse {
 }
 
 export interface CharacterStats {
+  atk: number;
   hp: number;
-  attack: number;
-  defense: number;
+  def: number;
+}
+
+export interface CharacterAllStats {
+  base: CharacterStats;
+
+  equips: CharacterStats;
+
+  skins: CharacterStats;
+
+  items: CharacterStats;
+
+  realm: CharacterStats;
 }
 
 export interface CharacterEquipments {
@@ -97,8 +109,8 @@ export interface Realm {
   maxLevel: number;
   cultivationRequired: number;
   hpBonus: number;
-  attackBonus: number;
-  defenseBonus: number;
+  atkBonus: number;
+  defBonus: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -146,7 +158,7 @@ export interface CharacterResponse {
   currentMap: CurrentMap;
   cultivationPerSecond: CultivationPerSecond;
   spiritStone: number;
-  stats: CharacterStats;
+  stats: CharacterAllStats;
   finalStats?: CharacterStats;
   equippedSkills: Array<{ skillId: string; slot: number }>;
   equipments: CharacterEquipments;
@@ -166,8 +178,8 @@ export interface MonstersResponse {
     icon: string;
     stats: {
       hp: number;
-      attack: number;
-      defense: number;
+      atk: number;
+      def: number;
     };
     expReward: number;
     spiritStoneReward: number;
@@ -209,8 +221,8 @@ export interface BattleMonster {
   hp: number;
   maxHp: number;
 
-  attack: number;
-  defense: number;
+  atk: number;
+  def: number;
 }
 
 export interface BattleState {

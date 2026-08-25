@@ -7,7 +7,11 @@ import "@/lib/models/Item";
 import "@/lib/models/Skill";
 import "@/lib/models/Skin";
 import "@/lib/models/Map";
-import { addBreakthroughInfo, characterPopulate } from "@/lib/helper";
+import {
+  addBreakthroughInfo,
+  calculateCharacterStats,
+  characterPopulate,
+} from "@/lib/helper";
 import connectDB from "@/lib/db/db";
 
 function generateRandomName() {
@@ -44,38 +48,22 @@ export async function POST(request: Request) {
         userId,
 
         name: generateRandomName(),
-
-        realmId: "luyenkhi",
-        realmLevel: 1,
-
-        cultivation: 0,
-        cultivationPerSecond: 1,
-
-        spiritStone: 0,
-
-        stats: {
-          hp: 100,
-          attack: 10,
-          defense: 5,
-        },
-
-        equipments: {},
-
-        inventory: {
-          equips: [],
-          items: [],
-        },
       });
 
       character = await Character.findById(createdCharacter._id)
         .populate(characterPopulate)
         .lean();
-    }    
+    }
+
+    const { finalStats } = calculateCharacterStats(character);
 
     return NextResponse.json(
       {
         message: "Lấy hoặc tạo character thành công",
-        character: addBreakthroughInfo(character),
+        character: {
+          ...addBreakthroughInfo(character),
+          finalStats,
+        },
       },
       {
         status: 200,
