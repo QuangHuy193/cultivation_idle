@@ -9,12 +9,10 @@ export default function ToastProvider() {
     <ToastContainer
       position="top-center"
       autoClose={2000}
-      hideProgressBar={false}
+      hideProgressBar={true}
       newestOnTop
       closeOnClick
-      pauseOnHover
       draggable
-      theme="dark"      
     />
   );
 }

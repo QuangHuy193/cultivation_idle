@@ -12,6 +12,7 @@ import Image from "next/image";
 import UserInfo from "../alert/UserInfo";
 import { Menu } from "lucide-react";
 import RedeemCodeForm from "../form/RedeemCodeForm";
+import { showSuccess } from "@/lib/toast";
 
 export default function DongPhuTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -42,7 +43,7 @@ export default function DongPhuTab() {
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-    >
+    >     
       {/* Nền nhân vật chồng lên */}
       <div
         className="absolute inset-0"

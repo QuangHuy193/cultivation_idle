@@ -244,5 +244,5 @@ export interface BattleState {
 
   battleStatus: string; //"fighting" | "win" | "lose"
 
-  logs: [Log];
+  logs: Log[];
 }

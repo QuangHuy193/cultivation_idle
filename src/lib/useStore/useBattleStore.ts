@@ -34,26 +34,30 @@ const battleStateDefault = {
 interface UseBattleStore {
   battle: BattleState;
 
+  isBattleStart: boolean;
+
+  isBattlePause: boolean;
+
   setBattle: (battle: BattleState) => void;
 
   updateBattle: (updater: (battle: BattleState) => BattleState) => void;
 
-  updateBattleStatus: (status: string) => void;
+  setIsBattleStart: (isStart: boolean) => void;
 
-  addLog: (
-    name: string,
-    enemyName: string,
-    damge: number,
-    skill?: string,
-  ) => void;
+  setIsBattlePause: (isPause: boolean) => void;
 }
 
 export const useBattleStore = create<UseBattleStore>()((set) => ({
   battle: battleStateDefault,
 
+  isBattleStart: false,
+
+  isBattlePause: false,
+
   setBattle: (battle) => {
     set({ battle });
   },
+
   updateBattle: (updater) =>
     set((state) => {
       if (!state.battle) return state;
@@ -63,32 +67,17 @@ export const useBattleStore = create<UseBattleStore>()((set) => ({
       };
     }),
 
-  updateBattleStatus: (status) =>
-    set((state) => {
-      if (!state.battle) return state;
+  setIsBattleStart: (isStart: boolean) => {
+    set((state) => ({
+      ...state,
+      isBattleStart: isStart,
+    }));
+  },
 
-      return {
-        battle: { ...state.battle, battleStatus: status },
-      };
-    }),
-
-  addLog: (name, enemyName, damge, skill) =>
-    set((state) => {
-      if (!state.battle) return state;
-
-      return {
-        battle: {
-          ...state.battle,
-          logs: [
-            ...state.battle.logs,
-            {
-              name,
-              enemyName,
-              damge,
-              skill,
-            },
-          ].slice(-50),
-        },
-      };
-    }),
+  setIsBattlePause: (isPause: boolean) => {
+    set((state) => ({
+      ...state,
+      isBattlePause: isPause,
+    }));
+  },
 }));

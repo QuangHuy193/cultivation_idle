@@ -3,7 +3,7 @@ import DongPhuTab from "@/app/components/tabs/DongPhuTab";
 import NhanVatTab from "@/app/components/tabs/nhan_vat/NhanVatTab";
 import TheGioiTab from "@/app/components/tabs/TheGioiTab";
 import KyNangTab from "@/app/components/tabs/KyNangTab";
-import BattleTab from "@/app/components/tabs/BattleTab";
+import BattleTab from "@/app/components/tabs/battle/BattleTab";
 import { Shirt } from "lucide-react";
 import SkinTab from "@/app/components/tabs/skin/SkinTab";
 
