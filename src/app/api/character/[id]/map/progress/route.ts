@@ -5,6 +5,7 @@ import Character from "@/lib/models/Character";
 import Map from "@/lib/models/Map";
 
 import "@/lib/models/Monster";
+import "@/lib/models/Realm";
 
 export async function POST(
   request: Request,

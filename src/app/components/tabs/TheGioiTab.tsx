@@ -94,6 +94,7 @@ export default function TheGioiTab() {
                     alt={map.name}
                     width={120}
                     height={120}
+                    className="w-30 h-30"
                   />
                   <div
                     className="font-semibold text-xl text-yellow-300"
