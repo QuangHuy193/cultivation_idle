@@ -52,6 +52,7 @@ export async function POST(
       },
     })
       .populate("monsters.monsterId")
+      .populate("requiredRealm")
       .sort({ order: 1 })
       .lean();
 

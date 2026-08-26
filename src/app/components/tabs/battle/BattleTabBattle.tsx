@@ -22,8 +22,6 @@ const BattleTabBattle = () => {
     (map) => map._id === progressMap?.currentMapId,
   );
 
-  const currentMonster = currentMap?.monsters?.[0]?.monsterId;
-
   return (
     <div className="w-full h-full">
       {/*  pause  */}
@@ -104,7 +102,7 @@ const BattleTabBattle = () => {
           <div className="absolute bottom-2 right-4">
             <div className="mb-2 w-32">
               <div className="mb-1 text-right text-xs font-semibold text-white">
-                {currentMonster?.name || "Quái vật"}
+                {battle.monster?.name || "Quái vật"}
               </div>
 
               <div
@@ -123,7 +121,7 @@ const BattleTabBattle = () => {
             </div>
 
             <Image
-              src={currentMonster?.icon || ""}
+              src={battle.monster?.icon || ""}
               alt="Monster"
               width={130}
               height={130}

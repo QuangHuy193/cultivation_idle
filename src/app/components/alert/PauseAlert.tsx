@@ -1,3 +1,4 @@
+import { CLASS_COATING_SM } from "@/lib/constants/cssConstants";
 import { LogOut, RefreshCw, Play } from "lucide-react";
 
 interface PauseAlertProp {
@@ -9,10 +10,7 @@ interface PauseAlertProp {
 const PauseAlert = ({ onContinue, onExit, onRestart }: PauseAlertProp) => {
   return (
     <div
-      className="
-      fixed inset-0 z-50
-      bg-black/40 backdrop-blur-sm
-      flex items-center justify-center"
+      className={`${CLASS_COATING_SM}`}
     >
       <div
         className="

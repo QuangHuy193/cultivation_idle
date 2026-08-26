@@ -194,7 +194,7 @@ export interface MapsResponse {
   icon: string;
   order: number;
   maxStage: number;
-  requiredRealm: string;
+  requiredRealm: Realm;
   monsterStatMultiplier: number;
   rewardMultiplier: number;
   cultivationPerSecondBouns: number;
@@ -207,14 +207,13 @@ export interface ProgressMapResponse {
   maps: MapsResponse[];
 }
 
-///
 export interface BattleSkill {
   skillId: string;
   currentCooldown: number;
 }
 
 export interface BattleMonster {
-  id: string;
+  monsterId: string;
   name: string;
   icon: string;
 
@@ -228,7 +227,7 @@ export interface BattleMonster {
 export interface Log {
   name: string;
   enemyName: string;
-  damge: number;
+  dmg: number;
   skill: string;
 }
 
@@ -242,7 +241,13 @@ export interface BattleState {
 
   skills: BattleSkill[];
 
+  mapId: string;
+
+  stage: number;
+
   battleStatus: string; //"fighting" | "win" | "lose"
+
+  lastTurnAt: Date;
 
   logs: Log[];
 }

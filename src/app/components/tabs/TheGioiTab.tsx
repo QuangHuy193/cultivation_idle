@@ -1,7 +1,7 @@
 "use client";
 
 import { progressMapAPI } from "@/app/axios/characterAPI";
-import {  } from "@/lib/constants";
+import {} from "@/lib/constants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { showWarning } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
@@ -10,27 +10,39 @@ import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 
 import { useEffect } from "react";
+import Loading from "./Loading";
+import { MapsResponse } from "@/lib/interface";
 
 export default function TheGioiTab() {
   const { character } = useCharacterStore();
-  const { progressMap, setProgressMap } = useMapStore();
+  const { progressMap, setProgressMap, loadingUseMap, setLoadingUseMap } =
+    useMapStore();
   const { tabState, setTabState } = useToggleStore();
 
-  const pushBattle = () => {
-    if (true) {
-      setTabState("chiendau", tabState.activeTab);
-    } else {
+  const pushBattle = (mapId: string) => {
+    const currentCLickMap: MapsResponse = progressMap?.maps.find(
+      (m) => m._id === mapId,
+    );
+
+    if (character.currentMap.map.order < currentCLickMap?.order) {
       showWarning("Bạn chưa hoàn thành bản đồ trước đó");
+    } else if (character.realmId?.order < currentCLickMap.requiredRealm.order) {
+      showWarning("Cảnh giới của bạn chưa đủ");
+    } else {
+      setTabState("chiendau", tabState.activeTab);
     }
   };
 
   useEffect(() => {
     const mapProgressApi = async () => {
       try {
+        setLoadingUseMap(true);
         const res = await progressMapAPI(character._id);
         setProgressMap(res);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoadingUseMap(false);
       }
     };
 
@@ -47,44 +59,57 @@ export default function TheGioiTab() {
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col-reverse justify-between h-full py-30 px-10">
-        {progressMap?.maps?.map((map, index) => {
-          const isLeft = index % 2 === 0;
-          const curMap = map.order === progressMap.currentStage;
+      {loadingUseMap ? (
+        <div>
+          <Loading message="Đang tải lộ trình thí luyện..." />
+        </div>
+      ) : (
+        <div className="flex flex-col-reverse justify-between h-full py-30 px-10">
+          {progressMap?.maps?.map((map, index) => {
+            const isLeft = index % 2 === 0;
+            const curMap = map.order === progressMap.currentStage;
 
-          return (
-            <div
-              key={map._id}
-              className={`flex ${isLeft ? "justify-start" : "justify-end"}`}
-            >
+            return (
               <div
-                onClick={pushBattle}
-                className="relative h-fit flex justify-center flex-col items-center"
+                key={map._id}
+                className={`flex ${isLeft ? "justify-start" : "justify-end"}`}
               >
-                {curMap && (
-                  <Image
-                    src={DEFAULT_IMG_CHARACTER}
-                    alt="Nhân vật"
-                    width={80}
-                    height={80}
-                    className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
-                  />
-                )}
-                <Image src={map.icon} alt={map.name} width={120} height={120} />
                 <div
-                  className="font-semibold text-xl text-yellow-300"
-                  style={{
-                    textShadow:
-                      "0 0 5px #facc15, 0 0 10px #facc15, 0 0 15px #f59e0b",
+                  onClick={() => {
+                    pushBattle(map._id);
                   }}
+                  className="relative h-fit flex justify-center flex-col items-center"
                 >
-                  {map.order}. {map.name}
+                  {curMap && (
+                    <Image
+                      src={DEFAULT_IMG_CHARACTER}
+                      alt="Nhân vật"
+                      width={80}
+                      height={80}
+                      className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    />
+                  )}
+                  <Image
+                    src={map.icon}
+                    alt={map.name}
+                    width={120}
+                    height={120}
+                  />
+                  <div
+                    className="font-semibold text-xl text-yellow-300"
+                    style={{
+                      textShadow:
+                        "0 0 5px #facc15, 0 0 10px #facc15, 0 0 15px #f59e0b",
+                    }}
+                  >
+                    {map.order}. {map.name}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 }

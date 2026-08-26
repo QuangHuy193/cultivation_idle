@@ -6,7 +6,7 @@ const Loading = ({ message = "Đang tải..." }: LoadingProps) => {
   return (
     <div
       className="fixed inset-0 z-999 flex items-center 
-    justify-center bg-black/5 backdrop-blur-sm"
+    justify-center bg-black/20 backdrop-blur-sm"
     >
       <div
         className="flex items-center gap-3 w-full justify-center

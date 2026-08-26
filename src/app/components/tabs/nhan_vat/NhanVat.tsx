@@ -16,7 +16,7 @@ const NhanVat = () => {
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
 
   return (
-    <section className="flex flex-col w-full h-full">
+    <section className="flex flex-col w-full h-full px-5">
       <div className="flex h-full flex-col justify-center">
         <div className="mb-4 text-center">
           <span className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}>

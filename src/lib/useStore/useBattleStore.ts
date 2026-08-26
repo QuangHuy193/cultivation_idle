@@ -8,7 +8,7 @@ const battleStateDefault = {
   playerMaxHp: 1,
 
   monster: {
-    id: "",
+    monsterId: "",
     name: "",
     icon: "",
     hp: 1,
@@ -17,9 +17,15 @@ const battleStateDefault = {
     def: 1,
   },
 
+  mapId: "",
+
+  stage: 1,
+
   skills: [],
 
   battleStatus: "fighting",
+
+  lastTurnAt: Date.now().toLocaleString(),
 
   logs: [
     {
@@ -32,11 +38,15 @@ const battleStateDefault = {
 };
 
 interface UseBattleStore {
+  loadingUseBattle: boolean;
+
   battle: BattleState;
 
   isBattleStart: boolean;
 
   isBattlePause: boolean;
+
+  setLoadingUseBattle: (loading: boolean) => void;
 
   setBattle: (battle: BattleState) => void;
 
@@ -48,11 +58,20 @@ interface UseBattleStore {
 }
 
 export const useBattleStore = create<UseBattleStore>()((set) => ({
+  loadingUseBattle: false,
+
   battle: battleStateDefault,
 
   isBattleStart: false,
 
   isBattlePause: false,
+
+  setLoadingUseBattle: (loading) => {
+    set((state) => ({
+      ...state,
+      loadingUseBattle: loading,
+    }));
+  },
 
   setBattle: (battle) => {
     set({ battle });
@@ -67,14 +86,14 @@ export const useBattleStore = create<UseBattleStore>()((set) => ({
       };
     }),
 
-  setIsBattleStart: (isStart: boolean) => {
+  setIsBattleStart: (isStart) => {
     set((state) => ({
       ...state,
       isBattleStart: isStart,
     }));
   },
 
-  setIsBattlePause: (isPause: boolean) => {
+  setIsBattlePause: (isPause) => {
     set((state) => ({
       ...state,
       isBattlePause: isPause,

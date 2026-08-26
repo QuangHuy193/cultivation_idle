@@ -35,7 +35,7 @@ export const playerTurn = (battle, character, currentMonster, updateBattle) => {
         newLogs.push({
           name: "Bạn",
           enemyName: currentMonster?.name ?? "",
-          damge: damgeOneSkill,
+          damage: damgeOneSkill,
           skill: skillData.skillId.name,
         });
       }
@@ -78,7 +78,7 @@ export const monsterTurn = (battle, character, currentMap, updateBattle) => {
     newLogs.push({
       name: battle.monster.name,
       enemyName: "Bạn",
-      damge: monsterDamge,
+      damage: monsterDamge,
       skill: "",
     });
 
