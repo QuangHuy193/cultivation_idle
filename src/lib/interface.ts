@@ -232,6 +232,10 @@ export interface Log {
 }
 
 export interface BattleState {
+  _id: string;
+
+  characterId: string;
+
   turn: number;
 
   playerHp: number;

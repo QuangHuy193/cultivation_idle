@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { BattleState } from "../interface";
 
 const battleStateDefault = {
+  _id: "",
+  characterId: "",
   turn: 1,
 
   playerHp: 1,

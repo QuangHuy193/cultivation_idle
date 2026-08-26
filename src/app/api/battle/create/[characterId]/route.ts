@@ -103,9 +103,9 @@ export async function POST(
 
         maxHp: monster.stats.hp,
 
-        attack: monster.stats.atk,
+        atk: monster.stats.atk,
 
-        defense: monster.stats.def,
+        def: monster.stats.def,
 
         icon: monster.icon,
       },

@@ -1,27 +1,33 @@
 "use client";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import { useMapStore } from "@/lib/useStore/useMapStore";
 import { useBattleStore } from "@/lib/useStore/useBattleStore";
 import { useEffect, useState } from "react";
 import { showError, showSuccess } from "@/lib/toast";
 import { useSettingStore } from "@/lib/useStore/usseSetting";
-import {
-  monsterTurn,
-  playerTurn,
-  reduceCooldown,
-} from "@/systems/battleFunction";
 import SplitLayout from "../../layout/SplitLayout";
 import BattleTabBattle from "./BattleTabBattle";
 import BattleTabLog from "./BattleTabLog";
-import { createBattleAPI } from "@/app/axios/battleAPI";
+import { createBattleAPI, fightBattleAPI } from "@/app/axios/battleAPI";
 import Loading from "../Loading";
 
 const BattleTab = () => {
   const { character } = useCharacterStore();
+  const {
+    battle,
+    setBattle,
+    updateBattle,
+    loadingUseBattle,
+    setLoadingUseBattle,
+    isBattlePause,
+    isBattleStart,
+  } = useBattleStore();
+  const { battleSpeed } = useSettingStore();
 
-  const { setBattle, loadingUseBattle, setLoadingUseBattle } = useBattleStore();
-  //const { battleSpeed } = useSettingStore();
+  // danh sách turns từ api {battleStatus, turns}
+  const [turns, setTurns] = useState([]);
+  // lượt hiện tại
+  const [currentTurn, setCurrentTurn] = useState(0);
 
   // tạo battle
   useEffect(() => {
@@ -42,81 +48,68 @@ const BattleTab = () => {
     }
   }, []);
 
-  // const battleTurn = () => {
-  //   if (!battle) return;
+  // tải trước turn
+  useEffect(() => {
+    const fightBattleApi = async () => {
+      try {
+        const res = await fightBattleAPI(battle._id)        
 
-  //   reduceCooldown(battle, updateBattle);
+        setTurns(res.turns);
 
-  //   if (battle.playerHp && battle.playerHp > 0)
-  //     playerTurn(battle, character, currentMonster, updateBattle);
+        updateBattle((battle) => {
+          return {
+            ...battle,
+            battleStatus: res.battleStatus,
+          };
+        });
 
-  //   if (battle.monster.hp && battle.monster.hp > 0)
-  //     monsterTurn(battle, character, currentMap, updateBattle);
-  // };
+        setCurrentTurn(0);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  // khởi tạo lại lượt chơi mới
-  // useEffect(() => {
-  //   setIsBattlePause(false);
-  //   setIsBattleStart(false);
-  // }, []);
+    if (battle?._id) {
+      fightBattleApi();
+    }
+  }, [battle?._id]);
 
-  // useEffect(() => {
-  //   if (!character || !currentMap) return;
+  // chạy từng lượt
+  useEffect(() => {
+    
+    if (!isBattleStart) return;
+    
+    if (isBattlePause) return;
+    
+    if (!turns.length) return;
+    
+    if (currentTurn >= turns.length) {
+      if (battle.battleStatus === "win") {
+        showSuccess("Chiến thắng");
+      } else {
+        showError("Thất bại");
+      }
+      return;
+    }
 
-  //   const battleSkills = character.equippedSkills.map((equippedSkill) => {
-  //     const skillData = character.inventory.skills.find(
-  //       (skill) => skill.skillId._id === equippedSkill.skillId,
-  //     );
+    const timer = setTimeout(() => {
+      updateBattle((battle) => {
+        return {
+          ...battle,
+          playerHp: turns[currentTurn].playerHp,
+          monster: {
+            ...battle.monster,
+            hp: turns[currentTurn].monsterHp,
+          },
+          logs: [...battle.logs, ...turns[currentTurn].logs],
+        };
+      });
 
-  //     return {
-  //       skillId: equippedSkill.skillId,
-  //       currentCooldown: skillData?.skillId.cooldown,
-  //     };
-  //   });
+      setCurrentTurn((prev) => prev + 1);
+    }, 4000 / battleSpeed);
 
-  //   const battleMonster = createMonster();
-
-  //   setBattle({
-  //     turn: 1,
-
-  //     playerHp: character?.finalStats?.hp || 0,
-  //     playerMaxHp: character?.finalStats?.hp || 0,
-
-  //     monster: battleMonster,
-
-  //     battleStatus: "fighting",
-
-  //     skills: battleSkills,
-
-  //     logs: [],
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!battle) return;
-
-  //   if (battle.battleStatus === "win") {
-  //     showSuccess("Bạn chiến thắng");
-  //   }
-
-  //   if (battle.battleStatus === "lose") {
-  //     showError("Bạn thất bại");
-  //   }
-  // }, [battle?.battleStatus]);
-
-  // useEffect(() => {
-  //   if (!battle || !isBattleStart || isBattlePause) return;
-
-  //   if (battle.battleStatus === "win" || battle.battleStatus === "lose") {
-  //     return;
-  //   }
-
-  //   const timer = setInterval(() => {
-  //     battleTurn();
-  //   }, 4000 / battleSpeed);
-
-  //   return () => clearInterval(timer);
-  // }, [battleSpeed, isBattleStart, battle?.battleStatus, isBattlePause]);
+    return () => clearTimeout(timer);
+  }, [currentTurn, turns, isBattleStart, isBattlePause, battleSpeed]);
 
   return (
     <>

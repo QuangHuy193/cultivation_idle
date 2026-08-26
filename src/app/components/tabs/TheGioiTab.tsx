@@ -93,8 +93,7 @@ export default function TheGioiTab() {
                     src={map.icon}
                     alt={map.name}
                     width={120}
-                    height={120}
-                    className="w-30 h-30"
+                    height={120}                    
                   />
                   <div
                     className="font-semibold text-xl text-yellow-300"

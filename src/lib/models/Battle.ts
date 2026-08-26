@@ -27,6 +27,12 @@ const LogBattle = new Schema(
 
 const BattleSchema = new Schema(
   {
+    characterId: {
+      type: Schema.Types.ObjectId,
+      ref: "Character",
+      require: true,
+    },
+
     turn: {
       type: Number,
       required: true,
@@ -55,9 +61,9 @@ const BattleSchema = new Schema(
 
       maxHp: Number,
 
-      attack: Number,
+      atk: Number,
 
-      defense: Number,
+      def: Number,
 
       icon: String,
     },
