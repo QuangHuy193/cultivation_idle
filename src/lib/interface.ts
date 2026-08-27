@@ -173,6 +173,7 @@ export interface Class {
 export interface CharacterClass {
   classId: Class;
   classLevelCharacter: number;
+  exp: number;
 }
 
 export interface CharacterResponse {

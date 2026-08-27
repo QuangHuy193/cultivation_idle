@@ -181,6 +181,10 @@ const CharacterSchema = new Schema(
         type: Number,
         default: 1,
       },
+      exp: {
+        type: Number,
+        default: 0,
+      },
     },
 
     realmId: {
