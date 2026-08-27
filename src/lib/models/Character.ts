@@ -129,6 +129,23 @@ const statsSchema = new Schema(
         default: 0,
       },
     },
+
+    class: {
+      hp: {
+        type: Number,
+        default: 0,
+      },
+
+      atk: {
+        type: Number,
+        default: 0,
+      },
+
+      def: {
+        type: Number,
+        default: 0,
+      },      
+    },
   },
   {
     _id: false,
@@ -152,6 +169,18 @@ const CharacterSchema = new Schema(
       type: String,
       ref: "Skin",
       default: "macdinh",
+    },
+
+    class: {
+      classId: {
+        type: String,
+        ref: "Class",
+        default: "",
+      },
+      classLevelCharacter: {
+        type: Number,
+        default: 1,
+      },
     },
 
     realmId: {
@@ -182,7 +211,6 @@ const CharacterSchema = new Schema(
 
     stats: {
       type: statsSchema,
-      
     },
 
     equippedSkills: {

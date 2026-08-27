@@ -4,6 +4,7 @@ export const characterPopulate = [
   { path: "realmId" },
   { path: "currentMap.map", select: "_id icon name order maxStage" },
   { path: "skinId" },
+  { path: "class.classId" },
   { path: "equipments.weapon" },
   { path: "equipments.helmet" },
   { path: "equipments.armor" },
@@ -62,17 +63,3 @@ export function addBreakthroughInfo(character: any) {
   };
 }
 
-// export function buildCharacterResponse(character: any) {
-//   const realm = character.realmId;
-
-//   return {
-//     ...character,
-
-//     breakthroughRequired:
-//       realm?.cultivationRequired ?? 0,
-
-//     canBreakthrough:
-//       character.cultivation >=
-//       (realm?.cultivationRequired ?? Infinity),
-//   };
-// }

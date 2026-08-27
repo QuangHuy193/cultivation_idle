@@ -1,8 +1,8 @@
 import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 
-import { getDb } from "@/lib/db/db";
-
+import connectDB from "@/lib/db/db";
+import "@/lib/models";
 function hashPassword(password: string) {
   return createHash("sha256").update(password).digest("hex");
 }
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const db = await getDb();
+    const db = await connectDB();
     const users = db.collection("users");
 
     const existingUser = await users.findOne({

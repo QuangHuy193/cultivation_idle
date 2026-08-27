@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import ItemInfo from "../../alert/ItemInfo";
 
-export default function TuiDo() {
+export default function Inventory() {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
   const [activeTab, setActiveTab] = useState<"equipment" | "items">(
     "equipment",
@@ -25,8 +25,10 @@ export default function TuiDo() {
   );
 
   return (
-    <section className="absolute top-0 bottom-16.25 inset-0 rounded-3xl border 
-    border-zinc-200 bg-zinc-50 p-5 overflow-y-hidden">
+    <section
+      className="absolute top-0 bottom-16.25 inset-0 rounded-3xl border 
+    border-zinc-200 bg-zinc-50 p-5 overflow-y-hidden"
+    >
       {/* Tab Navigation */}
       <div className="flex gap-2 mb-4 border-b border-zinc-200">
         <button

@@ -6,6 +6,7 @@ import SignInForm from "@/app/components/form/SignInForm";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useUserStore } from "@/lib/useStore/useUserStore";
 import Loading from "./components/tabs/Loading";
+import { DEFAULT_IMG_Wait } from "@/lib/constants/imageConstants";
 
 export default function Home() {
   const [showLogin, setShowLogin] = useState(false);
@@ -52,7 +53,7 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden">
       <div
         className="fixed inset-0 bg-center bg-cover"
-        style={{ backgroundImage: "url('/background_wait_screen.webp')" }}
+        style={{ backgroundImage: `url('${DEFAULT_IMG_Wait}')` }}
         aria-hidden
       />
 

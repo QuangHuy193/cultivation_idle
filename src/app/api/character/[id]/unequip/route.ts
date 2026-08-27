@@ -6,7 +6,7 @@ import { calculateCharacterStats, characterPopulate } from "@/lib/helper";
 import { VALID_SLOTS } from "@/lib/constants";
 import Equip from "@/lib/models/Equip";
 
-
+import "@/lib/models";
 
 export async function POST(
   request: Request,

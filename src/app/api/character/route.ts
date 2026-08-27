@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
 
 import Character from "@/lib/models/Character";
-import "@/lib/models/Realm";
-import "@/lib/models/Equip";
-import "@/lib/models/Item";
-import "@/lib/models/Skill";
-import "@/lib/models/Skin";
-import "@/lib/models/Map";
+import "@/lib/models";
 import {
   addBreakthroughInfo,
   calculateCharacterStats,

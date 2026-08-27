@@ -4,9 +4,7 @@ import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 import Realm from "@/lib/models/Realm";
 
-import "@/lib/models/Equip";
-import "@/lib/models/Item";
-import "@/lib/models/Skill";
+import "@/lib/models";
 
 import {
   addBreakthroughInfo,

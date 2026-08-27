@@ -7,14 +7,20 @@ import {
 } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { useClassStore } from "@/lib/useStore/useClassStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { SquarePen, X } from "lucide-react";
 import Image from "next/image";
 
 const UserInfo = () => {
   const { character } = useCharacterStore();
+  console.log(character);
   const { setAalertUserInfo } = useToggleStore();
+  const { classes } = useClassStore();
 
+  const classInfo =
+    classes?.find((cls) => cls._id === character?.class?.classId._id) ?? {};
+  console.log(classInfo);
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
 
@@ -28,10 +34,7 @@ const UserInfo = () => {
       bg-linear-to-b from-amber-100 to-yellow-50 p-5 shadow-2xl"
       >
         {/* nút tắt */}
-        <button
-          onClick={() => setAalertUserInfo("")}
-          className={CLASS_X_ALERT}
-        >
+        <button onClick={() => setAalertUserInfo("")} className={CLASS_X_ALERT}>
           <X className="h-5 w-5 text-red-500" />
         </button>
 
@@ -74,7 +77,12 @@ const UserInfo = () => {
               {character.realmId?.name} - Tầng {character.realmLevel}
             </div>
 
-            <div className="mt-2 text-xs text-zinc-500">Danh hiệu: Tán Tu</div>
+            <div className="mt-2 text-sm text-zinc-500">
+              Hệ phái: {character?.class?.classId?.name ?? "không"} -{" "}
+              {
+                classInfo?.levels[(character?.class?.classLevelCharacter ?? 2)-1]?.name
+              }
+            </div>
           </div>
         </div>
 

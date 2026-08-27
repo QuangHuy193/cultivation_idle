@@ -3,10 +3,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 
-import "@/lib/models/Skill";
-import "@/lib/models/Realm";
-import "@/lib/models/Equip";
-import "@/lib/models/Item";
+import "@/lib/models";
 
 import { characterPopulate } from "@/lib/helper";
 

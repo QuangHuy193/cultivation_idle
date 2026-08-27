@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
 import Skin from "@/lib/models/Skin";
 
+import "@/lib/models"
+
 export async function GET() {
   try {
     await connectDB();

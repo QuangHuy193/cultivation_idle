@@ -1,7 +1,7 @@
 import { createHash } from "crypto";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-
+import "@/lib/models";
 import connectDB from "@/lib/db/db";
 import User from "@/lib/models/User";
 

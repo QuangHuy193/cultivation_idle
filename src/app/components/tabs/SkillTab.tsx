@@ -8,7 +8,7 @@ import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { equipSkillAPI } from "@/app/axios/characterAPI";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 
-export default function KyNangTab() {
+export default function SkillTab() {
   const { character, updateCharacter } = useCharacterStore();
   const {
     itemInfoToggle,

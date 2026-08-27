@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import "@/lib/models";
 import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 import { calculateCharacterStats, characterPopulate } from "@/lib/helper";

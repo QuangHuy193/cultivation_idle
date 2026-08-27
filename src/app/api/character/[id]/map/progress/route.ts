@@ -4,8 +4,7 @@ import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 import Map from "@/lib/models/Map";
 
-import "@/lib/models/Monster";
-import "@/lib/models/Realm";
+import "@/lib/models";
 
 export async function POST(
   request: Request,

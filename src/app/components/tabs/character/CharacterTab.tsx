@@ -1,8 +1,8 @@
-import TuiDoTab from "./TuiDo";
+import TuiDoTab from "./Inventory";
 import SplitLayout from "../../layout/SplitLayout";
-import NhanVat from "./NhanVat";
+import NhanVat from "./Character";
 
-export default function NhanVatTab() {
+export default function CharacterTab() {
   
   return (
     <SplitLayout top={<NhanVat/>} bottom={<TuiDoTab/>}/>

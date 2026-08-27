@@ -67,6 +67,8 @@ export interface CharacterAllStats {
   items: CharacterStats;
 
   realm: CharacterStats;
+
+  class: CharacterStats;
 }
 
 export interface CharacterEquipments {
@@ -147,11 +149,38 @@ export interface Skin {
   buffs: CharacterStats;
 }
 
+export interface ClassLevel {
+  level: number;
+  name: string;
+  requiredExp: number;
+  buffs: {
+    hp: number;
+    atk: number;
+    def: number;
+    skill: number;
+  };
+}
+
+export interface Class {
+  _id: string;
+  name: string;
+  icon: string;
+  description: string;
+  typeSkillBuff: string;
+  levels: [ClassLevel];
+}
+
+export interface CharacterClass {
+  classId: Class;
+  classLevelCharacter: number;
+}
+
 export interface CharacterResponse {
   _id: string;
   userId: string;
   name: string;
   skinId: Skin;
+  class: CharacterClass;
   realmId?: Realm;
   realmLevel?: number;
   cultivation: number;

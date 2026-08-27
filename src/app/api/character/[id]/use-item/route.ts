@@ -8,6 +8,7 @@ import {
   calculateCharacterStats,
   characterPopulate,
 } from "@/lib/helper";
+import "@/lib/models";
 
 export async function POST(
   request: Request,

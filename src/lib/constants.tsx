@@ -1,62 +1,74 @@
-import BiCanhTab from "@/app/components/tabs/BiCanhTab";
-import DongPhuTab from "@/app/components/tabs/DongPhuTab";
-import NhanVatTab from "@/app/components/tabs/nhan_vat/NhanVatTab";
-import TheGioiTab from "@/app/components/tabs/TheGioiTab";
-import KyNangTab from "@/app/components/tabs/KyNangTab";
 import BattleTab from "@/app/components/tabs/battle/BattleTab";
-import { Shirt } from "lucide-react";
+import CharacterTab from "@/app/components/tabs/character/CharacterTab";
+import ClassTab from "@/app/components/tabs/class/ClassTab";
+import HomeTab from "@/app/components/tabs/HomeTab";
+import SecretRealmTab from "@/app/components/tabs/secretRealm/SecretRealmTab";
+import SkillTab from "@/app/components/tabs/SkillTab";
 import SkinTab from "@/app/components/tabs/skin/SkinTab";
+import { Shirt } from "lucide-react";
+import { DEFAULT_IMG_HOME } from "./constants/imageConstants";
+import MainStageTab from "@/app/components/tabs/secretRealm/MainStageTab";
+import WildMapTab from "@/app/components/tabs/secretRealm/WildMapTab";
 
 export const TABSLABEL = {
-  nhanvat: "nhanvat",
-  kynang: "kynang",
-  dongphu: "dongphu",
-  bicanh: "bicanh",
-  thegioi: "thegioi",
-  chiendau: "chiendau",
-  trangphuc: "trangphuc",
+  character: "character",
+  skill: "skill",
+  home: "home",
+  class: "class",
+  secretRealm: "secretRealm",
+  mainStage: "mainStage",
+  battle: "battle",
+  skin: "skin",
+  wildMap: "wildMap",
 } as const;
 
 export type TabType = (typeof TABSLABEL)[keyof typeof TABSLABEL];
 
 export const MAINTABS = [
   {
-    key: "nhanvat",
+    key: "character",
     label: "Nhân vật",
     icon: "🧘",
     accent: "from-rose-500 to-pink-400",
     display: true,
   },
   {
-    key: "kynang",
+    key: "skill",
     label: "Kỹ năng",
     icon: "📕",
     accent: "from-sky-500 to-cyan-400",
     display: true,
   },
   {
-    key: "dongphu",
+    key: "home",
     label: "Động phủ",
     icon: "🏡",
     accent: "from-amber-500 to-orange-400",
     display: true,
   },
   {
-    key: "bicanh",
-    label: "Bí cảnh",
-    icon: "🌀",
+    key: "class",
+    label: "Trường phái",
+    icon: "☯️",
     accent: "from-violet-500 to-fuchsia-400",
     display: true,
   },
   {
-    key: "thegioi",
-    label: "Thế giới",
+    key: "secretRealm",
+    label: "Bí cảnh",
     icon: "🌍",
     accent: "from-emerald-500 to-lime-400",
     display: true,
   },
   {
-    key: "chiendau",
+    key: "battle",
+    label: "",
+    icon: "",
+    accent: "",
+    display: false,
+  },
+  {
+    key: "mainStage",
     label: "",
     icon: "",
     accent: "",
@@ -66,7 +78,7 @@ export const MAINTABS = [
 
 export const CHARACTERTABS = [
   {
-    key: "trangphuc",
+    key: "skin",
     label: "Trang phục",
     icon: <Shirt className="w-6 h-6" />,
     accent: "from-rose-500 to-pink-400",
@@ -76,22 +88,26 @@ export const CHARACTERTABS = [
 
 export const renderContent = (activeTab: string) => {
   switch (activeTab) {
-    case "dongphu":
-      return <DongPhuTab />;
-    case "thegioi":
-      return <TheGioiTab />;
-    case "bicanh":
-      return <BiCanhTab />;
-    case "kynang":
-      return <KyNangTab />;
-    case "nhanvat":
-      return <NhanVatTab />;
-    case "chiendau":
+    case "home":
+      return <HomeTab />;
+    case "secretRealm":
+      return <SecretRealmTab />;
+    case "skill":
+      return <SkillTab />;
+    case "class":
+      return <ClassTab />;
+    case "character":
+      return <CharacterTab />;
+    case "battle":
       return <BattleTab />;
-    case "trangphuc":
+    case "skin":
       return <SkinTab />;
+    case "mainStage":
+      return <MainStageTab />;
+    case "wildMap":
+      return <WildMapTab />;
     default:
-      return <DongPhuTab />;
+      return <HomeTab />;
   }
 };
 
@@ -150,3 +166,31 @@ export const rarityTextMap = (rarity: string) => {
       return "Thường";
   }
 };
+
+export const swapTypeSkill = (type: string) => {
+  switch (type) {
+    case "sword":
+      return "Kiếm";
+    case "pill":
+      return "Đan dược";
+    case "formation":
+      return "Trận pháp";
+    default:
+      return "Không";
+  }
+};
+
+export const SECRET_REAML = [
+  {
+    key: "mainStage",
+    name: "Ải Chính Tuyến",
+    bg: "/bgs/main_stage.webp",
+    description: "Vượt ải để tăng cảnh giới và mở khóa nội dung mới",
+  },
+  {
+    key: "wildMap",
+    name: "Bản Đồ Dã Ngoại",
+    bg: "/bgs/wild_map.webp",
+    description: "Nơi săn yêu thú và thu thập nguyên liệu",
+  },
+];

@@ -2,7 +2,7 @@
 
 import { progressMapAPI } from "@/app/axios/characterAPI";
 import {} from "@/lib/constants";
-import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
+import { DEFAULT_IMG_CHARACTER, DEFAULT_IMG_THE_GIOI } from "@/lib/constants/imageConstants";
 import { showWarning } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
@@ -10,10 +10,10 @@ import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 
 import { useEffect } from "react";
-import Loading from "./Loading";
+import Loading from "../Loading";
 import { MapsResponse } from "@/lib/interface";
 
-export default function TheGioiTab() {
+export default function MainStageTab() {
   const { character } = useCharacterStore();
   const { progressMap, setProgressMap, loadingUseMap, setLoadingUseMap } =
     useMapStore();
@@ -54,7 +54,7 @@ export default function TheGioiTab() {
     <section
       className="h-full w-full"
       style={{
-        backgroundImage: "url('/bg_map.webp')",
+        backgroundImage: `url("${DEFAULT_IMG_THE_GIOI}")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

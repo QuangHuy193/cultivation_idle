@@ -8,7 +8,7 @@ import CharacterTabsBar from "../../navbar/CharacterTabsBar";
 import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 
-const NhanVat = () => {
+const Character = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
   const { character } = useCharacterStore();
   
@@ -141,4 +141,4 @@ const NhanVat = () => {
   );
 };
 
-export default NhanVat;
+export default Character;

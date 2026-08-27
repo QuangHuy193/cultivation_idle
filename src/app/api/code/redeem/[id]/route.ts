@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
 
-import "@/lib/models/User";
+import "@/lib/models";
+
 import Code from "@/lib/models/Code";
 import CodeRedeem from "@/lib/models/CodeRedeem";
 import Character from "@/lib/models/Character";

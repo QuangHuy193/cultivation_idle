@@ -1,6 +1,6 @@
 import { model, models, Schema } from "mongoose";
 
-const TitleSchema = new Schema({
+const ClassSchema = new Schema({
   _id: {
     type: String,
     required: true,
@@ -15,9 +15,13 @@ const TitleSchema = new Schema({
 
   description: String,
 
+  typeSkillBuff: String, // loại skill buff ex:sword, ....
+
   levels: [
     {
       level: Number,
+
+      name: String,
 
       requiredExp: Number,
 
@@ -28,12 +32,12 @@ const TitleSchema = new Schema({
 
         def: Number,
 
-        skill: String, // loại skill buff
+        skill: Number,
       },
     },
   ],
 });
 
-const Tittle = models.Tittle || model("Skin", TitleSchema);
+const Class = models.Class || model("Class", ClassSchema);
 
-export default Tittle;
+export default Class;

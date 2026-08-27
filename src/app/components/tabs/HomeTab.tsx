@@ -4,6 +4,7 @@ import { breakthroughAPI } from "@/app/axios/characterAPI";
 import { REALM_CSS } from "@/lib/constants/cssConstants";
 import {
   DEFAULT_IMG_CHARACTER,
+  DEFAULT_IMG_HOME,
   SPIRITSTONE_ICON,
 } from "@/lib/constants/imageConstants";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
@@ -12,9 +13,8 @@ import Image from "next/image";
 import UserInfo from "../alert/UserInfo";
 import { Menu } from "lucide-react";
 import RedeemCodeForm from "../form/RedeemCodeForm";
-import { showSuccess } from "@/lib/toast";
 
-export default function DongPhuTab() {
+export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
   const { alertUserInfo, setAalertUserInfo } = useToggleStore();
 
@@ -39,7 +39,7 @@ export default function DongPhuTab() {
     <section
       className="relative h-full w-full overflow-hidden"
       style={{
-        backgroundImage: "url('/bg_home.webp')",
+        backgroundImage: `url('${DEFAULT_IMG_HOME}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
