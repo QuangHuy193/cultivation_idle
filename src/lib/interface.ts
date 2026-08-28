@@ -285,3 +285,28 @@ export interface BattleState {
 
   logs: Log[];
 }
+
+export interface ClassMission {
+  _id: string;
+
+  name: string;
+  description: string;
+
+  itemId: Item;
+
+  baseQuantity: number;
+
+  expReward: number;
+}
+
+export interface CharacterClassMission {
+  _id: string;
+  characterId: string;
+  missionId: ClassMission;
+  description: string;
+  rarity: string;
+  quantity: number;
+  rewardExp: number;
+  status: "pending" | "completed" | "claimed";
+  date: string;
+}

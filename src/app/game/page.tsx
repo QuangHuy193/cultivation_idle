@@ -2,7 +2,7 @@
 
 import { renderContent } from "@/lib/constants";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import MainTabsBar from "../components/navbar/MainTabsBar";
+import MainTabsBar from "@/app/components/navbar/mainTabsBar";
 
 export default function GamePage() {
   const { tabState } = useToggleStore();

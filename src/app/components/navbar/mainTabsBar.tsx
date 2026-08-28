@@ -16,7 +16,7 @@ const MainTabsBar = () => {
       {MAINTABS.map((tab) => {
         const isActive = tabState.activeTab === tab.key;
         const isLock =
-          tab.key === "truongphai" && (character.realmId?.order ?? 1) < 2;
+          tab.key === "class" && (character.realmId?.order ?? 1) < 2;
         return tab.display ? (
           <div
             key={tab.key}

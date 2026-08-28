@@ -52,8 +52,8 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
   },
 
   tabState: {
-    activeTab: "dongphu",
-    prevousTab: "dongphu",
+    activeTab: "home",
+    prevousTab: "home",
   },
 
   isOpenPause: false,

@@ -39,7 +39,7 @@ const BattleTabBattle = () => {
             setIsOpenPause(false);
           }}
           onExit={() => {
-            setTabState(tabState.prevousTab, "dongphu");
+            setTabState(tabState.prevousTab, "home");
             setIsOpenPause(false);
           }}
           onRestart={() => {}}

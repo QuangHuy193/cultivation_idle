@@ -1,6 +1,6 @@
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useClassStore } from "@/lib/useStore/useClassStore";
-import { Gift } from "lucide-react";
+import { Gift, RefreshCw } from "lucide-react";
 import Image from "next/image";
 
 const milestones = [25, 50, 75, 100];
@@ -15,22 +15,25 @@ const ClassMissonTop = () => {
 
   const classs = classes.find((cl) => cl._id === charCls._id);
 
-  const percentExp =
-    (classs.levels[charClsLevel].requiredExp / 100) * charClsExp;
+  const percentExp = classs?.levels[charClsLevel]?.requiredExp
+    ? (charClsExp / classs?.levels[charClsLevel]?.requiredExp) * 100
+    : 0;
 
   return (
-    <div className="flex h-full flex-col gap-8 justify-center py-2">
+    <div className="flex h-full flex-col gap-8 justify-center pb-2">
       <div className="flex flex-col gap-9">
         {/* Thông tin hệ phái */}
         <div className="flex items-center gap-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
-          <Image
-            width={80}
-            height={80}
-            src={charCls.icon}
-            alt={charCls.name}
-            className="h-20 w-20 shrink-0 object-contain"
-          />
-
+          <div className="shrink-0 object-contain flex flex-col items-center gap-1">
+            <Image
+              width={80}
+              height={80}
+              src={charCls.icon}
+              alt={charCls.name}
+              className="h-20 w-20 shrink-0 object-contain"
+            />
+            <RefreshCw className="text-blue-400" />
+          </div>
           <div>
             <div className="text-lg font-bold text-amber-700">
               {charCls.name}
@@ -47,14 +50,11 @@ const ClassMissonTop = () => {
           <div className="relative w-[90%]">
             {/* Exp hiện tại */}
             <div
-              className="absolute -top-7 left-1/2
-          -translate-x-1/2
-          rounded-lg bg-amber-500 px-3 py-1
-          text-xs font-bold text-white
-          shadow
-        "
+              className="absolute -top-7 left-1/2 -translate-x-1/2 rounded-lg bg-amber-500 
+              px-3 py-1 text-xs font-bold text-white shadow"
             >
-              {character.class.exp} Kinh nghiệm
+              {character.class.exp} /{" "}
+              {classs?.levels[charClsLevel]?.requiredExp}
             </div>
 
             {/* Tên cấp hiện tại */}
@@ -78,23 +78,11 @@ const ClassMissonTop = () => {
               />
 
               {percentExp >= 100 && (
-                <div
-                  className="
-      absolute -top-8 -right-6 z-10
-      animate-pulse
-    "
-                >
+                <div className="absolute -top-8 -right-6 z-10 animate-pulse">
                   <button
-                    className="
-        rounded-lg bg-linear-to-r
-        from-yellow-400 to-amber-500
-        px-3 py-1
-        text-sm font-bold text-white
-        shadow-lg
-        border border-yellow-300
-        hover:scale-105
-        transition-transform
-      "
+                    className="rounded-lg bg-linear-to-r from-yellow-400 to-amber-500
+                    px-3 py-1 text-sm font-bold text-white shadow-lg border
+                    border-yellow-300 hover:scale-105 transition-transform"
                   >
                     ✦ Đột Phá
                   </button>
