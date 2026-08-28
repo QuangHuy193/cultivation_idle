@@ -4,7 +4,7 @@ import Image from "next/image";
 import { equipmentSlots } from "@/lib/constants";
 import EquipmentInfo from "../../alert/EquipmentInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import CharacterTabsBar from "../../navbar/CharacterTabsBar";
+import CharacterTabsBar from "@/app/components/navbar/CharacterTabsBar";
 import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 
