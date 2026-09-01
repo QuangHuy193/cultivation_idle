@@ -26,10 +26,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased 
+      fixed bottom-0 inset-x-0 sm:left-1/2 sm:-translate-x-1/2 sm:w-108`}
     >
       <body className="min-h-full flex flex-col">
-        {children} 
+        {children}
         <ToastProvider />
       </body>
     </html>

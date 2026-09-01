@@ -3,8 +3,7 @@ import { useSkinStore } from "@/lib/useStore/useSkinTab";
 import React, { useEffect } from "react";
 import SkinImage from "./SkinImage";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
-import { rarityTextMap } from "@/lib/constants";
-import CornerBadge from "../../badges/CornerBadge";
+import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
 
 const SkinTabTop = () => {
   const { character } = useCharacterStore();
@@ -34,7 +33,7 @@ const SkinTabTop = () => {
         ${rarityCss.text}
       `}
           >
-            {rarityTextMap(selectedSkin.rarity).toUpperCase()}
+            {RARITY_TEXT_MAP(selectedSkin.rarity).toUpperCase()}
           </span>
         </div>
 

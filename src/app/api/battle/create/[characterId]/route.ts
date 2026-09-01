@@ -18,6 +18,10 @@ export async function POST(
 
     const { characterId } = await params;
 
+    const body = await req.json();
+
+    const { battleType } = body;
+
     // lấy nhân vật
     const character = await Character.findById(characterId)
       .populate("currentMap.map")
@@ -85,6 +89,8 @@ export async function POST(
     const battle = await Battle.create({
       characterId,
 
+      battleType,
+      
       mapId: currentMap._id,
 
       stage: character.currentMap.stage,

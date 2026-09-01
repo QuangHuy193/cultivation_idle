@@ -1,11 +1,12 @@
-import { CHARACTERTABS } from "@/lib/constants";
+
+import { CHARACTER_TABS } from "@/lib/constants/tsxConstants";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
 const CharacterTabsBar = () => {
   const { tabState, setTabState } = useToggleStore();
   return (
     <div className="flex justify-center">
-      {CHARACTERTABS.map((tab, ind) => {
+      {CHARACTER_TABS.map((tab, ind) => {
         if (tab.display)
           return (
             <div

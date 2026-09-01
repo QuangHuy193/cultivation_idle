@@ -1,7 +1,7 @@
 "use client";
 
 import { progressMapAPI } from "@/app/axios/characterAPI";
-import {} from "@/lib/constants";
+import {} from "@/lib/constants/numberConstants";
 import { DEFAULT_IMG_CHARACTER, DEFAULT_IMG_THE_GIOI } from "@/lib/constants/imageConstants";
 import { showWarning } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
@@ -11,7 +11,7 @@ import Image from "next/image";
 
 import { useEffect } from "react";
 import Loading from "../Loading";
-import { MapsResponse } from "@/lib/interface";
+import { MapsResponse } from "@/lib/types/mapTypes";
 
 export default function MainStageTab() {
   const { character } = useCharacterStore();

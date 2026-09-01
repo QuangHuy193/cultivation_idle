@@ -50,13 +50,11 @@ export default function Home() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      <div
-        className="fixed inset-0 bg-center bg-cover"
-        style={{ backgroundImage: `url('${DEFAULT_IMG_Wait}')` }}
-        aria-hidden
-      />
-
+    <main
+      className="relative min-h-screen overflow-hidden"
+      style={{ backgroundImage: `url('${DEFAULT_IMG_Wait}')` }}
+      aria-hidden
+    >
       {isLoggedIn && email ? (
         <p className="rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-slate-700 shadow">
           Chào {email}

@@ -18,7 +18,11 @@ export async function POST(
 
     const { battleId } = await params;
 
-    const battle = await Battle.findById(battleId);
+    const body = await req.json();
+
+    const { battleType } = body;
+
+    const battle = await Battle.findOne({ _id: battleId, battleType });
 
     if (!battle) {
       return NextResponse.json(

@@ -14,13 +14,16 @@ import Image from "next/image";
 
 const UserInfo = () => {
   const { character } = useCharacterStore();
-  console.log(character);
+
   const { setAalertUserInfo } = useToggleStore();
   const { classes } = useClassStore();
 
   const classInfo =
-    classes?.find((cls) => cls._id === character?.class?.classId._id) ?? {};
-  console.log(classInfo);
+    classes?.find((cls) => {
+      console.log("classInfo", cls._id);
+      return cls._id === character?.class?.classId._id;
+    }) ?? {};
+
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
 
@@ -80,7 +83,9 @@ const UserInfo = () => {
             <div className="mt-2 text-sm text-zinc-500">
               Hệ phái: {character?.class?.classId?.name ?? "không"} -{" "}
               {
-                classInfo?.levels[(character?.class?.classLevelCharacter ?? 2)-1]?.name
+                classInfo?.levels[
+                  (character?.class?.classLevelCharacter ?? 2) - 1
+                ]?.name
               }
             </div>
           </div>

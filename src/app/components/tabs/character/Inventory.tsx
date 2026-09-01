@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import { MAX_ITEM_SLOTS } from "@/lib/constants";
+import { MAX_ITEM_SLOTS } from "@/lib/constants/numberConstants";
 import Image from "next/image";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import ItemInfo from "../../alert/ItemInfo";

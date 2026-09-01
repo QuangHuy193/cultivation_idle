@@ -1,5 +1,5 @@
+import { CharacterResponse, ProgressMapResponse } from "@/lib/types/characterTypes";
 import api from "./axios";
-import type { CharacterResponse, ProgressMapResponse } from "@/lib/interface";
 
 export async function getCharacterAPI(
   userId: string,

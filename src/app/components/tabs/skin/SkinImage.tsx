@@ -1,6 +1,6 @@
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { SPIRITSTONE_ICON } from "@/lib/constants/imageConstants";
-import { Skin } from "@/lib/interface";
+import { Skin } from "@/lib/types/skinTypes";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useSkinStore } from "@/lib/useStore/useSkinTab";
 import Image from "next/image";

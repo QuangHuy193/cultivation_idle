@@ -1,4 +1,5 @@
-import { Skin } from "@/lib/interface";
+ 
+import { Skin } from "@/lib/types/skinTypes";
 import api from "./axios";
 
 export async function getSkinsAPI(): Promise<Skin[]> {

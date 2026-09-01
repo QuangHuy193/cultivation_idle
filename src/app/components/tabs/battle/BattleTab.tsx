@@ -34,7 +34,7 @@ const BattleTab = () => {
     const createBattleApi = async () => {
       try {
         setLoadingUseBattle(true);
-        const res = await createBattleAPI(character._id);
+        const res = await createBattleAPI(character._id, "mainStage");
         setBattle(res);
       } catch (error) {
         console.log(error);
@@ -52,7 +52,7 @@ const BattleTab = () => {
   useEffect(() => {
     const fightBattleApi = async () => {
       try {
-        const res = await fightBattleAPI(battle._id)        
+        const res = await fightBattleAPI(battle._id, "mainStage");
 
         setTurns(res.turns);
 
@@ -76,13 +76,12 @@ const BattleTab = () => {
 
   // chạy từng lượt
   useEffect(() => {
-    
     if (!isBattleStart) return;
-    
+
     if (isBattlePause) return;
-    
+
     if (!turns.length) return;
-    
+
     if (currentTurn >= turns.length) {
       if (battle.battleStatus === "win") {
         showSuccess("Chiến thắng");

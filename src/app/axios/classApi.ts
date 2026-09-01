@@ -1,4 +1,5 @@
-import { CharacterClassMission } from "@/lib/interface";
+
+import { CharacterClassMission } from "@/lib/types/characterTypes";
 import api from "./axios";
 
 export async function getClassesAPI() {

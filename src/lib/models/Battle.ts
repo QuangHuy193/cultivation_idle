@@ -33,6 +33,12 @@ const BattleSchema = new Schema(
       require: true,
     },
 
+    battleType: {
+      type: String,
+      enum: ["mainStage", "wildMap"],
+      default: "mainStage",
+    },
+
     turn: {
       type: Number,
       required: true,

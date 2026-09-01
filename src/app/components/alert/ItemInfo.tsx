@@ -1,9 +1,9 @@
 "use client";
 import { takeItemAPI } from "@/app/axios/characterAPI";
-import {  rarityTextMap } from "@/lib/constants";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
-import { Item } from "@/lib/interface";
+import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
 import { showSuccess } from "@/lib/toast";
+import { Item } from "@/lib/types/itemTypes";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import Image from "next/image";
 
@@ -43,7 +43,7 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
         <div
           className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[item.rarity].text}`}
         >
-          {item.name} - {rarityTextMap(item.rarity)}
+          {item.name} - {RARITY_TEXT_MAP(item.rarity)}
         </div>
 
         {/* Body */}

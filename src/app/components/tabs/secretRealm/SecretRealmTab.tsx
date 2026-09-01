@@ -1,5 +1,5 @@
 "use client";
-import { SECRET_REAML } from "@/lib/constants";
+import { SECRET_REALM_TABS } from "@/lib/constants/objConstants";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
 const SecretRealmTab = () => {
@@ -15,25 +15,18 @@ const SecretRealmTab = () => {
       }}
     >
       <div className="flex flex-col gap-4">
-        {SECRET_REAML.map((map) => (
+        {SECRET_REALM_TABS.map((map) => (
           <div
             key={map.key}
             onClick={() => {
               setTabState(map.key, tabState.activeTab);
             }}
-            className="
-  overflow-hidden rounded-2xl
-              border border-amber-300/50
-              bg-black/40 backdrop-blur-sm
-              transition-all duration-300
-            "
+            className="overflow-hidden rounded-2xl border border-amber-300/50
+            bg-black/40 backdrop-blur-sm transition-all duration-300"
           >
             <div
-              className="
-    relative h-28 overflow-hidden rounded-2xl
-    border border-amber-300/50
-    cursor-pointer
-  "
+              className="relative h-28 overflow-hidden rounded-2xl border 
+              border-amber-300/50 cursor-pointer"
               style={{
                 backgroundImage: `url(${map.bg})`,
                 backgroundSize: "cover",

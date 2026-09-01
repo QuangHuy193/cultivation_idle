@@ -3,7 +3,7 @@ import "@/lib/models";
 import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 import { calculateCharacterStats, characterPopulate } from "@/lib/helper";
-import { VALID_SLOTS } from "@/lib/constants";
+import { VALID_SLOTS } from "@/lib/constants/numberConstants";
 import Equip from "@/lib/models/Equip";
 
 export async function POST(

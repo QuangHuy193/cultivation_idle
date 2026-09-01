@@ -1,12 +1,12 @@
 "use client";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import Image from "next/image";
-import { equipmentSlots } from "@/lib/constants";
 import EquipmentInfo from "../../alert/EquipmentInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import CharacterTabsBar from "@/app/components/navbar/CharacterTabsBar";
 import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
+import { EQUIPMENT_SLOTS } from "@/lib/constants/objConstants";
 
 const Character = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
@@ -27,7 +27,7 @@ const Character = () => {
         <div className="flex items-center justify-between">
           {/* Trang bị bên trái (3 ô) */}
           <div className="flex flex-col gap-5">
-            {equipmentSlots.slice(0, 3).map((slot) => {
+            {EQUIPMENT_SLOTS.slice(0, 3).map((slot) => {
               const equip = character.equipments?.[slot.key];
 
               return (
@@ -84,7 +84,7 @@ const Character = () => {
 
           {/* Trang bị bên phải (3 ô) */}
           <div className="flex flex-col gap-5">
-            {equipmentSlots.slice(3, 6).map((slot) => {
+            {EQUIPMENT_SLOTS.slice(3, 6).map((slot) => {
               const equip = character.equipments?.[slot.key];
 
               return (

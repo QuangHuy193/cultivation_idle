@@ -1,4 +1,5 @@
-import { MAINTABS } from "@/lib/constants";
+
+import { MAIN_TABS } from "@/lib/constants/objConstants";
 import { showWarning } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
@@ -10,10 +11,11 @@ const MainTabsBar = () => {
 
   return (
     <div
-      className="fixed h-16 bottom-0 left-0 right-0 z-20 flex items-center justify-between gap-2 
-        border-t border-amber-200 bg-white/90 p-2 shadow-lg shadow-zinc-300/60 sm:hidden"
+      className="fixed h-16 bottom-0 inset-x-0 z-20 flex items-center justify-between gap-2 
+        border-t border-amber-200 bg-white/90 p-2 shadow-lg shadow-zinc-300/60
+       "
     >
-      {MAINTABS.map((tab) => {
+      {MAIN_TABS.map((tab) => {
         const isActive = tabState.activeTab === tab.key;
         const isLock =
           tab.key === "class" && (character.realmId?.order ?? 1) < 2;

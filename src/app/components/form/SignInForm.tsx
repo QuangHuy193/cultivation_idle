@@ -2,8 +2,8 @@
 
 import { FormEvent, useState } from "react";
 import { signInAPI } from "@/app/axios/userAPI";
-import type { SignInPayload } from "@/lib/interface";
 import { useUserStore } from "@/lib/useStore/useUserStore";
+import { SignInPayload } from "@/lib/types/userTypes";
 
 interface SignInFormProps {
   onClose: () => void;

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { Equip, Item, Skill } from "../interface";
-import { TabType } from "../constants";
+import { TabType } from "../constants/numberConstants";
 
 interface UserToggleState {
   // quản lý các alert thông tin skill, equip, item

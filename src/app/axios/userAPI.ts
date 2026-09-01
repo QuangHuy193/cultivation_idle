@@ -1,5 +1,5 @@
+import { SignInPayload, SignInResponse } from "@/lib/types/userTypes";
 import api from "./axios";
-import type { SignInPayload, SignInResponse } from "@/lib/interface";
 
 export async function signInAPI(
   payload: SignInPayload,

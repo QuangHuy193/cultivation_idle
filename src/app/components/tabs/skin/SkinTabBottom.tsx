@@ -1,4 +1,4 @@
-import { Skin } from "@/lib/interface";
+import { Skin } from "@/lib/types/skinTypes";
 import SkinImage from "./SkinImage";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 

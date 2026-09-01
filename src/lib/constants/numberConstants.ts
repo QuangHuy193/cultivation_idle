@@ -1,0 +1,1 @@
+export const MAX_ITEM_SLOTS = 25;

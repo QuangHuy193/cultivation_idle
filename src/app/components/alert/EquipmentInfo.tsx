@@ -1,9 +1,9 @@
 "use client";
 
 import { equipAPI, unequipAPI } from "@/app/axios/characterAPI";
-import {  rarityTextMap } from "@/lib/constants";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
-import { Equip } from "@/lib/interface";
+import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
+import { Equip } from "@/lib/types/equipTypes";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import Image from "next/image";
 
@@ -52,7 +52,7 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
         <div
           className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[equip.rarity].text}`}
         >
-          {equip.name} - {rarityTextMap(equip.rarity)}
+          {equip.name} - {RARITY_TEXT_MAP(equip.rarity)}
         </div>
 
         {/* Body */}

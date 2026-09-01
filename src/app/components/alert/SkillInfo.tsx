@@ -1,8 +1,10 @@
 "use client";
 import {  unequipSkillAPI } from "@/app/axios/characterAPI";
-import {  rarityTextMap } from "@/lib/constants";
+
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
-import { Skill } from "@/lib/interface";
+import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
+import { Skill } from "@/lib/types/skillTypes";
+
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
@@ -52,7 +54,7 @@ const SkillInfo = ({
           className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[skill.rarity].text}
   `}
         >
-          {skill.name} - {rarityTextMap(skill.rarity)}
+          {skill.name} - {RARITY_TEXT_MAP(skill.rarity)}
         </div>
 
         {/* Body */}

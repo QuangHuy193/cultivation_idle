@@ -2,10 +2,7 @@ import { getCharacterAPI } from "@/app/axios/characterAPI";
 import { getCharacterInventoryAPI } from "@/app/axios/characterAPI";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-
-import type {
-  CharacterResponse,
-} from "@/lib/interface";
+import { CharacterResponse } from "../types/characterTypes";
 
 export const CharacterService = {
   async loadCharacter(

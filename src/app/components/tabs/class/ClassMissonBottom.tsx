@@ -8,7 +8,8 @@ import Loading from "../Loading";
 import Image from "next/image";
 import {  RARITY_CSS } from "@/lib/constants/cssConstants";
 import { Check } from "lucide-react";
-import { rarityTextMap } from "@/lib/constants";
+import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
+
 
 const ClassMissonBottom = () => {
   const {
@@ -46,11 +47,8 @@ const ClassMissonBottom = () => {
             return (
               <div
                 key={clsMission._id}
-                className={`
-      relative overflow-hidden rounded-xl border-2 p-3
-      bg-white/90 shadow-sm
-      ${RARITY_CSS[clsMission.rarity].border}
-    `}
+                className={`relative overflow-hidden rounded-xl border-2 p-3
+                  bg-white/90 shadow-sm ${RARITY_CSS[clsMission.rarity].border}`}
               >
                 {/* Overlay đã nhận */}
                 {clsMission.status === "claimed" && (
@@ -58,12 +56,8 @@ const ClassMissonBottom = () => {
                     <div className="absolute inset-0 z-10 bg-black/40" />
 
                     <div
-                      className="
-            absolute inset-0 z-20
-            flex items-center justify-center
-            text-lg font-bold text-white
-            backdrop-blur-[1px]
-          "
+                      className="absolute inset-0 z-20 flex items-center justify-center
+                      text-lg font-bold text-white backdrop-blur-[1px]"
                     >
                       ✓ Đã nhận
                     </div>
@@ -77,12 +71,10 @@ const ClassMissonBottom = () => {
                   </div>
 
                   <div
-                    className={`
-          rounded-full px-2 py-0.5 text-xs font-bold
-          ${RARITY_CSS[clsMission.rarity].text}
-        `}
+                    className={`rounded-full px-2 py-0.5 text-xs font-bold
+                      ${RARITY_CSS[clsMission.rarity].text}`}
                   >
-                    {rarityTextMap(clsMission.rarity).toUpperCase()}
+                    {RARITY_TEXT_MAP(clsMission.rarity).toUpperCase()}
                   </div>
                 </div>
 
@@ -93,10 +85,7 @@ const ClassMissonBottom = () => {
                     height={80}
                     src={clsMission.missionId.itemId.icon}
                     alt={clsMission.missionId.itemId.name}
-                    className="
-          h-12 w-12 rounded-lg border
-          object-contain bg-zinc-100 p-1
-        "
+                    className="h-12 w-12 rounded-lg border object-contain bg-zinc-100 p-1"
                   />
 
                   <div className="flex-1">
@@ -137,9 +126,7 @@ const ClassMissonBottom = () => {
                       clsMission.status !== "claimed" && (
                         <div
                           className="flex items-center gap-1 rounded-full
-              bg-green-100 px-2 py-1
-              text-xs font-bold text-green-600
-            "
+                          bg-green-100 px-2 py-1 text-xs font-bold text-green-600"
                         >
                           <Check className="h-4 w-4" />
                           Hoàn thành
@@ -148,9 +135,8 @@ const ClassMissonBottom = () => {
 
                     {clsMission.status === "claimed" && (
                       <div
-                        className="rounded-full bg-zinc-200
-              px-2 py-1 text-xs font-bold text-zinc-600
-            "
+                        className="rounded-full bg-zinc-200 px-2 py-1 text-xs font-bold 
+                        text-zinc-600"
                       >
                         Đã nhận
                       </div>
