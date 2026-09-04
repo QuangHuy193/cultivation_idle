@@ -1,3 +1,5 @@
+import { Monster } from "./monsterTypes";
+
 export interface BattleMonster {
   monsterId: string;
   name: string;
@@ -53,19 +55,5 @@ export interface BattleState {
 
 
 export interface MonstersResponse {
-  monsterId: {
-    _id: string;
-    name: string;
-    rarity: string;
-    icon: string;
-    stats: {
-      hp: number;
-      atk: number;
-      def: number;
-    };
-    expReward: number;
-    spiritStoneReward: number;
-    dropTable: Array<{ itemId: string; chance: number }>;
-  };
-  weight: number;
+  monsterId: Monster
 }

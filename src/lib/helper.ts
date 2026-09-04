@@ -17,7 +17,8 @@ export const characterPopulate = [
   { path: "inventory.skins.skinId" },
 ];
 
-export const mapRewardPopulate = [
+export const mapPopulate = [
+  { path: "stages.monsterId" },
   { path: "stages.firstClearReward.rewards.items.itemId" },
   { path: "stages.firstClearReward.rewards.equips.equipId" },
   { path: "stages.firstClearReward.rewards.skills.skillId" },
@@ -69,3 +70,7 @@ export function addBreakthroughInfo(character: any) {
     canBreakthrough,
   };
 }
+
+export const rollChance = (chance: number): boolean => {
+  return Math.random() * 100 < chance;
+};

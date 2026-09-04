@@ -25,6 +25,7 @@ export async function POST(
     // lấy nhân vật
     const character = await Character.findById(characterId)
       .populate("currentMap.map")
+      .populate("currentMap.map.stages.monsterId")
       .populate("inventory.skills.skillId");
 
     if (!character) {
@@ -52,7 +53,7 @@ export async function POST(
       );
     }
 
-    // lấy quái từ map
+    // lấy quái từ stage của map
     const monster = await Monster.findById(
       currentMap.stages.find((s) => s.stage === character.currentMap.stage)
         ?.monsterId,

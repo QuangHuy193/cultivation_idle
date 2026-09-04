@@ -5,7 +5,7 @@ import Character from "@/lib/models/Character";
 import Map from "@/lib/models/Map";
 
 import "@/lib/models";
-import { mapRewardPopulate } from "@/lib/helper";
+import { mapPopulate } from "@/lib/helper";
 
 export async function POST(
   request: Request,
@@ -48,9 +48,8 @@ export async function POST(
         $lte: currentMap.order + 4,
       },
     })
-      .populate("requiredRealm")
-      .populate("stages.monsterId")
-      .populate(mapRewardPopulate)
+      .populate("requiredRealm")      
+      .populate(mapPopulate)
       .sort({ order: 1 })
       .lean();
 

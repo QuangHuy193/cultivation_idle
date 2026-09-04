@@ -1,9 +1,10 @@
 import { InferSchemaType, Schema, model, models } from "mongoose";
+import {  Droppable } from "./Map";
 
 const MonsterSchema = new Schema({
   _id: String,
 
-  name: String, 
+  name: String,
 
   rarity: {
     type: String,
@@ -23,21 +24,9 @@ const MonsterSchema = new Schema({
     default: 0,
   },
 
-  spiritStoneReward: {
-    type: Number,
-    default: 0,
+  droppable: {
+    type: Droppable,
   },
-
-  dropTable: [
-    {
-      itemId: {
-        type: Schema.Types.ObjectId,
-        ref: "Item",
-      },
-
-      chance: Number,
-    },
-  ],
 });
 
 export type IMonster = InferSchemaType<typeof MonsterSchema>;

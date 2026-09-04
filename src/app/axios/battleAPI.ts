@@ -16,3 +16,9 @@ export async function fightBattleAPI(battleId: string, battleType: string) {
 
   return res.data;
 }
+
+export async function rewardBattleAPI(battleId: string) {
+  const res = await api.post(`/api/battle/${battleId}/reward`);
+
+  return res.data;
+}
