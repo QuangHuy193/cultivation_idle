@@ -17,12 +17,12 @@ const UserInfo = () => {
 
   const { setAalertUserInfo } = useToggleStore();
   const { classes } = useClassStore();
-
+  console.log(character);
   const classInfo =
+    character.class?.classId &&
     classes?.find((cls) => {
-      console.log("classInfo", cls._id);
       return cls._id === character?.class?.classId._id;
-    }) ?? {};
+    });
 
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
@@ -81,7 +81,8 @@ const UserInfo = () => {
             </div>
 
             <div className="mt-2 text-sm text-zinc-500">
-              Hệ phái: {character?.class?.classId?.name ?? "không"} -{" "}
+              Hệ phái: {character?.class?.classId?.name ?? "không"}{" "}
+              {character?.class?.classId?.name ? "-" : ""}{" "}
               {
                 classInfo?.levels[
                   (character?.class?.classLevelCharacter ?? 2) - 1

@@ -17,6 +17,13 @@ export const characterPopulate = [
   { path: "inventory.skins.skinId" },
 ];
 
+export const mapRewardPopulate = [
+  { path: "stages.firstClearReward.rewards.items.itemId" },
+  { path: "stages.firstClearReward.rewards.equips.equipId" },
+  { path: "stages.firstClearReward.rewards.skills.skillId" },
+  { path: "stages.firstClearReward.rewards.skins.skinId" },
+];
+
 export const equipmentPopulate = [
   { path: "equipments.weapon" },
   { path: "equipments.helmet" },
@@ -62,4 +69,3 @@ export function addBreakthroughInfo(character: any) {
     canBreakthrough,
   };
 }
-

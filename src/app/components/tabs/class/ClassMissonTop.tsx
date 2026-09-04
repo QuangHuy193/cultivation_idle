@@ -78,7 +78,7 @@ const ClassMissonTop = () => {
               />
 
               {percentExp >= 100 && (
-                <div className="absolute -top-8 -right-6 z-10 animate-pulse">
+                <div className="absolute -top-1.5 -right-6 z-10 animate-pulse">
                   <button
                     className="rounded-lg bg-linear-to-r from-yellow-400 to-amber-500
                     px-3 py-1 text-sm font-bold text-white shadow-lg border

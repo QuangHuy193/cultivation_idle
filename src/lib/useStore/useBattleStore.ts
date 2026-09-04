@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { BattleState } from "../interface";
+import { BattleState } from "../types/battleTypes";
 
 const battleStateDefault = {
   _id: "",
@@ -33,7 +33,7 @@ const battleStateDefault = {
     {
       name: "",
       enemyName: "",
-      damge: 0,
+      dmg: 0,
       skill: "",
     },
   ],

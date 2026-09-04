@@ -11,11 +11,11 @@ const MapSchema = new Schema({
 
   maxStage: {
     type: Number,
-    default: 10,
+    default: 1,
   },
 
   // bouns khi hoàn thành
-  cultivationPerSecondBouns: {
+  cultivationPerMinuteBouns: {
     type: Number,
     default: 1,
   },
@@ -30,19 +30,79 @@ const MapSchema = new Schema({
     default: 1,
   },
 
-  rewardMultiplier: {
-    type: Number,
-    default: 1,
-  },
-
-  monsters: [
+  stages: [
     {
+      stage: Number,
+
       monsterId: {
         type: String,
         ref: "Monster",
       },
 
-      weight: Number, // tỉ lệ ra của quái đó
+      firstClearReward: {
+        spiritStone: {
+          type: Number,
+          default: 0,
+        },
+
+        cultivation: {
+          type: Number,
+          default: 0,
+        },
+
+        rewards: {
+          items: [
+            {
+              itemId: {
+                type: Schema.Types.ObjectId,
+                ref: "Item",
+              },
+              quantity: {
+                type: Number,
+                default: 1,
+              },
+            },
+          ],
+
+          equips: [
+            {
+              equipId: {
+                type: Schema.Types.ObjectId,
+                ref: "Equip",
+              },
+              quantity: {
+                type: Number,
+                default: 1,
+              },
+            },
+          ],
+
+          skills: [
+            {
+              skillId: {
+                type: String,
+                ref: "Skill",
+              },
+              quantity: {
+                type: Number,
+                default: 1,
+              },
+            },
+          ],
+          skins: [
+            {
+              skinId: {
+                type: String,
+                ref: "Skin",
+              },
+              quantity: {
+                type: Number,
+                default: 1,
+              },
+            },
+          ],
+        },
+      },
     },
   ],
 });

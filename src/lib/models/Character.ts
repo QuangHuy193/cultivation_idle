@@ -1,6 +1,6 @@
 import { InferSchemaType, Schema, model, models } from "mongoose";
 
-const cultivationPerSecondSchema = new Schema(
+const cultivationPerMinuteSchema = new Schema(
   {
     base: {
       type: Number,
@@ -36,6 +36,72 @@ const currentMapSchema = new Schema(
     stage: {
       type: Number,
       default: 1,
+    },
+  },
+  {
+    _id: false,
+  },
+);
+
+const InventorySchema = new Schema(
+  {
+    equips: {
+      type: [
+        {
+          equipId: {
+            type: Schema.Types.ObjectId,
+            ref: "Equip",
+            required: true,
+          },
+          quantity: { type: Number, default: 1, min: 0 },
+        },
+      ],
+      default: [],
+    },
+    items: {
+      type: [
+        {
+          itemId: {
+            type: Schema.Types.ObjectId,
+            ref: "Item",
+            required: true,
+          },
+          quantity: { type: Number, default: 1, min: 0 },
+        },
+      ],
+      default: [],
+    },
+    skills: {
+      type: [
+        {
+          skillId: {
+            type: String,
+            ref: "Skill",
+            required: true,
+          },
+          level: {
+            type: Number,
+            default: 1,
+          },
+          shard: {
+            type: Number,
+            default: 0,
+          },
+        },
+      ],
+      default: [],
+    },
+    skins: {
+      type: [
+        {
+          skinId: {
+            type: String,
+            ref: "Skin",
+            required: true,
+          },
+        },
+      ],
+      default: [],
     },
   },
   {
@@ -144,7 +210,7 @@ const statsSchema = new Schema(
       def: {
         type: Number,
         default: 0,
-      },      
+      },
     },
   },
   {
@@ -203,8 +269,8 @@ const CharacterSchema = new Schema(
       default: 0,
     },
 
-    cultivationPerSecond: {
-      type: cultivationPerSecondSchema,
+    cultivationPerMinute: {
+      type: cultivationPerMinuteSchema,
       default: {},
     },
 
@@ -265,63 +331,8 @@ const CharacterSchema = new Schema(
     },
 
     inventory: {
-      equips: {
-        type: [
-          {
-            equipId: {
-              type: Schema.Types.ObjectId,
-              ref: "Equip",
-              required: true,
-            },
-          },
-        ],
-        default: [],
-      },
-      items: {
-        type: [
-          {
-            itemId: {
-              type: Schema.Types.ObjectId,
-              ref: "Item",
-              required: true,
-            },
-            quantity: { type: Number, default: 1, min: 0 },
-          },
-        ],
-        default: [],
-      },
-      skills: {
-        type: [
-          {
-            skillId: {
-              type: String,
-              ref: "Skill",
-              required: true,
-            },
-            level: {
-              type: Number,
-              default: 1,
-            },
-            shard: {
-              type: Number,
-              default: 0,
-            },
-          },
-        ],
-        default: [],
-      },
-      skins: {
-        type: [
-          {
-            skinId: {
-              type: String,
-              ref: "Skin",
-              required: true,
-            },
-          },
-        ],
-        default: [],
-      },
+      type: InventorySchema,
+      default: {},
     },
 
     lastOnlineAt: {

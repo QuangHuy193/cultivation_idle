@@ -69,7 +69,7 @@ export async function GET(
     await connectDB();
 
     const { characterId } = await params;
-
+    
     if (!mongoose.Types.ObjectId.isValid(characterId)) {
       return NextResponse.json(
         {

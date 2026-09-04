@@ -5,7 +5,7 @@ import { getCharacterAPI } from "@/app/axios/characterAPI";
 import SignInForm from "@/app/components/form/SignInForm";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useUserStore } from "@/lib/useStore/useUserStore";
-import Loading from "./components/tabs/Loading";
+import Loading from "./components/ui/Loading";
 import { DEFAULT_IMG_Wait } from "@/lib/constants/imageConstants";
 
 export default function Home() {

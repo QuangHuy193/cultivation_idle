@@ -96,7 +96,7 @@ const BattleTabLog = () => {
                   )}
 
                   {" gây "}
-                  <span className="text-[#ef4444] font-bold">{log.damge}</span>
+                  <span className="text-[#ef4444] font-bold">{log.dmg}</span>
                   {" sát thương cho "}
                   <span className="text-[#f87171]">{log.enemyName}</span>
                 </div>

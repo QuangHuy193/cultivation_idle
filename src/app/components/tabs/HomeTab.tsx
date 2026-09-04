@@ -13,6 +13,7 @@ import Image from "next/image";
 import UserInfo from "../alert/UserInfo";
 import { Menu } from "lucide-react";
 import RedeemCodeForm from "../form/RedeemCodeForm";
+import OfflineReward from "../ui/OfflineReward";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -55,6 +56,8 @@ export default function HomeTab() {
           backgroundPosition: "center",
         }}
       />
+
+      <OfflineReward/>
 
       {/* Nội dung */}
       <div className="relative z-10">

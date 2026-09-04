@@ -5,6 +5,7 @@ import Character from "@/lib/models/Character";
 import Map from "@/lib/models/Map";
 
 import "@/lib/models";
+import { mapRewardPopulate } from "@/lib/helper";
 
 export async function POST(
   request: Request,
@@ -28,11 +29,7 @@ export async function POST(
       );
     }
 
-    const currentMap = await Map.findById(
-      character.currentMap.map,
-    )
-      .populate("monsters.monsterId")
-      .lean();
+    const currentMap = await Map.findById(character.currentMap.map);
 
     if (!currentMap) {
       return NextResponse.json(
@@ -51,8 +48,9 @@ export async function POST(
         $lte: currentMap.order + 4,
       },
     })
-      .populate("monsters.monsterId")
       .populate("requiredRealm")
+      .populate("stages.monsterId")
+      .populate(mapRewardPopulate)
       .sort({ order: 1 })
       .lean();
 
@@ -61,13 +59,9 @@ export async function POST(
 
       current: map._id === currentMap._id,
 
-      unlocked:
-        map.order <= currentMap.order + 1,
+      unlocked: map.order <= currentMap.order + 1,
 
-      currentStage:
-        map._id === currentMap._id
-          ? character.currentMap.stage
-          : 0,
+      currentStage: map._id === currentMap._id ? character.currentMap.stage : 0,
     }));
 
     return NextResponse.json({

@@ -42,7 +42,7 @@ export interface CharacterInventoryItem {
   skins: Array<{ skinId: Skin }> | [];
 }
 
-export interface CultivationPerSecond {
+export interface CultivationPerMinute {
   base: number;
   fromMap: number;
   fromItem: number;
@@ -96,7 +96,7 @@ export interface CharacterResponse {
   realmLevel?: number;
   cultivation: number;
   currentMap: CurrentMap;
-  cultivationPerSecond: CultivationPerSecond;
+  cultivationPerMinute: CultivationPerMinute;
   spiritStone: number;
   stats: CharacterAllStats;
   finalStats?: CharacterStats;

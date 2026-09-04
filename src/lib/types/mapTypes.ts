@@ -1,5 +1,9 @@
 import { MonstersResponse } from "./battleTypes";
+import { Equip } from "./equipTypes";
+import { Item } from "./itemTypes";
 import { Realm } from "./realmTypes";
+import { Skill } from "./skillTypes";
+import { Skin } from "./skinTypes";
 
 export interface MapsResponse {
   _id: string;
@@ -9,7 +13,41 @@ export interface MapsResponse {
   maxStage: number;
   requiredRealm: Realm;
   monsterStatMultiplier: number;
-  rewardMultiplier: number;
-  cultivationPerSecondBouns: number;
-  monsters: MonstersResponse[];
+  cultivationPerMinuteBouns: number;
+  stages: [
+    {
+      stage: number;
+      monsterId: MonstersResponse;
+      firstClearReward: {
+        spiritStone: number;
+        cultivation: number;
+      };
+      rewards: {
+        items: [
+          {
+            itemId: Item;
+            quantity: number;
+          },
+        ];
+        equips: [
+          {
+            equipId: Equip;
+            quantity: number;
+          },
+        ];
+        skills: [
+          {
+            skillId: Skill  ;
+            quantity: number;
+          },
+        ];
+        skins: [
+          {
+            skinId: Skin;
+            quantity: number;
+          },
+        ];
+      };
+    },
+  ];
 }

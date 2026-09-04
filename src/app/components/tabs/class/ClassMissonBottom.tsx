@@ -1,40 +1,18 @@
 "use client";
 
-import { getCharacterClassMisionsAPI } from "@/app/axios/classApi";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMisionStore } from "@/lib/useStore/useMissionStore";
-import { useEffect } from "react";
-import Loading from "../Loading";
+import Loading from "../../ui/Loading";
 import Image from "next/image";
-import {  RARITY_CSS } from "@/lib/constants/cssConstants";
+import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { Check } from "lucide-react";
 import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
 
-
 const ClassMissonBottom = () => {
-  const {
-    characterClassMission,
-    loadingUseMision,
-    setLoadingUseMision,
-    setCharacterClassMission,
-  } = useMisionStore();
+  const { characterClassMission } = useMisionStore();
 
   const { character } = useCharacterStore();
 
-  useEffect(() => {
-    const getCharacterClassMission = async () => {
-      try {
-        const res = await getCharacterClassMisionsAPI(character._id);
-        setCharacterClassMission(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (character._id) {
-      getCharacterClassMission();
-    }
-  }, []);
   return (
     <div className="h-screen overflow-y-scroll pb-90">
       {characterClassMission ? (
@@ -145,7 +123,10 @@ const ClassMissonBottom = () => {
                 </div>
 
                 {/* Thưởng */}
-                <div className="mt-2 border-t pt-2 text-xs text-purple-600 font-semibold">
+                <div
+                  className={`mt-2 border-t pt-2 text-xs font-semibold 
+                    ${RARITY_CSS[clsMission.rarity].text}`}
+                >
                   +{clsMission.rewardExp} EXP hệ phái
                 </div>
               </div>
@@ -154,7 +135,7 @@ const ClassMissonBottom = () => {
         </div>
       ) : (
         <div>
-          <Loading message="Đang nhận nhiệm vụ..." />{" "}
+          <Loading message="Đang nhận nhiệm vụ..." />
         </div>
       )}
     </div>

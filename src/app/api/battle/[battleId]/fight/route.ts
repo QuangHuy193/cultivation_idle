@@ -89,7 +89,7 @@ export async function POST(
         logs.push({
           name: character.name,
           enemyName: battle.monster.name,
-          damage,
+          dmg: damage,
           skill: skillData.skillId.name,
         });
 

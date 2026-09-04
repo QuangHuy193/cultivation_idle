@@ -1,6 +1,5 @@
 "use client";
 
-import { progressMapAPI } from "@/app/axios/characterAPI";
 import {} from "@/lib/constants/numberConstants";
 import { DEFAULT_IMG_CHARACTER, DEFAULT_IMG_THE_GIOI } from "@/lib/constants/imageConstants";
 import { showWarning } from "@/lib/toast";
@@ -8,14 +7,12 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
-
-import { useEffect } from "react";
-import Loading from "../Loading";
+import Loading from "../../ui/Loading";
 import { MapsResponse } from "@/lib/types/mapTypes";
 
 export default function MainStageTab() {
   const { character } = useCharacterStore();
-  const { progressMap, setProgressMap, loadingUseMap, setLoadingUseMap } =
+  const { progressMap, loadingUseMap } =
     useMapStore();
   const { tabState, setTabState } = useToggleStore();
 
@@ -28,28 +25,12 @@ export default function MainStageTab() {
       showWarning("Bạn chưa hoàn thành bản đồ trước đó");
     } else if (character.realmId?.order < currentCLickMap.requiredRealm.order) {
       showWarning("Cảnh giới của bạn chưa đủ");
-    } else {
-      setTabState("chiendau", tabState.activeTab);
+    } else {      
+      setTabState("battle", tabState.activeTab);
     }
   };
 
-  useEffect(() => {
-    const mapProgressApi = async () => {
-      try {
-        setLoadingUseMap(true);
-        const res = await progressMapAPI(character._id);
-        setProgressMap(res);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoadingUseMap(false);
-      }
-    };
 
-    if (character._id) {
-      mapProgressApi();
-    }
-  }, [character]);
   return (
     <section
       className="h-full w-full"

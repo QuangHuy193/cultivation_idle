@@ -9,7 +9,7 @@ import SplitLayout from "../../layout/SplitLayout";
 import BattleTabBattle from "./BattleTabBattle";
 import BattleTabLog from "./BattleTabLog";
 import { createBattleAPI, fightBattleAPI } from "@/app/axios/battleAPI";
-import Loading from "../Loading";
+import Loading from "../../ui/Loading";
 
 const BattleTab = () => {
   const { character } = useCharacterStore();
@@ -20,7 +20,9 @@ const BattleTab = () => {
     loadingUseBattle,
     setLoadingUseBattle,
     isBattlePause,
-    isBattleStart,
+    setIsBattlePause,
+    isBattleStart,   
+    setIsBattleStart, 
   } = useBattleStore();
   const { battleSpeed } = useSettingStore();
 
@@ -43,6 +45,10 @@ const BattleTab = () => {
       }
     };
 
+    // tạo lại các tham số khác
+    setIsBattleStart(false);
+    setIsBattlePause(false);
+
     if (character?._id) {
       createBattleApi();
     }
@@ -53,7 +59,6 @@ const BattleTab = () => {
     const fightBattleApi = async () => {
       try {
         const res = await fightBattleAPI(battle._id, "mainStage");
-
         setTurns(res.turns);
 
         updateBattle((battle) => {
@@ -82,15 +87,6 @@ const BattleTab = () => {
 
     if (!turns.length) return;
 
-    if (currentTurn >= turns.length) {
-      if (battle.battleStatus === "win") {
-        showSuccess("Chiến thắng");
-      } else {
-        showError("Thất bại");
-      }
-      return;
-    }
-
     const timer = setTimeout(() => {
       updateBattle((battle) => {
         return {
@@ -109,6 +105,24 @@ const BattleTab = () => {
 
     return () => clearTimeout(timer);
   }, [currentTurn, turns, isBattleStart, isBattlePause, battleSpeed]);
+
+  // kiểm tra thắng thua
+  useEffect(() => {
+     if (!isBattleStart) return;
+
+    if (isBattlePause) return;
+
+    if (!turns.length) return;
+
+    if (currentTurn >= turns.length) {
+      if (battle.battleStatus === "win") {
+        showSuccess("Chiến thắng");
+      } else {
+        showError("Thất bại");
+      }
+      return;
+    }
+  }, [currentTurn, turns]);
 
   return (
     <>

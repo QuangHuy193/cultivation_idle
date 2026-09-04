@@ -52,13 +52,11 @@ export async function POST(
       );
     }
 
-    // random quái
-    const randomIndex = Math.floor(Math.random() * currentMap.monsters.length);
-
-    const monsterId = currentMap.monsters[randomIndex].monsterId;
-
-    // lấy thông tin quái
-    const monster = await Monster.findById(monsterId);
+    // lấy quái từ map
+    const monster = await Monster.findById(
+      currentMap.stages.find((s) => s.stage === character.currentMap.stage)
+        ?.monsterId,
+    );
 
     if (!monster) {
       return NextResponse.json(
@@ -90,7 +88,7 @@ export async function POST(
       characterId,
 
       battleType,
-      
+
       mapId: currentMap._id,
 
       stage: character.currentMap.stage,
