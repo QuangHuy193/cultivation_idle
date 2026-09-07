@@ -8,4 +8,6 @@ export const DEFAULT_IMG_BATTLE = "/bgs/bg_battle.webp"
 
 export const DEFAULT_IMG_THE_GIOI = "/bgs/bg_the_gioi.webp"
 
-export const SPIRITSTONE_ICON="/linh_thach.webp"
+export const SPIRITSTONE_ICON="/icons/linh_thach.webp"
+
+export const CULTIVATION_ICON="/icons/exp.webp"

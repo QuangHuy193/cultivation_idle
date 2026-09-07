@@ -3,15 +3,21 @@
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useBattleStore } from "@/lib/useStore/useBattleStore";
 import { useEffect, useState } from "react";
-import { showError, showSuccess } from "@/lib/toast";
+import { showError } from "@/lib/toast";
 import { useSettingStore } from "@/lib/useStore/usseSetting";
 import SplitLayout from "../../layout/SplitLayout";
 import BattleTabBattle from "./BattleTabBattle";
 import BattleTabLog from "./BattleTabLog";
-import { createBattleAPI, fightBattleAPI } from "@/app/axios/battleAPI";
+import {
+  createBattleAPI,
+  fightBattleAPI,
+  rewardBattleAPI,
+} from "@/app/axios/battleAPI";
 import Loading from "../../ui/Loading";
+import RewardAlert from "../../alert/RewardAlert";
 
 const BattleTab = () => {
+  const [rewardAlertOpen, setRewardAlertOpen] = useState(false);
   const { character } = useCharacterStore();
   const {
     battle,
@@ -21,8 +27,8 @@ const BattleTab = () => {
     setLoadingUseBattle,
     isBattlePause,
     setIsBattlePause,
-    isBattleStart,   
-    setIsBattleStart, 
+    isBattleStart,
+    setIsBattleStart,
   } = useBattleStore();
   const { battleSpeed } = useSettingStore();
 
@@ -30,6 +36,8 @@ const BattleTab = () => {
   const [turns, setTurns] = useState([]);
   // lượt hiện tại
   const [currentTurn, setCurrentTurn] = useState(0);
+  // trả về từ api lấy rewward {character, rewwards}
+  const [resReward, setResReawrd] = useState({});
 
   // tạo battle
   useEffect(() => {
@@ -106,9 +114,19 @@ const BattleTab = () => {
     return () => clearTimeout(timer);
   }, [currentTurn, turns, isBattleStart, isBattlePause, battleSpeed]);
 
+  // gọi api nhận thưởng
+  const getRewardApi = async () => {
+    try {
+      const res = await rewardBattleAPI(battle._id);
+      setResReawrd(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // kiểm tra thắng thua
   useEffect(() => {
-     if (!isBattleStart) return;
+    if (!isBattleStart) return;
 
     if (isBattlePause) return;
 
@@ -116,7 +134,8 @@ const BattleTab = () => {
 
     if (currentTurn >= turns.length) {
       if (battle.battleStatus === "win") {
-        showSuccess("Chiến thắng");
+        setRewardAlertOpen(true);
+        getRewardApi();
       } else {
         showError("Thất bại");
       }
@@ -131,12 +150,24 @@ const BattleTab = () => {
           <Loading message="Đang tạo chiến trường..." />
         </div>
       ) : (
-        <SplitLayout
-          top={<BattleTabBattle />}
-          bottom={<BattleTabLog />}
-          percentTop="flex-7"
-          percentBottom="flex-5"
-        />
+        <>
+          {rewardAlertOpen && (
+            <RewardAlert
+              status={battle?.battleStatus}
+              newCharacter={resReward?.character}
+              rewards={resReward?.rewards}
+              onClose={() => {
+                setRewardAlertOpen(false);
+              }}
+            />
+          )}
+          <SplitLayout
+            top={<BattleTabBattle />}
+            bottom={<BattleTabLog />}
+            percentTop="flex-7"
+            percentBottom="flex-5"
+          />
+        </>
       )}
     </>
   );

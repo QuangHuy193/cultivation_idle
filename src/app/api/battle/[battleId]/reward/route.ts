@@ -5,7 +5,12 @@ import connectDB from "@/lib/db/db";
 import Battle from "@/lib/models/Battle";
 import Character from "@/lib/models/Character";
 import "@/lib/models/Skill";
-import { calculateCharacterStats, mapPopulate, rollChance } from "@/lib/helper";
+import {
+  addBreakthroughInfo,
+  grantRewards,
+  mapPopulate,
+  rollChance,
+} from "@/lib/helper";
 import Map from "@/lib/models/Map";
 
 export async function POST(
@@ -39,7 +44,6 @@ export async function POST(
 
     const monster = map.stages[battle.stage - 1].monsterId;
 
-    //console.log("map", map);
     const stage = map.stages[battle.stage - 1];
 
     let realmReward = 0;
@@ -52,7 +56,7 @@ export async function POST(
     realmReward += monster.realmReward * map.monsterRewardMultiplier;
 
     // tính đá linh thạch
-    // đá linh thạch từ map
+    // đá linh thạch từ quái nhân với hệ số map
     if (rollChance(stage.firstClearReward.rewards.spiritStone.chance)) {
       spiritStoneReward += stage.firstClearReward.rewards.spiritStone.amount;
     }
@@ -62,8 +66,43 @@ export async function POST(
         monster.droppable.spiritStone.amount * map.monsterRewardMultiplier;
     }
 
+    // lấy character
+    const character = await Character.findById(battle.characterId);
+
+    // cập nhật character
+    if (!character) {
+      return NextResponse.json(
+        { message: "Không tìm thấy nhân vật" },
+        { status: 404 },
+      );
+    }
+
+    await grantRewards(character, {
+      cultivation: realmReward,
+      spiritStone: spiritStoneReward,
+
+      items: stage.firstClearReward.rewards.items,
+      equips: stage.firstClearReward.rewards.equips,
+      skills: stage.firstClearReward.rewards.skills,
+      skins: stage.firstClearReward.rewards.skins,
+    });
+
+    await character.save();
+
+    const charObj = character.toObject();
+
     return NextResponse.json({
-      data: {
+      character: {
+        cultivation: character.cultivation,
+        spiritStone: character.spiritStone,        
+        canBreakthrough: addBreakthroughInfo(charObj).canBreakthrough,
+      },
+
+      rewards: {
+        equips: stage.firstClearReward.rewards.equips,
+        skins: stage.firstClearReward.rewards.skins,
+        skills: stage.firstClearReward.rewards.skills,
+        items: stage.firstClearReward.rewards.items,
         realmReward,
         spiritStoneReward,
       },

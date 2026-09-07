@@ -14,7 +14,6 @@ import UserInfo from "../alert/UserInfo";
 import { Menu } from "lucide-react";
 import RedeemCodeForm from "../form/RedeemCodeForm";
 import OfflineReward from "../ui/OfflineReward";
-import { rewardBattleAPI } from "@/app/axios/battleAPI";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -35,16 +34,7 @@ export default function HomeTab() {
     } catch (error) {
       console.log(error);
     }
-  };  
-
-  const getReward = async () => {
-    try {
-      const res = await rewardBattleAPI("6a9a86ee051033db778eb1ad");
-      console.log("res", res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  };
 
   return (
     <section
@@ -54,7 +44,7 @@ export default function HomeTab() {
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-    >     
+    >
       {/* Nền nhân vật chồng lên */}
       <div
         className="absolute inset-0"
@@ -67,14 +57,11 @@ export default function HomeTab() {
         }}
       />
 
-      
-
-      <OfflineReward/>
+      <OfflineReward />
 
       {/* Nội dung */}
       <div className="relative z-10">
         {/* tên nhân vật */}
-        <button className="z-99 p-10" onClick={getReward}> API </button>
         <div className="flex w-fit items-center gap-3 px-3 py-2 rounded-r-2xl">
           <div className="flex flex-col">
             <div className="border-b flex justify-center">
