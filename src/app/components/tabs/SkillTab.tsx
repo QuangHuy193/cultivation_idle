@@ -7,6 +7,8 @@ import SkillInfo from "../alert/SkillInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { equipSkillAPI } from "@/app/axios/characterAPI";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
+import CoatingButton from "../ui/CoatingButton";
 
 export default function SkillTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -16,6 +18,7 @@ export default function SkillTab() {
     equipSkillSelect,
     setEquipSkillSelect,
   } = useToggleStore();
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   // lấy dl từ equippedSkills để hiện các skill đang trang bị (hiện "eq" ở phần inventory)
   const equippedSkillSet = new Set(
@@ -42,6 +45,7 @@ export default function SkillTab() {
           </div>
         )}
 
+        {/* các ô skill  */}
         <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => {
             const equippedSkill = character.equippedSkills?.find(
@@ -56,7 +60,7 @@ export default function SkillTab() {
               <div
                 key={index}
                 className={`aspect-square rounded-xl border-2 bg-amber-50 overflow-hidden 
-                  flex items-center justify-center ${
+                  flex items-center justify-center relative ${
                     equipSkillSelect.active
                       ? "border-yellow-400 ring-4 ring-yellow-300 animate-pulse"
                       : ""
@@ -66,6 +70,7 @@ export default function SkillTab() {
                   if (!equipSkillSelect.active) return;
 
                   try {
+                    setActionLoadingName("equipSkill");
                     const res = await equipSkillAPI(
                       character._id,
                       equipSkillSelect.skillId,
@@ -80,6 +85,8 @@ export default function SkillTab() {
                     });
                   } catch (error) {
                     console.log(error);
+                  } finally {
+                    setActionLoadingName("");
                   }
                 }}
               >
@@ -102,6 +109,7 @@ export default function SkillTab() {
                 ) : (
                   <span className="text-xs text-zinc-400">Trống</span>
                 )}
+                {actionLoadingName === "equipSkill" && <CoatingButton />}
               </div>
             );
           })}

@@ -5,7 +5,9 @@ import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
 import { Equip } from "@/lib/types/equipTypes";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
 import Image from "next/image";
+import CoatingButton from "../ui/CoatingButton";
 
 interface EquipmentInfoProps {
   equip: Equip;
@@ -15,24 +17,31 @@ interface EquipmentInfoProps {
 
 const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
   const { character, updateCharacter } = useCharacterStore();
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const unequipApi = async (slot: string) => {
     try {
+      setActionLoadingName("unequip");
       const res = await unequipAPI(character._id, slot);
       updateCharacter(res);
       if (onClose) onClose();
     } catch (error) {
       console.log("lỗi", error);
+    } finally {
+      setActionLoadingName("");
     }
   };
 
   const equipApi = async (equipId: string) => {
     try {
+      setActionLoadingName("equip");
       const res = await equipAPI(character._id, equip.type, equipId);
       updateCharacter(res);
       if (onClose) onClose();
     } catch (error) {
       console.log("lỗi", error);
+    } finally {
+      setActionLoadingName("");
     }
   };
 
@@ -67,9 +76,7 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
             />
           </div>
 
-          <div
-            className="rounded-xl border border-amber-200bg-white/70 p-3 space-y-2"
-          >
+          <div className="rounded-xl border border-amber-200bg-white/70 p-3 space-y-2">
             <div className="flex justify-between">
               <span className="text-zinc-600">⚔️ Công kích</span>
               <span className="font-semibold text-red-600">
@@ -104,18 +111,26 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
             {isEquipped ? (
               <button
                 onClick={() => unequipApi(equip.type)}
-                className="flex-1 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 
-                text-white transition font-medium"
+                className={`flex-1 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 
+                text-white transition font-medium relative`}
+                disabled={actionLoadingName === "unequip"}
               >
                 Gỡ
+                {actionLoadingName === "unequip" && (
+                  <CoatingButton borderRadius="rounded-xl" />
+                )}
               </button>
             ) : (
               <button
                 onClick={() => equipApi(equip._id)}
-                className="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700
-                text-white transition font-medium"
+                className={`flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700
+                text-white transition font-medium relative`}
+                disabled={actionLoadingName === "equip"}
               >
                 Trang bị
+                {actionLoadingName === "equip" && (
+                  <CoatingButton borderRadius="rounded-xl" />
+                )}
               </button>
             )}
           </div>

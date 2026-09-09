@@ -5,21 +5,21 @@ import { useBattleStore } from "@/lib/useStore/useBattleStore";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import { useSettingStore } from "@/lib/useStore/usseSetting";
+import { useSettingStore } from "@/lib/useStore/useSetting";
 import { SquarePause } from "lucide-react";
 import Image from "next/image";
 import PauseAlert from "../../alert/PauseAlert";
 
 const BattleTabBattle = () => {
   const { character } = useCharacterStore();
-  const { progressMap } = useMapStore();
+  const { maps } = useMapStore();
   const { isOpenPause, setIsOpenPause, tabState, setTabState } =
     useToggleStore();
   const { battle, setIsBattlePause } = useBattleStore();
   const { battleSpeed, setBattleSpeed } = useSettingStore();
 
-  const currentMap = progressMap?.maps?.find(
-    (map) => map._id === progressMap?.currentMapId,
+  const currentMap = maps?.find(
+    (map) => map._id === character?.currentMap.map,
   );
 
   return (
@@ -63,7 +63,7 @@ const BattleTabBattle = () => {
             <div className="font-semibold">{currentMap?.name}</div>
 
             <div className="text-xs text-zinc-200">
-              Tầng {progressMap?.currentStage}/{currentMap?.maxStage}
+              Tầng {character?.currentMap.stage}/{currentMap?.maxStage}
             </div>
 
             <div>Lượt {battle?.turn}</div>

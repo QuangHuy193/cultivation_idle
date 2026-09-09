@@ -1,13 +1,15 @@
 "use client";
-import {  unequipSkillAPI } from "@/app/axios/characterAPI";
+import { unequipSkillAPI } from "@/app/axios/characterAPI";
 
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
 import { Skill } from "@/lib/types/skillTypes";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
+import CoatingButton from "../ui/CoatingButton";
 
 interface SkillInfoProps {
   skill: Skill;
@@ -26,14 +28,18 @@ const SkillInfo = ({
 }: SkillInfoProps) => {
   const { setEquipSkillSelect } = useToggleStore();
   const { character, updateCharacter } = useCharacterStore();
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const unequipSkillApi = async () => {
     try {
+      setActionLoadingName("unequipSkill");
       const res = await unequipSkillAPI(character._id, skill._id);
       updateCharacter(res);
       onClose?.();
     } catch (error) {
       console.log(error);
+    } finally {
+      setActionLoadingName("");
     }
   };
 
@@ -90,11 +96,15 @@ const SkillInfo = ({
             </button>
             {isEquipped ? (
               <button
-              onClick={unequipSkillApi}
+                onClick={unequipSkillApi}
                 className="flex-1 py-2 rounded-xl bg-amber-600 
-                text-white transition font-medium"
+                text-white transition font-medium relative"
+                disabled={actionLoadingName === "unequipSkill"}
               >
                 Gỡ
+                {actionLoadingName === "unequipSkill" && (
+                  <CoatingButton borderRadius="rounded-xl" />
+                )}
               </button>
             ) : (
               <button

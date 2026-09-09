@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { BattleState } from "../types/battleTypes";
 
-const battleStateDefault = {
+export const battleStateDefault = {
   _id: "",
   characterId: "",
   turn: 1,

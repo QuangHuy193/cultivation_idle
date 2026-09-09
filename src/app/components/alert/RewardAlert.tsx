@@ -7,6 +7,7 @@ import {
 } from "@/lib/constants/imageConstants";
 import { CharacterResponse } from "@/lib/types/characterTypes";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
 interface RewardAlertProps {
   status: "win" | "lose";
@@ -22,12 +23,16 @@ const RewardAlert = ({
   onClose,
 }: RewardAlertProps) => {
   const { updateCharacter } = useCharacterStore();
-  
+  const { setTabState, tabState } = useToggleStore();
+
   const grantReward = () => {
     if (newCharacter) {
       updateCharacter(newCharacter);
     }
     onClose();
+
+    // chuyển trang
+    setTabState("mainStage", tabState);
   };
   return (
     <div className={`${CLASS_COATING_L} flex items-center justify-center`}>
@@ -54,8 +59,8 @@ const RewardAlert = ({
         {/* Danh sách thưởng */}
         <div className="grid grid-cols-3 gap-4">
           <div
-            className="flex h-20 w-20 items-end justify-center rounded-xl border-2 
-            border-yellow-500"
+            className="flex h-20 w-20 items-end justify-end rounded-xl border-2 
+            border-yellow-500 font-bold"
             style={{
               backgroundImage: `url("${SPIRITSTONE_ICON}")`,
               backgroundSize: "cover",
@@ -68,8 +73,8 @@ const RewardAlert = ({
           </div>
 
           <div
-            className="flex h-20 w-20 items-end justify-center rounded-xl border-2 
-            border-yellow-500"
+            className="flex h-20 w-20 items-end justify-end rounded-xl border-2 
+            border-yellow-500 font-bold"
             style={{
               backgroundImage: `url("${CULTIVATION_ICON}")`,
               backgroundSize: "cover",

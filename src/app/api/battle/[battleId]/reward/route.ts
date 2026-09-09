@@ -77,6 +77,7 @@ export async function POST(
       );
     }
 
+    // nhật thưởng
     await grantRewards(character, {
       cultivation: realmReward,
       spiritStone: spiritStoneReward,
@@ -87,14 +88,26 @@ export async function POST(
       skins: stage.firstClearReward.rewards.skins,
     });
 
+    // cập nhật map
+    if (character.currentMap.stage < map.maxStage) {
+      character.currentMap.stage += 1;
+    } else {
+      const nextMap = await Map.findOne({ order: map.order + 1 });
+      if (nextMap) {
+        character.currentMap.map = nextMap._id;
+        character.currentMap.stage = 1;
+      }
+    }
+
     await character.save();
 
     const charObj = character.toObject();
 
     return NextResponse.json({
       character: {
+        currentMap: character.currentMap,
         cultivation: character.cultivation,
-        spiritStone: character.spiritStone,        
+        spiritStone: character.spiritStone,
         canBreakthrough: addBreakthroughInfo(charObj).canBreakthrough,
       },
 

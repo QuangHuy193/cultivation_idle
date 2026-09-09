@@ -80,10 +80,4 @@ export async function unequipSkillAPI(
   return res.data as CharacterResponse;
 }
 
-// lấy tiến trình map
-export async function progressMapAPI(
-  characterId: string,
-): Promise<ProgressMapResponse> {
-  const res = await api.post(`/api/character/${characterId}/map/progress`);
-  return res.data as ProgressMapResponse;
-}
+

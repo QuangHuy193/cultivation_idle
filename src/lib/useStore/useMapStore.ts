@@ -1,22 +1,22 @@
-import { ProgressMapResponse } from "./../interface";
 import { create } from "zustand";
+import { MapsResponse } from "../types/mapTypes";
 
 interface UserMapState {
   loadingUseMap: boolean;
 
-  progressMap: ProgressMapResponse | null;
+  maps: MapsResponse[] | [];
 
   setLoadingUseMap: (loading: boolean) => void;
 
-  setProgressMap: (progressMap: ProgressMapResponse) => void;
+  setMaps: (maps: MapsResponse[]) => void;
 
-  updateProgressMap: (data: any) => void;
+  updateMaps: (data: any) => void;
 }
 
 export const useMapStore = create<UserMapState>()((set) => ({
   loadingUseMap: false,
 
-  progressMap: null,
+  maps: [],
 
   setLoadingUseMap: (loading) => {
     set((state) => ({
@@ -25,11 +25,11 @@ export const useMapStore = create<UserMapState>()((set) => ({
     }));
   },
 
-  setProgressMap: (progressMap) => {
-    set({ progressMap });
+  setMaps: (maps) => {
+    set({ maps });
   },
-  
-  updateProgressMap: (data) => {
+
+  updateMaps: (data) => {
     set((state) => ({
       progressMap: {
         ...state.progressMap,

@@ -17,7 +17,7 @@ export default function GamePage() {
   const { setSkins } = useSkinStore();
   const { setClasses, setLoadingUseClass } = useClassStore();
   const { setCharacterClassMission } = useMisionStore();
-  const { setProgressMap, setLoadingUseMap } = useMapStore();
+  const { setMaps, setLoadingUseMap } = useMapStore();
 
   useEffect(() => {
     // const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -38,7 +38,7 @@ export default function GamePage() {
         setClasses,
         setCharacterClassMission,
         setLoadingUseMap,
-        setProgressMap
+        setMaps
       );
     }
   }, [character._id]);

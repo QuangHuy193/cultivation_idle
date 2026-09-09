@@ -1,8 +1,8 @@
-import { progressMapAPI } from "@/app/axios/characterAPI";
 import {
   getCharacterClassMisionsAPI,
   getClassesAPI,
 } from "@/app/axios/classApi";
+import { progressMapAPI } from "@/app/axios/map";
 import { getSkinsAPI } from "@/app/axios/skinAPI";
 
 // tải các phần khác của game
@@ -24,7 +24,7 @@ export const init = async (
         getSkinsAPI(),
         getClassesAPI(),
         getCharacterClassMisionsAPI(characterId),
-        progressMapAPI(characterId),
+        progressMapAPI(),
       ]);
 
     // tải danh sách skin từ API

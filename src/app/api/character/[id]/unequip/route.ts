@@ -1,12 +1,14 @@
+
 import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/db/db";
 import Character from "@/lib/models/Character";
 import { calculateCharacterStats, characterPopulate } from "@/lib/helper";
-import { VALID_SLOTS } from "@/lib/constants/numberConstants";
+
 import Equip from "@/lib/models/Equip";
 
 import "@/lib/models";
+import { EQUIPMENT_SLOTS_LABEL } from '@/lib/constants/objConstants';
 
 export async function POST(
   request: Request,
@@ -18,7 +20,7 @@ export async function POST(
     const { id } = await params;
     const { slot } = await request.json();
 
-    if (!VALID_SLOTS.includes(slot)) {
+    if (!EQUIPMENT_SLOTS_LABEL.includes(slot)) {
       return NextResponse.json(
         {
           message: "Slot không hợp lệ",

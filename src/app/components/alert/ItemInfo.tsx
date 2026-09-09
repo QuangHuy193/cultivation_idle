@@ -5,7 +5,9 @@ import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
 import { showSuccess } from "@/lib/toast";
 import { Item } from "@/lib/types/itemTypes";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
 import Image from "next/image";
+import CoatingButton from "../ui/CoatingButton";
 
 interface ItemInfoProps {
   item: Item;
@@ -14,17 +16,21 @@ interface ItemInfoProps {
 
 const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
   const { character, updateCharacter } = useCharacterStore();
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const useItemApi = async () => {
     try {
+      setActionLoadingName("useItem");
       const res = await takeItemAPI(character._id, item._id);
       updateCharacter(res);
       if (onClose) {
         onClose();
       }
-      showSuccess(`Đã dùng ${item.name}`)
+      showSuccess(`Đã dùng ${item.name}`);
     } catch (error) {
       console.log(error);
+    } finally {
+      setActionLoadingName("");
     }
   };
   return (
@@ -58,9 +64,7 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
             />
           </div>
 
-          <div
-            className="rounded-xl border border-amber-200 bg-white/70 p-3 min-h-25"
-          >
+          <div className="rounded-xl border border-amber-200 bg-white/70 p-3 min-h-25">
             <div className="text-zinc-700 leading-relaxed text-sm">
               {item.description}
             </div>
@@ -77,9 +81,13 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
             <button
               onClick={useItemApi}
               className="flex-1 px-8 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700
-              text-white font-medium transition shadow-md"
+              text-white font-medium transition shadow-md relative"
+              disabled={actionLoadingName === "useItem"}
             >
               Sử dụng
+              {actionLoadingName === "useItem" && (
+                <CoatingButton borderRadius="rounded-xl" />
+              )}
             </button>
           </div>
         </div>

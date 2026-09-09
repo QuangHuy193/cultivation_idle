@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CharacterClassMission } from "../interface";
+import { CharacterClassMission } from "../types/characterTypes";
 
 interface useMisionState {
   loadingUseMision: boolean;

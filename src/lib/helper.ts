@@ -3,7 +3,7 @@ import { ICharacter } from "./models/Character";
 
 export const characterPopulate = [
   { path: "realmId" },
-  { path: "currentMap.map", select: "_id icon name order maxStage" },
+  { path: "currentMap.map"},
   { path: "skinId" },
   { path: "class.classId" },
   { path: "equipments.weapon" },

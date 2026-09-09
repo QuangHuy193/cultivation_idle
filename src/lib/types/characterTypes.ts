@@ -68,12 +68,6 @@ export interface CharacterClass {
   exp: number;
 }
 
-export interface ProgressMapResponse {
-  currentMapId: string;
-  currentStage: number;
-  maps: MapsResponse[];
-}
-
 export interface CharacterClassMission {
   _id: string;
   characterId: string;

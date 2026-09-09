@@ -7,10 +7,11 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useUserStore } from "@/lib/useStore/useUserStore";
 import Loading from "./components/ui/Loading";
 import { DEFAULT_IMG_Wait } from "@/lib/constants/imageConstants";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
 
 export default function Home() {
   const [showLogin, setShowLogin] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const { email, token, userId } = useUserStore();
@@ -31,7 +32,7 @@ export default function Home() {
       return;
     }
 
-    setIsLoading(true);
+    setActionLoadingName("getUser");
     setError(null);
 
     try {
@@ -45,7 +46,7 @@ export default function Home() {
           "Không thể tải dữ liệu nhân vật",
       );
     } finally {
-      setIsLoading(false);
+      setActionLoadingName("");
     }
   }
 
@@ -86,10 +87,12 @@ export default function Home() {
           {isLoggedIn ? (
             <button
               onClick={enterWorld}
-              disabled={isLoading}
+              disabled={actionLoadingName === "getUser"}
               className="mx-auto rounded-full bg-emerald-500 px-8 py-4 text-center font-semibold text-white shadow-2xl shadow-emerald-600/40 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-emerald-300"
             >
-              {isLoading ? "Đang tải..." : "Tiến vào thế giới"}
+              {actionLoadingName === "getUser"
+                ? "Đang tải..."
+                : "Tiến vào thế giới"}
             </button>
           ) : (
             <button
@@ -102,7 +105,9 @@ export default function Home() {
         </div>
       </div>
 
-      {isLoading ? <Loading message="Đang tải nhân vật..." /> : null}
+      {actionLoadingName === "getUser" ? (
+        <Loading message="Đang tải nhân vật..." />
+      ) : null}
 
       {error ? (
         <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 rounded-full bg-rose-500/95 px-4 py-2 text-sm font-medium text-white shadow-lg">

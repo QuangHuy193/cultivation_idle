@@ -1,10 +1,13 @@
 "use client";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import { useBattleStore } from "@/lib/useStore/useBattleStore";
+import {
+  battleStateDefault,
+  useBattleStore,
+} from "@/lib/useStore/useBattleStore";
 import { useEffect, useState } from "react";
 import { showError } from "@/lib/toast";
-import { useSettingStore } from "@/lib/useStore/usseSetting";
+import { useSettingStore } from "@/lib/useStore/useSetting";
 import SplitLayout from "../../layout/SplitLayout";
 import BattleTabBattle from "./BattleTabBattle";
 import BattleTabLog from "./BattleTabLog";
@@ -58,6 +61,7 @@ const BattleTab = () => {
     setIsBattlePause(false);
 
     if (character?._id) {
+      setBattle(battleStateDefault);
       createBattleApi();
     }
   }, []);
