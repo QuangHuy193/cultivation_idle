@@ -11,7 +11,7 @@ import { EQUIPMENT_SLOTS } from "@/lib/constants/objConstants";
 const Character = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
   const { character } = useCharacterStore();
-  
+
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
 
@@ -20,7 +20,8 @@ const Character = () => {
       <div className="flex h-full flex-col justify-center">
         <div className="mb-4 text-center">
           <span className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}>
-            {character.realmId?.name} - Tầng {character.realmLevel}
+            {character.realmId?.name} -{" "}
+            {character.realmId.levels[character.realmLevel - 1].name}
           </span>
         </div>
 

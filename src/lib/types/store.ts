@@ -1,4 +1,5 @@
-import { CharacterResponse } from "@/lib/interface";
+import { CharacterResponse } from "./characterTypes";
+
 
 export interface CharacterState {
   character: CharacterResponse;

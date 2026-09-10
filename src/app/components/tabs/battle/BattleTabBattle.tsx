@@ -19,7 +19,7 @@ const BattleTabBattle = () => {
   const { battleSpeed, setBattleSpeed } = useSettingStore();
 
   const currentMap = maps?.find(
-    (map) => map._id === character?.currentMap.map,
+    (map) => map._id === character?.currentMap.map._id,
   );
 
   return (

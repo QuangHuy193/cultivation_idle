@@ -1,15 +1,15 @@
 
 
-interface Buff {
-  statBonus: {
-    hp: number;
-    atk: number;
-    def: number;
-  };
-  realmBonus: {
-    realm: number;
-  };
-}
+// interface Buff {
+//   statBonus: {
+//     hp: number;
+//     atk: number;
+//     def: number;
+//   };
+//   realmBonus: {
+//     realm: number;
+//   };
+// }
 
 
 

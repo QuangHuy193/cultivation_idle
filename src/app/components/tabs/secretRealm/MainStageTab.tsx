@@ -12,11 +12,14 @@ import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 import Loading from "../../ui/Loading";
 import { MapsResponse } from "@/lib/types/mapTypes";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
+import { useEffect } from "react";
+import { mapService } from "@/lib/services/map.service";
 
 export default function MainStageTab() {
   const { character } = useCharacterStore();
-  const { maps, loadingUseMap } = useMapStore();
-  //const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { maps } = useMapStore();
+  const { actionLoadingName } = useLoadingStore();
   const { tabState, setTabState } = useToggleStore();
 
   const pushBattle = (mapId: string) => {
@@ -31,6 +34,11 @@ export default function MainStageTab() {
     }
   };
 
+  useEffect(() => {
+    console.log(maps);
+    if (!maps || maps.length === 0) mapService.getMaps();
+  }, [maps]);
+
   return (
     <section
       className="h-full w-full"
@@ -40,7 +48,7 @@ export default function MainStageTab() {
         backgroundPosition: "center",
       }}
     >
-      {loadingUseMap ? (
+      {actionLoadingName === "getMaps" ? (
         <div>
           <Loading message="Đang tải lộ trình thí luyện..." />
         </div>

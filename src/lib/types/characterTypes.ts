@@ -86,8 +86,8 @@ export interface CharacterResponse {
   name: string;
   skinId: Skin;
   class: CharacterClass;
-  realmId?: Realm;
-  realmLevel?: number;
+  realmId: Realm;
+  realmLevel: number;
   cultivation: number;
   currentMap: CurrentMap;
   cultivationPerMinute: CultivationPerMinute;

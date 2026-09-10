@@ -46,9 +46,10 @@ export async function POST(
         },
       );
     }
-
+    const breakthroughRequired =
+      currentRealm.levels[character.realmLevel - 1].cultivationRequired ?? 0;
     // Kiểm tra đủ tu vi chưa
-    if (character.cultivation < currentRealm.cultivationRequired) {
+    if (character.cultivation < breakthroughRequired) {
       return NextResponse.json(
         {
           message: "Chưa đủ tu vi đột phá",
@@ -60,18 +61,24 @@ export async function POST(
     }
 
     // Trừ tu vi
-    character.cultivation -= currentRealm.cultivationRequired;
+    character.cultivation -= breakthroughRequired;
 
     // Tăng tầng trong cảnh giới
     if (character.realmLevel < currentRealm.maxLevel) {
       character.realmLevel += 1;
 
-      await character.save();
+      // tăng chỉ số cơ bản của tầng mới
+      character.stats.realm.atk =
+        currentRealm.levels[character.realmLevel - 1].atkBouns;
+      character.stats.realm.hp =
+        currentRealm.levels[character.realmLevel - 1].hpBonus;
+      character.stats.realm.def =
+        currentRealm.levels[character.realmLevel - 1].defBonus;
     } else {
       // Sang cảnh giới mới
       const nextRealm = await Realm.findOne({
         order: currentRealm.order + 1,
-      });    
+      });
 
       if (!nextRealm) {
         return NextResponse.json(
@@ -87,13 +94,13 @@ export async function POST(
       character.realmId = nextRealm._id;
       character.realmLevel = 1;
 
-      // tăng chỉ số cơ bản của cảnh giới
-      character.stats.realm.atk = nextRealm.atkBonus;
-      character.stats.realm.hp = nextRealm.hpBonus;
-      character.stats.realm.def = nextRealm.defBonus;
-
-      await character.save();
+      // tăng chỉ số cơ bản của cảnh giới mới
+      character.stats.realm.atk = nextRealm.levels[0].atkBouns;
+      character.stats.realm.hp = nextRealm.levels[0].hpBonus;
+      character.stats.realm.def = nextRealm.levels[0].defBonus;
     }
+
+    await character.save();
 
     const updatedCharacter = await Character.findById(id)
       .populate(characterPopulate)

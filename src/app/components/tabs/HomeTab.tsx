@@ -14,10 +14,14 @@ import UserInfo from "../alert/UserInfo";
 import { Menu } from "lucide-react";
 import RedeemCodeForm from "../form/RedeemCodeForm";
 import OfflineReward from "../ui/OfflineReward";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
+import { showError, showSuccess } from "@/lib/toast";
+import Loading from "../ui/Loading";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
   const { alertUserInfo, setAalertUserInfo } = useToggleStore();
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const realmStyle =
     REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
@@ -28,11 +32,16 @@ export default function HomeTab() {
 
   const breakthroughApi = async () => {
     try {
+      setActionLoadingName("break");
       const res = await breakthroughAPI(character._id);
 
       updateCharacter(res);
+      showSuccess("Đột phá thành công");
     } catch (error) {
       console.log(error);
+      showError("Đột phá thất bại")
+    } finally {
+      setActionLoadingName("");
     }
   };
 
@@ -45,6 +54,10 @@ export default function HomeTab() {
         backgroundPosition: "center",
       }}
     >
+      {actionLoadingName === "break" && (
+        <Loading message="Đang cảm ngộ đại đạo..." />
+      )}
+
       {/* Nền nhân vật chồng lên */}
       <div
         className="absolute inset-0"
@@ -71,7 +84,8 @@ export default function HomeTab() {
             <span
               className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}
             >
-              {character.realmId?.name} - Tầng {character.realmLevel}
+              {character.realmId?.name} -{" "}
+              {character.realmId.levels[character.realmLevel - 1].name}
             </span>
 
             <div className="relative mt-2 h-2 w-full overflow-hidden rounded-full bg-white">

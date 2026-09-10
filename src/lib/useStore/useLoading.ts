@@ -7,7 +7,9 @@ export type LoadingKey =
   | "equip" // trang bị
   | "useItem" // dùng vật phẩm
   | "unequipSkill" // gỡ trang bị skill
-  | "equipSkill"; // trang bị skill
+  | "equipSkill" // trang bị skill
+  | "getMaps"// tải map
+  | "break" // đột phá cảnh giới
 
 interface useLoandingState {
   actionLoadingName: LoadingKey;

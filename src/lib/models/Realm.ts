@@ -1,5 +1,38 @@
 import { InferSchemaType, Schema, model, models } from "mongoose";
 
+// các cảnh giới nhỏ
+const RealLevels = new Schema(
+  {
+    order: {
+      type: Number,
+    },
+
+    name: {
+      type: String,
+    },
+
+    cultivationRequired: {
+      type: Number,
+    },
+
+    hpBonus: {
+      type: Number,
+      default: 0,
+    },
+
+    atkBonus: {
+      type: Number,
+      default: 0,
+    },
+
+    defBonus: {
+      type: Number,
+      default: 0,
+    },
+  },
+  { _id: false },
+);
+
 const RealmSchema = new Schema(
   {
     _id: {
@@ -23,24 +56,8 @@ const RealmSchema = new Schema(
       default: 10,
     },
 
-    cultivationRequired: {
-      type: Number,
-      required: true,
-    },   
-
-    hpBonus: {
-      type: Number,
-      default: 0,
-    },
-
-    atkBonus: {
-      type: Number,
-      default: 0,
-    },
-
-    defBonus: {
-      type: Number,
-      default: 0,
+    levels: {
+      type: [RealLevels],
     },
   },
   {
