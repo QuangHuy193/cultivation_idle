@@ -10,15 +10,16 @@ import { useClassStore } from "@/lib/useStore/useClassStore";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMisionStore } from "@/lib/useStore/useMissionStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
+import ComfirmAlert from "../components/alert/ComfirmAlert";
 
 export default function GamePage() {
   const { tabState } = useToggleStore();
   const { character } = useCharacterStore();
   const { setSkins } = useSkinStore();
-  const { setClasses, setLoadingUseClass } = useClassStore();
+  const { setClasses } = useClassStore();
   const { setCharacterClassMission } = useMisionStore();
   const { setMaps } = useMapStore();
-
+  const { comfirmAlert } = useToggleStore();
   useEffect(() => {
     // const handleBeforeUnload = (event: BeforeUnloadEvent) => {
     //   event.preventDefault();
@@ -48,6 +49,13 @@ export default function GamePage() {
         className="mx-auto flex h-full w-full flex-col backdrop-blur-sm
       shadow-[0_20px_50px_rgba(120,53,15,0.12)]"
       >
+        {comfirmAlert.isOpen && (
+          <ComfirmAlert
+            text={comfirmAlert.text}
+            onYes={comfirmAlert.onYes}
+            onNo={comfirmAlert.onNo}
+          />
+        )}
         <div className="flex-1">{RENDER_CONTENT(tabState.activeTab)}</div>
       </div>
     </main>

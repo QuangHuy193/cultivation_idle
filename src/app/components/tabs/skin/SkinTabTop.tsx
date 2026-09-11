@@ -44,7 +44,7 @@ const SkinTabTop = () => {
           </div>
 
           <div className="space-y-2">
-            {selectedSkin.buffs.attack > 0 && (
+            {selectedSkin.buffs.atk > 0 && (
               <div
                 className="
             flex items-center justify-between
@@ -52,7 +52,7 @@ const SkinTabTop = () => {
           "
               >
                 <span className="font-semibold text-red-500">
-                  ⚔️ +{selectedSkin.buffs.attack}
+                  ⚔️ +{selectedSkin.buffs.atk}
                 </span>
               </div>
             )}
@@ -70,7 +70,7 @@ const SkinTabTop = () => {
               </div>
             )}
 
-            {selectedSkin.buffs.defense > 0 && (
+            {selectedSkin.buffs.def > 0 && (
               <div
                 className="
             flex items-center justify-between
@@ -78,7 +78,7 @@ const SkinTabTop = () => {
           "
               >
                 <span className="font-semibold text-blue-500">
-                  🛡️ +{selectedSkin.buffs.defense}
+                  🛡️ +{selectedSkin.buffs.def}
                 </span>
               </div>
             )}

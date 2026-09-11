@@ -68,7 +68,7 @@ export default function HomeTab() {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-      />
+      />    
 
       <OfflineReward />
 

@@ -1,3 +1,5 @@
+export const CLASS_COATING_XS =
+  "fixed inset-0 z-50 flex items-center justify-center bg-black/10";
 export const CLASS_COATING_SM =
   "fixed inset-0 z-50 flex items-center justify-center bg-black/20";
 export const CLASS_COATING_L =

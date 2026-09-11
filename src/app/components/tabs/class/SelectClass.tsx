@@ -2,12 +2,27 @@
 
 import { SKILL_TYPE_TEXT_MAP } from "@/lib/constants/mapConstants";
 import { useClassStore } from "@/lib/useStore/useClassStore";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 import { useState } from "react";
 
 const SelectClass = () => {
   const { classes } = useClassStore();
   const [classSelect, setClassSelect] = useState("");
+  const { setComfirmAlert } = useToggleStore();
+
+  const onSelect = async () => {
+    const onComfirm = () => {};
+    const onUncomfirm = () => {
+      setComfirmAlert({ isOpen: false });
+    };
+    setComfirmAlert({
+      isOpen: true,
+      text: "Bạn chắc chắn muốn chọn hệ phái này?",
+      onYes: onComfirm,
+      onNo: onUncomfirm,
+    });
+  };
 
   return (
     <div className="w-full h-full flex flex-col gap-3 overflow-y-auto items-center justify-center">
@@ -69,7 +84,8 @@ const SelectClass = () => {
                       <div>🛡️ Thủ: +{cls.levels[0].buffs.def}</div>
 
                       <div className="font-medium text-blue-600">
-                        ✦ Tấn công kỹ năng hệ {SKILL_TYPE_TEXT_MAP(cls.typeSkillBuff)} +
+                        ✦ Tấn công kỹ năng hệ{" "}
+                        {SKILL_TYPE_TEXT_MAP(cls.typeSkillBuff)} +
                         {cls.levels[0].buffs.skill}%
                       </div>
                     </div>
@@ -78,6 +94,9 @@ const SelectClass = () => {
 
                 <div className="mt-4 flex justify-center">
                   <button
+                    onClick={() => {
+                      onSelect();
+                    }}
                     className="rounded-xl bg-amber-500 px-4 py-2 font-semibold text-white
                     transition hover:bg-amber-600"
                   >

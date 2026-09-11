@@ -1,6 +1,9 @@
 import { create } from "zustand";
-import { Equip, Item, Skill } from "../interface";
-import { TabType } from "../constants/numberConstants";
+
+import { Equip } from "../types/equipTypes";
+import { Item } from "../types/itemTypes";
+import { Skill } from "../types/skillTypes";
+import { TabType } from "../constants/objConstants";
 
 interface UserToggleState {
   // quản lý các alert thông tin skill, equip, item
@@ -25,6 +28,13 @@ interface UserToggleState {
   isOpenPause: boolean;
   // quản lý alert user. code, setting,...
   alertUserInfo: "" | "menu" | "code" | "setting";
+  // quản lý hộp thoại xác nhận
+  comfirmAlert: {
+    isOpen: boolean;
+    text: string;
+    onYes: () => void;
+    onNo: () => void;
+  };
 
   setItemInfoToggle: (payload: {
     open: boolean;
@@ -37,6 +47,7 @@ interface UserToggleState {
   setTabState: (activeTab: TabType, prevousTab: TabType) => void;
   setIsOpenPause: (open: boolean) => void;
   setAalertUserInfo: (alert: "" | "menu" | "code" | "setting") => void;
+  setComfirmAlert: (alert: any) => void;
 }
 
 export const useToggleStore = create<UserToggleState>()((set) => ({
@@ -60,6 +71,13 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
 
   alertUserInfo: "",
 
+  comfirmAlert: {
+    isOpen: false,
+    text: "",
+    onYes: () => {},
+    onNo: () => {},
+  },
+
   setItemInfoToggle: (payload) =>
     set({
       itemInfoToggle: {
@@ -79,5 +97,11 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
 
   setAalertUserInfo: (alert) => {
     set({ alertUserInfo: alert });
+  },
+
+  setComfirmAlert: (alert) => {
+    set((state) => ({
+      comfirmAlert: { ...state.comfirmAlert, ...alert },
+    }));
   },
 }));
