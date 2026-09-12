@@ -1,6 +1,7 @@
 import {
+  CharacterInventoryItem,
   CharacterResponse,
-  ProgressMapResponse,
+  CharacterStats,
 } from "@/lib/types/characterTypes";
 import api from "./axios";
 import { Skin } from "@/lib/types/skinTypes";
@@ -89,6 +90,24 @@ export async function equipSkinAPI(
   characterId: string,
   skinId: string,
 ): Promise<Skin> {
-  const res = await api.post(`/api/character/${characterId}/skin/${skinId}`);
+  const res = await api.post(
+    `/api/character/${characterId}/skin/${skinId}/equip`,
+  );
   return res.data.skinId;
+}
+
+// mua skin
+export async function buySkinAPI(
+  characterId: string,
+  skinId: string,
+): Promise<{
+  inventory: CharacterInventoryItem;
+  spiritStone: number;
+  finalStats: CharacterStats;
+}> {
+  const res = await api.post(
+    `/api/character/${characterId}/skin/${skinId}/buy`,
+  );
+
+  return res.data;
 }

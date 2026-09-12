@@ -1,4 +1,4 @@
-import { equipSkinAPI } from "@/app/axios/characterAPI";
+import { buySkinAPI, equipSkinAPI } from "@/app/axios/characterAPI";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { SPIRITSTONE_ICON } from "@/lib/constants/imageConstants";
 import { Skin } from "@/lib/types/skinTypes";
@@ -7,6 +7,7 @@ import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useSkinStore } from "@/lib/useStore/useSkinTab";
 import Image from "next/image";
 import CoatingButton from "../../ui/CoatingButton";
+import { showWarning } from "@/lib/toast";
 
 interface SkinImageProps {
   skin: Skin;
@@ -22,11 +23,32 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
 
   const rarityCSS = RARITY_CSS[skin.rarity] ?? RARITY_CSS.common;
 
-  const equipSkinApi = async (characterId: string, skinId: string) => {
+  const equipSkinApi = async () => {
     try {
-      setActionLoadingName("equipSkin");
-      const res = await equipSkinAPI(characterId, skinId);
+      setActionLoadingName(skin._id);
+      const res = await equipSkinAPI(character._id, skin._id);
       updateCharacter({ skinId: res });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setActionLoadingName("");
+    }
+  };
+
+  const buySkinApi = async () => {
+    try {
+      if (skin.price.unity === "linhthach") {
+        if (character.spiritStone < skin.price.number) {
+          showWarning("Bạn không đủ linh thạch mua trang phục này!");
+        } else {
+          setActionLoadingName(skin._id);
+          const res = await buySkinAPI(character._id, skin._id);
+          console.log(res);
+          updateCharacter({ ...res });
+        }
+      } else {
+        // mua bằng tiền,...
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -67,26 +89,31 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
       >
         {!isHas ? (
           <div className="flex justify-center gap-2 items-center">
-            {skin.price.number}
-            <Image
-              height={80}
-              width={80}
-              alt="linhthach"
-              src={SPIRITSTONE_ICON}
-              className="w-5 h-5"
-            />
+            <div
+              className="flex items-center justify-center gap-1.5"
+              onClick={buySkinApi}
+            >
+              {actionLoadingName === skin._id && (
+                <CoatingButton borderRadius="rounded-xl" />
+              )}
+              {skin.price.number}
+              <Image
+                height={80}
+                width={80}
+                alt="linhthach"
+                src={SPIRITSTONE_ICON}
+                className="w-5 h-5"
+              />
+            </div>
           </div>
         ) : isEQ ? (
           "Đã trang bị"
         ) : (
-          <button
-            className=""
-            onClick={() => {
-              equipSkinApi(character._id, skin._id);
-            }}
-          >
+          <button onClick={equipSkinApi}>
             Trang bị
-            {actionLoadingName === "equipSkin" && <CoatingButton borderRadius="rounded-xl" />}
+            {actionLoadingName === skin._id && (
+              <CoatingButton borderRadius="rounded-xl" />
+            )}
           </button>
         )}
       </div>
