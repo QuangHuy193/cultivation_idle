@@ -64,6 +64,7 @@ export const calculateCharacterStats = (character: ICharacter) => {
 
 // thêm đột phá nếu tu vi vượt ngưỡng
 export function addBreakthroughInfo(character: CharacterResponse) {
+  console.log(character);
   const breakthroughRequired =
     character.realmId?.levels[character.realmLevel - 1]
       .cultivationRequired ?? 0;

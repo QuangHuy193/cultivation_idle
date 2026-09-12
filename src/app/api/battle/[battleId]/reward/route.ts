@@ -2,11 +2,14 @@ import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/db/db";
 
+import "@/lib/models";
+
 import Battle from "@/lib/models/Battle";
 import Character from "@/lib/models/Character";
 import "@/lib/models/Skill";
 import {
   addBreakthroughInfo,
+  characterPopulate,
   grantRewards,
   mapPopulate,
   rollChance,
@@ -101,14 +104,17 @@ export async function POST(
 
     await character.save();
 
-    const charObj = character.toObject();
+    const charRes = await Character.findById(battle.characterId)
+      .populate(characterPopulate)
+      .lean();
 
     return NextResponse.json({
       character: {
         currentMap: character.currentMap,
         cultivation: character.cultivation,
         spiritStone: character.spiritStone,
-        canBreakthrough: addBreakthroughInfo(charObj).canBreakthrough,
+        canBreakthrough: addBreakthroughInfo(charRes).canBreakthrough,
+        breakthroughRequired: addBreakthroughInfo(charRes).breakthroughRequired,
       },
 
       rewards: {

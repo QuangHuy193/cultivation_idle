@@ -17,7 +17,7 @@ const UserInfo = () => {
 
   const { setAalertUserInfo } = useToggleStore();
   const { classes } = useClassStore();
-  console.log(character);
+  
   const classInfo =
     character.class?.classId &&
     classes?.find((cls) => {

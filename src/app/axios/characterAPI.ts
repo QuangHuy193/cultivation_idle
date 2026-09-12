@@ -1,5 +1,9 @@
-import { CharacterResponse, ProgressMapResponse } from "@/lib/types/characterTypes";
+import {
+  CharacterResponse,
+  ProgressMapResponse,
+} from "@/lib/types/characterTypes";
 import api from "./axios";
+import { Skin } from "@/lib/types/skinTypes";
 
 export async function getCharacterAPI(
   userId: string,
@@ -80,4 +84,11 @@ export async function unequipSkillAPI(
   return res.data as CharacterResponse;
 }
 
-
+// trang bị skin
+export async function equipSkinAPI(
+  characterId: string,
+  skinId: string,
+): Promise<Skin> {
+  const res = await api.post(`/api/character/${characterId}/skin/${skinId}`);
+  return res.data.skinId;
+}

@@ -10,7 +10,7 @@ export type LoadingKey =
   | "equipSkill" // trang bị skill
   | "getMaps"// tải map
   | "break" // đột phá cảnh giới
-
+  |"equipSkin"// trang bị skin
 interface useLoandingState {
   actionLoadingName: LoadingKey;
 
