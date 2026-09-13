@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import OfflineRewardAlert from "../alert/OfflineRewardAlert";
 
-const OfflineReward = () => {
+const OfflineRewardIcon = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="fixed right-3 bottom-50">
@@ -23,4 +23,4 @@ const OfflineReward = () => {
   );
 };
 
-export default OfflineReward;
+export default OfflineRewardIcon;

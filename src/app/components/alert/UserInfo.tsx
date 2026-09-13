@@ -17,7 +17,7 @@ const UserInfo = () => {
 
   const { setAalertUserInfo } = useToggleStore();
   const { classes } = useClassStore();
-  
+
   const classInfo =
     character.class?.classId &&
     classes?.find((cls) => {
@@ -67,7 +67,12 @@ const UserInfo = () => {
               </div>
 
               <button className="rounded-lg bg-white/70 p-2 transition hover:bg-white">
-                <SquarePen className="h-4 w-4 text-zinc-700" />
+                <SquarePen
+                  className="h-4 w-4 text-zinc-700"
+                  onClick={() => {
+                    setAalertUserInfo("changeName");
+                  }}
+                />
               </button>
             </div>
 

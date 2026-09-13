@@ -43,7 +43,7 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
         } else {
           setActionLoadingName(skin._id);
           const res = await buySkinAPI(character._id, skin._id);
-          console.log(res);
+          
           updateCharacter({ ...res });
         }
       } else {

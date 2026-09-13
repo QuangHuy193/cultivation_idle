@@ -1,18 +1,28 @@
 "use client";
 
+import { selectClassAPI } from "@/app/axios/classApi";
 import { SKILL_TYPE_TEXT_MAP } from "@/lib/constants/mapConstants";
+import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useClassStore } from "@/lib/useStore/useClassStore";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 import { useState } from "react";
+import CoatingButton from "../../ui/CoatingButton";
+import Loading from "../../ui/Loading";
 
 const SelectClass = () => {
+  const { character, updateCharacter } = useCharacterStore();
   const { classes } = useClassStore();
   const [classSelect, setClassSelect] = useState("");
   const { setComfirmAlert } = useToggleStore();
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
-  const onSelect = async () => {
-    const onComfirm = () => {};
+  const onSelect = async (classId: string) => {
+    const onComfirm = async () => {
+      selectClassApi(classId);
+      setComfirmAlert({ isOpen: false });
+    };
     const onUncomfirm = () => {
       setComfirmAlert({ isOpen: false });
     };
@@ -22,6 +32,18 @@ const SelectClass = () => {
       onYes: onComfirm,
       onNo: onUncomfirm,
     });
+  };
+
+  const selectClassApi = async (classId: string) => {
+    try {
+      setActionLoadingName("selectClass");
+      const res = await selectClassAPI(character._id, classId);
+      updateCharacter(res);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setActionLoadingName("");
+    }
   };
 
   return (
@@ -66,6 +88,9 @@ const SelectClass = () => {
             {/* phải */}
             {classSelect === cls._id && (
               <div className="flex flex-1 flex-col justify-between">
+                {actionLoadingName === "selectClass" && (
+                  <Loading message="Đang gia nhập hệ phái..." />
+                )}
                 <div>
                   <div className="mb-3 text-sm text-zinc-600">
                     {cls.description}
@@ -95,7 +120,7 @@ const SelectClass = () => {
                 <div className="mt-4 flex justify-center">
                   <button
                     onClick={() => {
-                      onSelect();
+                      onSelect(cls._id);
                     }}
                     className="rounded-xl bg-amber-500 px-4 py-2 font-semibold text-white
                     transition hover:bg-amber-600"

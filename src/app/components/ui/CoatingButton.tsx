@@ -2,7 +2,7 @@ interface CoatingButtonProps {
   borderRadius?: string;
 }
 
-const CoatingButton = ({ borderRadius = "" }: CoatingButtonProps) => {
+const CoatingButton = ({ borderRadius = "rounded-xl" }: CoatingButtonProps) => {
   return (
     <div
       className={`absolute inset-0 bg-black/20 flex justify-center items-center 

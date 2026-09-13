@@ -10,6 +10,8 @@ export type LoadingKey =
   | "equipSkill" // trang bị skill
   | "getMaps" // tải map
   | "break" // đột phá cảnh giới
+  | "redeemCode" // đổi code
+  |"selectClass"// chọn class
   | string; // các trường hợp danh sách dùng id
 interface useLoandingState {
   actionLoadingName: LoadingKey;

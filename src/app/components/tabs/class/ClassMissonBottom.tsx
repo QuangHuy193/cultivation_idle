@@ -25,7 +25,7 @@ const ClassMissonBottom = () => {
             return (
               <div
                 key={clsMission._id}
-                className={`relative overflow-hidden rounded-xl border-2 p-3
+                className={`relative overflow-hidden rounded-xl border-2 p-3 mb-3
                   bg-white/90 shadow-sm ${RARITY_CSS[clsMission.rarity].border}`}
               >
                 {/* Overlay đã nhận */}
@@ -123,11 +123,21 @@ const ClassMissonBottom = () => {
                 </div>
 
                 {/* Thưởng */}
-                <div
-                  className={`mt-2 border-t pt-2 text-xs font-semibold 
-                    ${RARITY_CSS[clsMission.rarity].text}`}
-                >
-                  +{clsMission.rewardExp} EXP hệ phái
+                <div className="flex justify-between pt-3 border-t mt-2">
+                  <div
+                    className={`pt-2 text-xs font-semibold 
+                      ${RARITY_CSS[clsMission.rarity].text}`}
+                  >
+                    +{clsMission.rewardExp} EXP hệ phái
+                  </div>
+                  <div className="flex items-end">
+                    {(itemMission?.quantity ?? 0) >= clsMission.quantity &&
+                      clsMission.status !== "claimed" && (
+                        <button className="px-5 py-1 rounded-xl bg-cyan-400 text-white">
+                          Nhận
+                        </button>
+                      )}
+                  </div>
                 </div>
               </div>
             );

@@ -1,7 +1,6 @@
 import { Class, ClassMission } from "./classTypes";
 import { Equip } from "./equipTypes";
 import { Item } from "./itemTypes";
-import { MapsResponse } from "./mapTypes";
 import { Realm } from "./realmTypes";
 import { Skill } from "./skillTypes";
 import { Skin } from "./skinTypes";

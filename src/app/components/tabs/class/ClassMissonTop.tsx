@@ -1,5 +1,4 @@
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import { useClassStore } from "@/lib/useStore/useClassStore";
 import { Gift, RefreshCw } from "lucide-react";
 import Image from "next/image";
 
@@ -7,16 +6,14 @@ const milestones = [25, 50, 75, 100];
 
 const ClassMissonTop = () => {
   const { character } = useCharacterStore();
-  const { classes } = useClassStore();
+  console.log(character.class);
 
   const charCls = character.class.classId;
   const charClsLevel = character.class.classLevelCharacter - 1;
   const charClsExp = character.class.exp;
 
-  const classs = classes.find((cl) => cl._id === charCls._id);
-
-  const percentExp = classs?.levels[charClsLevel]?.requiredExp
-    ? (charClsExp / classs?.levels[charClsLevel]?.requiredExp) * 100
+  const percentExp = charCls?.levels[charClsLevel]?.requiredExp
+    ? (charClsExp / charCls?.levels[charClsLevel]?.requiredExp) * 100
     : 0;
 
   return (
@@ -54,7 +51,7 @@ const ClassMissonTop = () => {
               px-3 py-1 text-xs font-bold text-white shadow"
             >
               {character.class.exp} /{" "}
-              {classs?.levels[charClsLevel]?.requiredExp}
+              {charCls?.levels[charClsLevel]?.requiredExp}
             </div>
 
             {/* Tên cấp hiện tại */}

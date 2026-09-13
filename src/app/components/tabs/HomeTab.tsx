@@ -12,8 +12,8 @@ import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 import UserInfo from "../alert/UserInfo";
 import { Menu } from "lucide-react";
-import RedeemCodeForm from "../form/RedeemCodeForm";
-import OfflineReward from "../ui/OfflineReward";
+import SingleInputForm from "../form/SingleInputForm";
+import OfflineRewardIcon from "../ui/OfflineRewardIcon";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { showError, showSuccess } from "@/lib/toast";
 import Loading from "../ui/Loading";
@@ -39,7 +39,7 @@ export default function HomeTab() {
       showSuccess("Đột phá thành công");
     } catch (error) {
       console.log(error);
-      showError("Đột phá thất bại")
+      showError("Đột phá thất bại");
     } finally {
       setActionLoadingName("");
     }
@@ -68,9 +68,9 @@ export default function HomeTab() {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-      />    
+      />
 
-      <OfflineReward />
+      <OfflineRewardIcon />
 
       {/* Nội dung */}
       <div className="relative z-10">
@@ -128,7 +128,22 @@ export default function HomeTab() {
       </div>
 
       {alertUserInfo === "menu" && <UserInfo />}
-      {alertUserInfo === "code" && <RedeemCodeForm />}
+      {alertUserInfo === "code" && (
+        <SingleInputForm
+          title="NHẬP MÃ QUÀ TẬNG"
+          type="redeemCode"
+          btnLabel="ĐỔI MÃ"
+          placeholderInput="Nhập mã quà tặng..."
+        />
+      )}
+      {alertUserInfo === "changeName" && (
+        <SingleInputForm
+          title="NHẬP TÊN MỚI"
+          type="changeName"
+          btnLabel="ĐỔI TÊN"
+          placeholderInput="Tối đa 30 kí tự, không bao gồm kí tự đặc biệt"
+        />
+      )}
     </section>
   );
 }

@@ -27,7 +27,7 @@ interface UserToggleState {
   // quản lý alert pause
   isOpenPause: boolean;
   // quản lý alert user. code, setting,...
-  alertUserInfo: "" | "menu" | "code" | "setting";
+  alertUserInfo: "" | "menu" | "code" | "setting" | "changeName";
   // quản lý hộp thoại xác nhận
   comfirmAlert: {
     isOpen: boolean;
@@ -46,7 +46,9 @@ interface UserToggleState {
   setEquipSkillSelect: (data: { active: boolean; skillId: string }) => void;
   setTabState: (activeTab: TabType, prevousTab: TabType) => void;
   setIsOpenPause: (open: boolean) => void;
-  setAalertUserInfo: (alert: "" | "menu" | "code" | "setting") => void;
+  setAalertUserInfo: (
+    alert: "" | "menu" | "code" | "setting" | "changeName",
+  ) => void;
   setComfirmAlert: (alert: any) => void;
 }
 
