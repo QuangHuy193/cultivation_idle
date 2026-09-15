@@ -11,7 +11,7 @@ const SkinTabBottom = ({ skins }: SkinTabBottomProps) => {
 
   return (
     <div
-      className="absolute inset-x-0 top-0 bottom-16.25 grid grid-cols-3 gap-2 
+      className="absolute inset-x-0 top-0 bottom-18.25 grid grid-cols-3 gap-2 
     overflow-y-scroll "
     >
       {skins &&

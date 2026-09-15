@@ -110,7 +110,7 @@ export async function POST(
 
     return NextResponse.json({
       character: {
-        currentMap: character.currentMap,
+        currentMap: charRes.currentMap,
         cultivation: character.cultivation,
         spiritStone: character.spiritStone,
         canBreakthrough: addBreakthroughInfo(charRes).canBreakthrough,

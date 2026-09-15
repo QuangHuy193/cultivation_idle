@@ -6,6 +6,7 @@ import { MAX_ITEM_SLOTS } from "@/lib/constants/numberConstants";
 import Image from "next/image";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import ItemInfo from "../../alert/ItemInfo";
+import { RARITY_CSS } from "@/lib/constants/cssConstants";
 
 export default function Inventory() {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
@@ -64,7 +65,7 @@ export default function Inventory() {
                 className="aspect-square rounded-lg border border-zinc-300 bg-white shadow-sm overflow-hidden"
               >
                 {equip ? (
-                  <>
+                  <div className={`${RARITY_CSS[equip.equipId.rarity].bg}`}>
                     <Image
                       src={equip.equipId.icon || "/sword_1.png"}
                       alt={equip.equipId.name}
@@ -79,7 +80,7 @@ export default function Inventory() {
                         });
                       }}
                     />
-                  </>
+                  </div>
                 ) : (
                   <div className="flex h-full items-center justify-center text-xs text-zinc-400"></div>
                 )}
@@ -97,7 +98,7 @@ export default function Inventory() {
                 className="z-1 relative aspect-square rounded-lg border border-zinc-300 bg-white shadow-sm overflow-hidden"
               >
                 {item ? (
-                  <>
+                  <div className={`${RARITY_CSS[item.itemId.rarity].bg} h-full w-full`}>
                     <Image
                       src={item.itemId.icon || "/sword_1.png"}
                       alt={item.itemId.name}
@@ -117,7 +118,7 @@ export default function Inventory() {
                     <div className="absolute bottom-1 right-1 rounded bg-black/70 px-1 text-[10px] text-white">
                       {item.quantity}
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <div className="flex h-full items-center justify-center text-xs text-zinc-400"></div>
                 )}

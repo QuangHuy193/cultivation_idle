@@ -7,6 +7,7 @@ import CharacterTabsBar from "@/app/components/navbar/CharacterTabsBar";
 import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { EQUIPMENT_SLOTS } from "@/lib/constants/objConstants";
+import TippyCustom from "../../ui/TippyCustom";
 
 const Character = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
@@ -18,10 +19,17 @@ const Character = () => {
   return (
     <section className="flex flex-col w-full h-full px-5">
       <div className="flex h-full flex-col justify-center">
-        <div className="mb-4 text-center">
-          <span className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}>
-            {character.realmId?.name} -{" "}
-            {character.realmId.levels[character.realmLevel - 1].name}
+        <div className="text-center">
+          <span
+            className={`flex justify-center gap-2 items-center font-bold text-lg
+              ${realmStyle?.text} ${realmStyle?.glow}`}
+          >
+            <div>
+              {character.realmId?.name} -{" "}
+              {character.realmId.levels[character.realmLevel - 1].name}
+            </div>
+
+            <TippyCustom content="Nguyên anh - Hóa thần" />          
           </span>
         </div>
 
@@ -68,9 +76,9 @@ const Character = () => {
               width={50}
               src={character.skinId.icon || DEFAULT_IMG_CHARACTER}
               alt="Nhân vật"
-              className="h-full w-full object-contain rounded-lg"
+              className="h-full w-full object-contain rounded-lg mb-4"
             />
-            <div className="flex mt-2 justify-between gap-4">
+            <div className="flex justify-between gap-4">
               <div className="text-red-400">
                 ⚔️ {character.finalStats?.atk || character.stats.base.atk}
               </div>

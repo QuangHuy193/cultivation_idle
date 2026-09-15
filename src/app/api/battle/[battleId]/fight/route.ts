@@ -56,6 +56,8 @@ export async function POST(
 
     const turns = [];
 
+    const logs = [];
+
     for (let turn = 1; turn <= MAX_TURN; turn++) {
       // giảm CD
       skills.forEach((skill) => {
@@ -63,8 +65,6 @@ export async function POST(
           skill.currentCooldown--;
         }
       });
-
-      const logs = [];
 
       // player turn
       let totalDamage = 0;
@@ -114,6 +114,9 @@ export async function POST(
           logs,
         });
 
+        battle.logs = logs;
+        await battle.save();
+
         return NextResponse.json({
           battleStatus: "win",
           turns,
@@ -148,6 +151,8 @@ export async function POST(
 
       // kiểm tra thua
       if (playerHp <= 0) {
+        battle.logs = logs;
+        await battle.save();
         return NextResponse.json({
           battleStatus: "lose",
           turns,
@@ -155,6 +160,8 @@ export async function POST(
       }
     }
 
+    battle.logs = logs;
+    await battle.save();
     return NextResponse.json({
       battleStatus: "lose",
       reason: "max_turn",

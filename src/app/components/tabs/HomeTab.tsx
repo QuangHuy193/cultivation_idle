@@ -11,7 +11,7 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 import UserInfo from "../alert/UserInfo";
-import { Menu } from "lucide-react";
+import { Menu, Plus } from "lucide-react";
 import SingleInputForm from "../form/SingleInputForm";
 import OfflineRewardIcon from "../ui/OfflineRewardIcon";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
@@ -108,22 +108,42 @@ export default function HomeTab() {
           </div>
         </div>
 
-        {/* linh thạch */}
-        <div className="fixed top-0 right-0 p-3 rounded-2xl flex items-center gap-2">
-          <Image
-            src={SPIRITSTONE_ICON}
-            alt="Linh thạch"
-            height={80}
-            width={80}
-            className="w-8 h-8"
-          />
-          <span className="text-xl text-cyan-500">
-            {character?.spiritStone || "0"}
-          </span>
+        {/* linh thạch, menu */}
+        <div
+          className="fixed top-2 right-1 z-50 flex items-center gap-3 rounded-2xl border 
+          border-amber-200/60 bg-amber-50/95 px-3 py-2 shadow-lg backdrop-blur-sm"
+        >
+          <div
+            className="flex items-center gap-2 rounded-xl border border-cyan-200 
+            bg-white/70 px-3 py-1 shadow-sm"
+          >
+            <Image
+              src={SPIRITSTONE_ICON}
+              alt="Linh thạch"
+              height={80}
+              width={80}
+              className="h-8 w-8 drop-shadow-sm"
+            />
 
-          <span onClick={() => setAalertUserInfo("menu")}>
-            <Menu />
-          </span>
+            <span
+              className="min-w-15 text-right text-lg font-bold text-cyan-600"
+            >
+              {(character?.spiritStone || 0).toLocaleString()}
+            </span>
+
+            <span>
+              <Plus size={20} className="text-green-700"/>
+            </span>
+          </div>
+
+          <button
+            onClick={() => setAalertUserInfo("menu")}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border 
+            border-cyan-200 bg-white/70 text-slate-700 shadow-sm transition-all
+            hover:scale-105 active:scale-95"
+          >
+            <Menu size={20} />
+          </button>
         </div>
       </div>
 
