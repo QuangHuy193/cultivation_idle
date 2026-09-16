@@ -111,3 +111,24 @@ export async function buySkinAPI(
 
   return res.data;
 }
+
+// cập nhật thưởng tu vi off
+export async function updateCulOffAPI(
+  characterId: string,
+): Promise<{
+  cultivationOffline: number;
+  timeReawrdOffline: number;
+}> {
+  const res = await api.post(`/api/character/${characterId}/online`);
+
+  return res.data;
+}
+
+// cập nhật time online
+export async function updateTimeCharacterOnlineAPI(
+  characterId: string,
+): Promise<string> {
+  const res = await api.post(`/api/character/${characterId}/online/refresh`);
+
+  return res.data.message;
+}

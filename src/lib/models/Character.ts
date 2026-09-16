@@ -274,6 +274,18 @@ const CharacterSchema = new Schema(
       default: {},
     },
 
+    // tu vi nhận khi off
+    cultivationOffline: {
+      type: Number,
+      default: 0,
+    },
+
+    // số giờ đã off
+    timeReawrdOffline: {
+      type: Number,
+      defalut: 0,
+    },
+
     spiritStone: {
       type: Number,
       default: 0,

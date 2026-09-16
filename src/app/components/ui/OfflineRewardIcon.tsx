@@ -3,9 +3,12 @@
 import Image from "next/image";
 import { useState } from "react";
 import OfflineRewardAlert from "../alert/OfflineRewardAlert";
+import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 
 const OfflineRewardIcon = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { character } = useCharacterStore();
+
   return (
     <div className="fixed right-3 bottom-50">
       <button>

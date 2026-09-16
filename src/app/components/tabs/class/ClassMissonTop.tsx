@@ -6,7 +6,6 @@ const milestones = [25, 50, 75, 100];
 
 const ClassMissonTop = () => {
   const { character } = useCharacterStore();
-  console.log(character.class);
 
   const charCls = character.class.classId;
   const charClsLevel = character.class.classLevelCharacter - 1;

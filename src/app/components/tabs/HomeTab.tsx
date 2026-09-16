@@ -45,6 +45,8 @@ export default function HomeTab() {
     }
   };
 
+
+
   return (
     <section
       className="relative h-full w-full overflow-hidden"
@@ -125,14 +127,12 @@ export default function HomeTab() {
               className="h-8 w-8 drop-shadow-sm"
             />
 
-            <span
-              className="min-w-15 text-right text-lg font-bold text-cyan-600"
-            >
+            <span className="min-w-15 text-right text-lg font-bold text-cyan-600">
               {(character?.spiritStone || 0).toLocaleString()}
             </span>
 
             <span>
-              <Plus size={20} className="text-green-700"/>
+              <Plus size={20} className="text-green-700" />
             </span>
           </div>
 

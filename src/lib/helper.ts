@@ -1,6 +1,9 @@
 import { Types } from "mongoose";
 import { ICharacter } from "./models/Character";
-import { CharacterResponse } from "./types/characterTypes";
+import {
+  CharacterResponse,
+  CultivationPerMinute,
+} from "./types/characterTypes";
 
 export const characterPopulate = [
   { path: "realmId" },
@@ -62,12 +65,20 @@ export const calculateCharacterStats = (character: ICharacter) => {
   return { finalStats };
 };
 
+export function calculateCharacterCultivationPerMinute(
+  cultivationPerMinute: CultivationPerMinute,
+) {
+  return Object.values(cultivationPerMinute).reduce(
+    (sum, value) => sum + value,
+    0,
+  );
+}
+
 // thêm đột phá nếu tu vi vượt ngưỡng
 export function addBreakthroughInfo(character: CharacterResponse) {
-  console.log(character);
   const breakthroughRequired =
-    character.realmId?.levels[character.realmLevel - 1]
-      .cultivationRequired ?? 0;
+    character.realmId?.levels[character.realmLevel - 1].cultivationRequired ??
+    0;
 
   const canBreakthrough = character.cultivation >= breakthroughRequired;
 

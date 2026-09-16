@@ -1,7 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getCharacterAPI } from "@/app/axios/characterAPI";
+import {
+  getCharacterAPI,
+  updateCulOffAPI,
+  updateTimeCharacterOnlineAPI,
+} from "@/app/axios/characterAPI";
 import SignInForm from "@/app/components/form/SignInForm";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useUserStore } from "@/lib/useStore/useUserStore";
@@ -15,7 +19,8 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const { email, token, userId } = useUserStore();
-  const { clearCharacter, setCharacter } = useCharacterStore();
+  const { clearCharacter, setCharacter, updateCharacter, character } =
+    useCharacterStore();
   const isLoggedIn = Boolean(token);
 
   function openLogin() {
@@ -49,6 +54,22 @@ export default function Home() {
       setActionLoadingName("");
     }
   }
+
+  useEffect(() => {
+    const updateTimeCharacterOnline = async () => {
+      try {
+        const res = await updateCulOffAPI(character._id);
+        
+        updateCharacter(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (character?._id) {
+      updateTimeCharacterOnline();
+    }
+  }, [character?._id]);
 
   return (
     <main

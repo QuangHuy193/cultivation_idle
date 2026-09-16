@@ -1,6 +1,10 @@
 "use client";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import TippyCustom from "../ui/TippyCustom";
+import { calculateCharacterCultivationPerMinute } from "@/lib/helper";
+import Image from "next/image";
+import { CULTIVATION_ICON } from "@/lib/constants/imageConstants";
 
 interface OfflineRewardAlertProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -9,9 +13,9 @@ interface OfflineRewardAlertProps {
 const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
   const { character } = useCharacterStore();
 
-  const rewardCultivation = Object.values(
-    character?.cultivationPerMinute || {},
-  ).reduce((acc, curr) => acc + curr, 0);
+  const culPerMinute = calculateCharacterCultivationPerMinute(
+    character.cultivationPerMinute,
+  );
 
   const handleClaimReward = () => {
     // Xử lý logic nhận phần thưởng offline ở đây
@@ -30,22 +34,34 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
         {/* Tiêu đề */}
         <div className="mb-4 text-center">
           <div className="text-4xl">🎁</div>
-          <h1 className="mt-2 text-xl font-bold text-amber-700">
-            Thưởng Offline
-          </h1>
-          <p className="text-sm text-zinc-600">Tu vi tích lũy khi bế quan</p>
+          <div className="flex justify-center gap-2 items-end">
+            <h1 className="mt-2 text-xl font-bold text-amber-700">
+              Thưởng Offline
+            </h1>
+            <TippyCustom content="Nhận thưởng tu vi khi offline tối đa 8h" />
+          </div>
         </div>
 
         {/* Nội dung */}
         <div className="rounded-xl bg-white/70 p-4 text-center shadow-inner">
-          <div className="text-sm text-zinc-500">Tu vi nhận được</div>
+          <div>Thời gian đã offline: {character.timeReawrdOffline} phút</div>
 
-          <div className="mt-2 text-3xl font-bold text-emerald-600">
-            +{rewardCultivation ?? 0}
+          <div className="text-center">
+            <div>Số tu vi nhận theo thời gian: {culPerMinute}/phút</div>
           </div>
 
-          <div className="mt-3 text-sm text-zinc-600">
-            ⚡ {rewardCultivation || 0}/phút
+          <div className="text-sm text-zinc-500">Tu vi tích lũy</div>
+          <div className="flex justify-center items-center my-1">
+            <div className="mt-2 text-3xl font-bold text-emerald-600">
+              +{character.cultivationOffline ?? 0}{" "}
+            </div>{" "}
+            <Image
+              alt="ảnh tu vi"
+              src={CULTIVATION_ICON}
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
           </div>
         </div>
 

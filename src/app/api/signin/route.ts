@@ -4,11 +4,10 @@ import { NextResponse } from "next/server";
 import "@/lib/models";
 import connectDB from "@/lib/db/db";
 import User from "@/lib/models/User";
+import Character from "@/lib/models/Character";
 
 function hashPassword(password: string) {
-  return createHash("sha256")
-    .update(password)
-    .digest("hex");
+  return createHash("sha256").update(password).digest("hex");
 }
 
 export async function POST(request: Request) {
@@ -18,27 +17,21 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const email =
-      typeof body?.email === "string"
-        ? body.email.trim().toLowerCase()
-        : "";
+      typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
 
-    const password =
-      typeof body?.password === "string"
-        ? body.password
-        : "";
+    const password = typeof body?.password === "string" ? body.password : "";
 
     if (!email || !password) {
       return NextResponse.json(
         {
-          message:
-            "Vui lòng nhập đầy đủ email và mật khẩu",
+          message: "Vui lòng nhập đầy đủ email và mật khẩu",
         },
         {
           status: 400,
         },
       );
     }
-
+    
     const user = await User.findOne({
       email,
       password: hashPassword(password),
@@ -58,9 +51,7 @@ export async function POST(request: Request) {
     const { password: _, ...safeUser } = user;
 
     const jwtSecret =
-      process.env.JWT_SECRET ||
-      process.env.SECRET ||
-      "dev-secret";
+      process.env.JWT_SECRET || process.env.SECRET || "dev-secret";
 
     const token = jwt.sign(
       {

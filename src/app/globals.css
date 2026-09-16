@@ -33,6 +33,7 @@
 /* tippy */
 .tippy-arrow {
   border-bottom-color: #c89b3c !important;
+  border-top-color: #c89b3c !important;
 }
 
 .tippy-tooltip {

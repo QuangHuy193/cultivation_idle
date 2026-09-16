@@ -11,6 +11,7 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMisionStore } from "@/lib/useStore/useMissionStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
 import ComfirmAlert from "../components/alert/ComfirmAlert";
+import { updateTimeCharacterOnlineAPI } from "../axios/characterAPI";
 
 export default function GamePage() {
   const { tabState } = useToggleStore();
@@ -41,6 +42,25 @@ export default function GamePage() {
       );
     }
   }, [character._id]);
+
+  useEffect(() => {
+    const refreshOnline = async () => {
+      try {
+        await updateTimeCharacterOnlineAPI(character._id);
+        console.log("online");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const timer = setInterval(() => {
+      refreshOnline();
+    }, 60 * 1000); // 1 phút
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <main className="h-screen min-h-screen overflow-hidden text-zinc-800 sm:min-h-screen">

@@ -90,6 +90,8 @@ export interface CharacterResponse {
   cultivation: number;
   currentMap: CurrentMap;
   cultivationPerMinute: CultivationPerMinute;
+  cultivationOffline: number;
+  timeReawrdOffline:number;
   spiritStone: number;
   stats: CharacterAllStats;
   finalStats?: CharacterStats;
