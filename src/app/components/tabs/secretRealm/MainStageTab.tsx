@@ -73,7 +73,7 @@ export default function MainStageTab() {
                   >
                     {curMap && (
                       <Image
-                        src={DEFAULT_IMG_CHARACTER}
+                        src={character.skinId.icon}
                         alt="Nhân vật"
                         width={80}
                         height={80}

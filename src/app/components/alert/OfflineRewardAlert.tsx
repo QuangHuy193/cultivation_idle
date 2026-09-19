@@ -5,22 +5,39 @@ import TippyCustom from "../ui/TippyCustom";
 import { calculateCharacterCultivationPerMinute } from "@/lib/helper";
 import Image from "next/image";
 import { CULTIVATION_ICON } from "@/lib/constants/imageConstants";
+import { rewardCultivationOfflineAPI } from "@/app/axios/characterAPI";
+import { showSuccess, showWarning } from "@/lib/toast";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
+import CoatingButton from "../ui/CoatingButton";
 
 interface OfflineRewardAlertProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
 const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
-  const { character } = useCharacterStore();
+  const { character, updateCharacter } = useCharacterStore();
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const culPerMinute = calculateCharacterCultivationPerMinute(
     character.cultivationPerMinute,
   );
 
-  const handleClaimReward = () => {
-    // Xử lý logic nhận phần thưởng offline ở đây
-
-    setIsOpen(false); // Đóng alert sau khi nhận phần thưởng
+  const handleClaimReward = async () => {
+    if (character.cultivationOffline <= 0) {
+      showWarning("Bạn chưa có tu vi ngoại tuyến để nhận!");
+    } else {
+      try {
+        setActionLoadingName("rewardCulOff");
+        const res = await rewardCultivationOfflineAPI(character._id);
+        updateCharacter(res);
+        showSuccess("Đã nhận tu vi");
+        setIsOpen(false); // Đóng alert sau khi nhận phần thưởng
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setActionLoadingName("");
+      }
+    }
   };
   return (
     <div
@@ -29,7 +46,8 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[90%] max-w-sm rounded-2xl border-2 border-yellow-400 bg-gradient-to-b from-yellow-50 to-amber-100 p-6 shadow-2xl"
+        className="w-[90%] max-w-sm rounded-2xl border-2 border-yellow-400 bg-linear-to-b 
+        from-yellow-50 to-amber-100 p-6 shadow-2xl"
       >
         {/* Tiêu đề */}
         <div className="mb-4 text-center">
@@ -44,7 +62,10 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
 
         {/* Nội dung */}
         <div className="rounded-xl bg-white/70 p-4 text-center shadow-inner">
-          <div>Thời gian đã offline: {character.timeReawrdOffline} phút</div>
+          <div>
+            Thời gian đã offline: {Math.floor(character.timeReawrdOffline / 60)}{" "}
+            giờ {character.timeReawrdOffline % 60} phút
+          </div>
 
           <div className="text-center">
             <div>Số tu vi nhận theo thời gian: {culPerMinute}/phút</div>
@@ -68,10 +89,11 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
         {/* Nút */}
         <button
           onClick={handleClaimReward}
-          className="mt-5 w-full rounded-xl bg-linear-to-r from-amber-500 to-yellow-400
-          py-3 font-bold text-white shadow-lg transition active:scale-95"
+          className={`mt-5 w-full rounded-xl bg-linear-to-r from-amber-500 to-yellow-400
+          py-3 font-bold text-white shadow-lg transition active:scale-95 relative`}
         >
           Nhận thưởng
+          {actionLoadingName === "rewardCulOff" && <CoatingButton />}
         </button>
       </div>
     </div>

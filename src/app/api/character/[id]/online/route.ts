@@ -49,7 +49,7 @@ export async function POST(
       minutesPassed = MAX_TIME_OFFLINE - timeReawrdOffline;
     }
 
-    const cultivationOffline = minutesPassed * minutesPassed;
+    const cultivationOffline = minutesPassed * cultivationPerMinute;
 
     await Character.updateOne(
       { _id: id },

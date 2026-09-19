@@ -139,6 +139,9 @@ const UserInfo = () => {
           </button>
 
           <button
+            onClick={() => {
+              setAalertUserInfo("setting");
+            }}
             className="rounded-xl bg-linear-to-b from-blue-400 to-blue-600 py-2 
             font-semibold text-white shadow-md transition hover:scale-105"
           >

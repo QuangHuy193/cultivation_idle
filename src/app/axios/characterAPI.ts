@@ -113,9 +113,7 @@ export async function buySkinAPI(
 }
 
 // cập nhật thưởng tu vi off
-export async function updateCulOffAPI(
-  characterId: string,
-): Promise<{
+export async function updateCulOffAPI(characterId: string): Promise<{
   cultivationOffline: number;
   timeReawrdOffline: number;
 }> {
@@ -131,4 +129,13 @@ export async function updateTimeCharacterOnlineAPI(
   const res = await api.post(`/api/character/${characterId}/online/refresh`);
 
   return res.data.message;
+}
+
+// nhận tu vi offline
+export async function rewardCultivationOfflineAPI(characterId: string) {
+  const res = await api.post(
+    `/api/character/${characterId}/online/rewardCultivation`,
+  );
+
+  return res.data;
 }

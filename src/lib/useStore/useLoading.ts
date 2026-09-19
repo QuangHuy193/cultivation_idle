@@ -11,7 +11,8 @@ export type LoadingKey =
   | "getMaps" // tải map
   | "break" // đột phá cảnh giới
   | "redeemCode" // đổi code
-  |"selectClass"// chọn class
+  | "selectClass" // chọn class
+  | "rewardCulOff" // nhận thưởng tu vi khi offline
   | string; // các trường hợp danh sách dùng id
 interface useLoandingState {
   actionLoadingName: LoadingKey;

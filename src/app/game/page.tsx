@@ -54,6 +54,7 @@ export default function GamePage() {
     };
 
     const timer = setInterval(() => {
+      console.log("online");
       refreshOnline();
     }, 60 * 1000); // 1 phút
 

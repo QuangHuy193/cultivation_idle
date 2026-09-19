@@ -17,6 +17,7 @@ import OfflineRewardIcon from "../ui/OfflineRewardIcon";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { showError, showSuccess } from "@/lib/toast";
 import Loading from "../ui/Loading";
+import SettingAlert from "../alert/SettingAlert";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -164,6 +165,7 @@ export default function HomeTab() {
           placeholderInput="Tối đa 30 kí tự, không bao gồm kí tự đặc biệt"
         />
       )}
+       {alertUserInfo === "setting" && <SettingAlert />}
     </section>
   );
 }
