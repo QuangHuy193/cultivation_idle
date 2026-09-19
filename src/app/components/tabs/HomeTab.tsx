@@ -128,7 +128,7 @@ export default function HomeTab() {
               className="h-8 w-8 drop-shadow-sm"
             />
 
-            <span className="min-w-15 text-right text-lg font-bold text-cyan-600">
+            <span className="min-w-fit text-right text-lg font-bold text-cyan-600">
               {(character?.spiritStone || 0).toLocaleString()}
             </span>
 

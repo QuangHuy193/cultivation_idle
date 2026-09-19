@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import SkinImage from "./SkinImage";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
+import TippyCustom from "../../ui/TippyCustom";
 
 const SkinTabTop = () => {
   const { character } = useCharacterStore();
@@ -18,14 +19,16 @@ const SkinTabTop = () => {
   }, [character]);
   return (
     <div className="flex gap-2">
-      <div className="flex-1">        
+      <div className="flex-1">
         <SkinImage skin={selectedSkin} isHas={owner} />
       </div>
 
       <div className="flex-1 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
         {/* Độ hiếm */}
         <div className="mb-4 flex items-center justify-between border-b border-zinc-200 pb-3">
-          <span className="font-medium text-zinc-500">Độ hiếm</span>
+          <div className="font-medium text-zinc-500 flex items-center gap-1">
+            Độ hiếm <TippyCustom content=""/>
+          </div>
 
           <span
             className={`

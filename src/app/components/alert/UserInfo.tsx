@@ -82,7 +82,8 @@ const UserInfo = () => {
               ${realmStyle.glow}
             `}
             >
-              {character.realmId?.name} - Tầng {character.realmLevel}
+              {character.realmId?.name} -{" "}
+              {character.realmId.levels[character.realmLevel - 1].name}
             </div>
 
             <div className="mt-2 text-sm text-zinc-500">
@@ -100,31 +101,63 @@ const UserInfo = () => {
         {/* Divider */}
         <div className="my-4 h-px bg-yellow-300" />
 
-        {/* Tiến độ */}
-        <div className="rounded-2xl border border-yellow-300 bg-white/70 p-3">
-          <div className="text-sm font-semibold text-zinc-700">
-            Ải chính tuyến
+        <div
+          className="rounded-2xl border border-yellow-300 bg-white/70 p-3
+        flex gap-y-3 flex-col"
+        >
+          {/* Tiến độ tu vi*/}
+          <div>
+            <div className="text-sm font-semibold text-zinc-700">Tu vi</div>
+
+            <div className="mt-1 text-sm text-zinc-600">
+              Kinh nghiệm {character.cultivation}/
+              {character.breakthroughRequired}
+            </div>
+
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-zinc-200">
+              <div
+                className="h-full bg-blue-500"
+                style={{
+                  width: `${
+                    (character.cultivation /
+                      (character.breakthroughRequired ?? 1)) *
+                    100
+                  }%`,
+                }}
+              />
+            </div>
           </div>
 
-          <div className="mt-1 text-lg font-bold text-amber-700">
-            {character.currentMap.map.name}
-          </div>
+          {/* Divider */}
+          <div className="h-px bg-yellow-300" />
 
-          <div className="mt-1 text-sm text-zinc-600">
-            Ải {character.currentMap.stage}/{character.currentMap.map.maxStage}
-          </div>
+          {/* Tiến độ ải*/}
+          <div>
+            <div className="text-sm font-semibold text-zinc-700">
+              Ải chính tuyến
+            </div>
 
-          <div className="mt-2 h-2 overflow-hidden rounded-full bg-zinc-200">
-            <div
-              className="h-full bg-yellow-500"
-              style={{
-                width: `${
-                  (character.currentMap.stage /
-                    character.currentMap.map.maxStage) *
-                  100
-                }%`,
-              }}
-            />
+            <div className="mt-1 text-lg font-bold text-amber-700">
+              {character.currentMap.map.name}
+            </div>
+
+            <div className="mt-1 text-sm text-zinc-600">
+              Ải {character.currentMap.stage}/
+              {character.currentMap.map.maxStage}
+            </div>
+
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-zinc-200">
+              <div
+                className="h-full bg-yellow-500"
+                style={{
+                  width: `${
+                    (character.currentMap.stage /
+                      character.currentMap.map.maxStage) *
+                    100
+                  }%`,
+                }}
+              />
+            </div>
           </div>
         </div>
 
