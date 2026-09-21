@@ -6,6 +6,8 @@ import { Skill } from "../types/skillTypes";
 import { TabType } from "../constants/objConstants";
 
 interface UserToggleState {
+  // quản lý auth form
+  formOpen: "" | "signin" | "signup";
   // quản lý các alert thông tin skill, equip, item
   itemInfoToggle: {
     open: boolean;
@@ -36,6 +38,7 @@ interface UserToggleState {
     onNo: () => void;
   };
 
+  setFormOpen: (name: "" | "signin" | "signup") => void;
   setItemInfoToggle: (payload: {
     open: boolean;
     state: "item" | "equip" | "unequip" | "";
@@ -49,10 +52,17 @@ interface UserToggleState {
   setAalertUserInfo: (
     alert: "" | "menu" | "code" | "setting" | "changeName",
   ) => void;
-  setComfirmAlert: (alert: any) => void;
+  setComfirmAlert: (alert: {
+    isOpen?: boolean;
+    text?: string;
+    onYes?: () => void;
+    onNo?: () => void;
+  }) => void;
 }
 
 export const useToggleStore = create<UserToggleState>()((set) => ({
+  formOpen: "",
+
   itemInfoToggle: {
     open: false,
     state: "",
@@ -78,6 +88,10 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
     text: "",
     onYes: () => {},
     onNo: () => {},
+  },
+
+  setFormOpen: (open) => {
+    set({ formOpen: open });
   },
 
   setItemInfoToggle: (payload) =>

@@ -1,17 +1,42 @@
 import { CLASS_COATING_SM, CLASS_X_ALERT } from "@/lib/constants/cssConstants";
+import { useAuthStore } from "@/lib/useStore/useAuthStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
+import { useUserStore } from "@/lib/useStore/useUserStore";
 import { X } from "lucide-react";
-import React from "react";
+import { useRouter } from "next/navigation";
 
 const SettingAlert = () => {
-  const { setAalertUserInfo } = useToggleStore();
+  const { setAalertUserInfo, setComfirmAlert } = useToggleStore();
+  const { initForm } = useAuthStore();
+  const router = useRouter();
+  const { clearAuth } = useUserStore();
+
+  const handleLogout = () => {
+    setComfirmAlert({
+      isOpen: true,
+      text: "Bạn chắc chắn muốn đăng xuất nhân vật này?",
+      onNo: () => {
+        setComfirmAlert({ isOpen: false });
+      },
+      onYes: () => {
+        clearAuth();
+        initForm();
+        router.push("/");
+        setComfirmAlert({ isOpen: false });
+      },
+    });
+  };
+
   return (
-    <div className={CLASS_COATING_SM}>
+    <div className={`${CLASS_COATING_SM} z-50`}>
       <div
         className="relative w-85 rounded-3xl border-2 border-yellow-700 
       bg-linear-to-b from-amber-100 to-yellow-50 p-5 shadow-2xl flex justify-center"
       >
-        <button onClick={() => setAalertUserInfo("menu")} className={CLASS_X_ALERT}>
+        <button
+          onClick={() => setAalertUserInfo("menu")}
+          className={CLASS_X_ALERT}
+        >
           <X className="h-5 w-5 text-red-500" />
         </button>
         <div className="flex flex-col items-center gap-3 w-[60%]">
@@ -35,8 +60,11 @@ const SettingAlert = () => {
           </button>
 
           <button
+            onClick={() => {
+              handleLogout();
+            }}
             className="rounded-xl bg-linear-to-b from-red-400 to-red-600 py-3 w-full 
-                font-semibold text-white shadow-md transition mt-5"
+                font-semibold text-white shadow-md transition mt-5 active:scale-95"
           >
             Đăng xuất
           </button>

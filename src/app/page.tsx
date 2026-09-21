@@ -1,20 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  getCharacterAPI,
-  updateCulOffAPI,
-  updateTimeCharacterOnlineAPI,
-} from "@/app/axios/characterAPI";
+import { getCharacterAPI, updateCulOffAPI } from "@/app/axios/characterAPI";
 import SignInForm from "@/app/components/form/SignInForm";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useUserStore } from "@/lib/useStore/useUserStore";
 import Loading from "./components/ui/Loading";
 import { DEFAULT_IMG_Wait } from "@/lib/constants/imageConstants";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
+import SignUpForm from "./components/form/SignUpForm";
 
 export default function Home() {
-  const [showLogin, setShowLogin] = useState(false);
+  const { formOpen, setFormOpen } = useToggleStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -24,11 +22,11 @@ export default function Home() {
   const isLoggedIn = Boolean(token);
 
   function openLogin() {
-    setShowLogin(true);
+    setFormOpen("signin");
   }
 
   function closeLogin() {
-    setShowLogin(false);
+    setFormOpen("");
   }
 
   async function enterWorld() {
@@ -59,7 +57,7 @@ export default function Home() {
     const updateTimeCharacterOnline = async () => {
       try {
         const res = await updateCulOffAPI(character._id);
-        
+
         updateCharacter(res);
       } catch (error) {
         console.log(error);
@@ -109,7 +107,9 @@ export default function Home() {
             <button
               onClick={enterWorld}
               disabled={actionLoadingName === "getUser"}
-              className="mx-auto rounded-full bg-emerald-500 px-8 py-4 text-center font-semibold text-white shadow-2xl shadow-emerald-600/40 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-emerald-300"
+              className="mx-auto rounded-full bg-emerald-500 px-8 py-4 text-center font-semibold 
+              text-white shadow-2xl shadow-emerald-600/40 transition hover:bg-emerald-400 
+              disabled:cursor-not-allowed disabled:bg-emerald-300"
             >
               {actionLoadingName === "getUser"
                 ? "Đang tải..."
@@ -118,7 +118,8 @@ export default function Home() {
           ) : (
             <button
               onClick={openLogin}
-              className="mx-auto rounded-full bg-emerald-500 px-8 py-4 text-center font-semibold text-white shadow-2xl shadow-emerald-600/40 transition hover:bg-emerald-400"
+              className="mx-auto rounded-full bg-emerald-500 px-8 py-4 text-center 
+              font-semibold text-white shadow-2xl shadow-emerald-600/40 transition"
             >
               Bắt đầu tu luyện
             </button>
@@ -131,12 +132,17 @@ export default function Home() {
       ) : null}
 
       {error ? (
-        <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 rounded-full bg-rose-500/95 px-4 py-2 text-sm font-medium text-white shadow-lg">
+        <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 rounded-full 
+        bg-rose-500/95 px-4 py-2 text-sm font-medium text-white shadow-lg">
           {error}
         </div>
       ) : null}
 
-      {showLogin && <SignInForm onClose={closeLogin} onSuccess={closeLogin} />}
+      {formOpen === "signin" && (
+        <SignInForm/>
+      )}
+
+      {formOpen === "signup" && <SignUpForm />}
     </main>
   );
 }

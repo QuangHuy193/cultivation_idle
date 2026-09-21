@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Class } from "../interface";
+import { Class } from "../types/classTypes";
 
 interface useClassState {
   loadingUseClass: boolean;

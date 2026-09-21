@@ -183,3 +183,53 @@ export const grantRewards = async (
 
   return character;
 };
+
+// kiểm tra hợp lệ các trường trong form đăng nhập, đăng kí
+export const validateDataAuthForm = ({
+  email,
+  password,
+  passwordAgain,
+}: {
+  email: string;
+  password: string;
+  passwordAgain?: string;
+}) => {
+  // Email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+
+  if (!emailRegex.test(email)) {
+    return {
+      check: false,
+      mess: "Email không hợp lệ!",
+    };
+  }
+
+  if (!passwordRegex.test(password)) {
+    return {
+      check: false,
+      mess: "Mật khẩu phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt!",
+    };
+  }
+
+  // Có ký tự đặc biệt
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    return {
+      check: false,
+      mess: "Mật khẩu phải chứa ít nhất 1 ký tự đặc biệt!",
+    };
+  }
+
+  if (passwordAgain !== undefined && passwordAgain !== password) {
+    return {
+      check: false,
+      mess: "Mật khẩu nhập lại không đúng!",
+    };
+  }
+
+  return {
+    check: true,
+    mess: null,
+  };
+};

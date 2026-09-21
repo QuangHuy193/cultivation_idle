@@ -13,7 +13,7 @@ const ComfirmAlert = ({ text, onYes, onNo }: ComfirmAlertProps) => {
   return (
     <div className={CLASS_COATING_XS}>
       <div
-        className="
+        className="z-999
           w-80 overflow-hidden rounded-2xl
           border-2 border-yellow-600
           bg-linear-to-b from-amber-200 to-amber-400

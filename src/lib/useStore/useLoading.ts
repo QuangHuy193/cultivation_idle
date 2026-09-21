@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 export type LoadingKey =
   | ""
+  | "signin" // đăng nhập
+  | "signup" // đăng kí
   | "getUser" // tải user
   | "unequip" // gỡ trang bị
   | "equip" // trang bị
