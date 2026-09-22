@@ -83,6 +83,7 @@ export interface CharacterResponse {
   _id: string;
   userId: string;
   name: string;
+  countChangeName: number;
   skinId: Skin;
   class: CharacterClass;
   realmId: Realm;
@@ -91,7 +92,7 @@ export interface CharacterResponse {
   currentMap: CurrentMap;
   cultivationPerMinute: CultivationPerMinute;
   cultivationOffline: number;
-  timeReawrdOffline:number;
+  timeReawrdOffline: number;
   spiritStone: number;
   stats: CharacterAllStats;
   finalStats?: CharacterStats;

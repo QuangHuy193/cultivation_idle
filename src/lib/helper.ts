@@ -239,3 +239,18 @@ export const validateDataAuthForm = ({
     mess: null,
   };
 };
+
+// kiểm tra hợp lệ khi đổi tên
+export const validateName = (name: string) => {
+  if (name.length > 30) {
+    return {
+      check: false,
+      mess: "Tên vượt quá 30 kí tự!",
+    };
+  }
+
+  return {
+    check: true,
+    mess: null,
+  };
+};

@@ -8,13 +8,16 @@ import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { useUserStore } from "@/lib/useStore/useUserStore";
 import { X } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import CoatingButton from "../ui/CoatingButton";
+import { validateName } from "@/lib/helper";
+import { CHANGE_NAME_COST_ONCE } from "@/lib/constants/numberConstants";
+import { changeNameAPI } from "@/app/axios/characterAPI";
 
 interface SingleInputFormProps {
   type: "redeemCode" | "changeName";
   title: string;
-  btnLabel: string;
+  btnLabel: string | React.ReactElement;
   placeholderInput: string;
 }
 
@@ -26,8 +29,8 @@ const SingleInputForm = ({
 }: SingleInputFormProps) => {
   const [formData, setFormData] = useState("");
   const { userId } = useUserStore();
-  const { setAalertUserInfo } = useToggleStore();
-  const { character, setCharacter } = useCharacterStore();
+  const { setAalertUserInfo, setComfirmAlert } = useToggleStore();
+  const { character, setCharacter, updateCharacter } = useCharacterStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,9 +55,51 @@ const SingleInputForm = ({
       return;
     }
 
-    if (formData.trim().length > 30) {
-      showWarning("Tên vượt quá 30 kí tự");
+    if (formData === character.name) {
+      showWarning("Bạn chưa đổi tên!");
       return;
+    }
+
+    if (!validateName(formData).check) {
+      showError(validateName(formData).mess || "");
+      return;
+    }
+
+    if (character.countChangeName > 0) {
+      if (
+        (character.countChangeName + 1) * CHANGE_NAME_COST_ONCE >
+        character.spiritStone
+      ) {
+        showError("Bạn không đủ linh thạch!");
+      }
+
+      setComfirmAlert({
+        isOpen: true,
+        onNo: () => {
+          setComfirmAlert({ isOpen: false });
+        },
+        onYes: async () => {
+          try {
+            const res = await changeNameAPI(character._id, formData);
+            updateCharacter(res);
+            setAalertUserInfo("menu");
+            showSuccess("Đã đổi tên");
+            setComfirmAlert({ isOpen: false });
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        text: "Bạn chắc chắn muốn dùng linh thạch để đổi tên chứ?",
+      });
+    } else {
+      try {
+        const res = await changeNameAPI(character._id, formData);
+        updateCharacter(res);
+        setAalertUserInfo("menu");
+        showSuccess("Đã đổi tên");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -84,7 +129,7 @@ const SingleInputForm = ({
     }
   };
   return (
-    <div className={CLASS_COATING_SM}>
+    <div className={`${CLASS_COATING_SM} z-50`}>
       <form
         onSubmit={onSubmit}
         className="flex flex-col gap-4 bg-linear-to-b to-amber-100 from-yellow-50 p-5 

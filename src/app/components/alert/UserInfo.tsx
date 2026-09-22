@@ -31,7 +31,7 @@ const UserInfo = () => {
     RARITY_CSS[character.skinId.rarity] ?? RARITY_CSS["common"];
 
   return (
-    <div className={CLASS_COATING_SM}>
+    <div className={`${CLASS_COATING_SM} z-50`}>
       <div
         className="relative w-85 rounded-3xl border-2 border-yellow-700 
       bg-linear-to-b from-amber-100 to-yellow-50 p-5 shadow-2xl"

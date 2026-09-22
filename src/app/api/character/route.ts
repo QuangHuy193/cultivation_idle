@@ -8,6 +8,7 @@ import {
   characterPopulate,
 } from "@/lib/helper";
 import connectDB from "@/lib/db/db";
+import Map from "@/lib/models/Map";
 
 function generateRandomName() {
   const randomSuffix = Math.floor(1000000000 + Math.random() * 9000000000);
@@ -39,10 +40,19 @@ export async function POST(request: Request) {
       .lean();
 
     if (!character) {
+      // khởi tạo map 1
+      const mapId = await Map.findOne({ order: 1 }).select("_id");
+
+      // tạo nhân vật mới
       const createdCharacter = await Character.create({
         userId,
 
         name: generateRandomName(),
+
+        currentMap: {
+          map: mapId,
+          stage: 1,
+        },
       });
 
       character = await Character.findById(createdCharacter._id)

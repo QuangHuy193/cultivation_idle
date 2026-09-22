@@ -105,9 +105,9 @@ const BattleTabLog = () => {
         </div>
 
         {!isBattleStart && (
-          <div className="fixed w-full h-fit inset-x-0 bottom-16.25 flex justify-center">
+          <div className="fixed w-full h-fit inset-x-0 bottom-18 flex justify-center">
             <button
-              className=" px-5 py-2 bg-blue-500 rounded-2xl text-white"
+              className="px-5 py-2 bg-blue-500 rounded-2xl text-white"
               onClick={() => {
                 setIsBattleStart(true);
               }}

@@ -231,6 +231,11 @@ const CharacterSchema = new Schema(
       required: true,
     },
 
+    countChangeName: {
+      type: Number,
+      defalut: -2, // miễn phí đổi tên 3 lần
+    },
+
     skinId: {
       type: String,
       ref: "Skin",
@@ -293,6 +298,43 @@ const CharacterSchema = new Schema(
 
     stats: {
       type: statsSchema,
+      default: {
+        base: {
+          hp: 100,
+          atk: 10,
+          def: 5,
+        },
+
+        equips: {
+          hp: 0,
+          atk: 0,
+          def: 0,
+        },
+
+        skins: {
+          hp: 0,
+          atk: 0,
+          def: 0,
+        },
+
+        items: {
+          hp: 0,
+          atk: 0,
+          def: 0,
+        },
+
+        realm: {
+          hp: 0,
+          atk: 0,
+          def: 0,
+        },
+
+        class: {
+          hp: 0,
+          atk: 0,
+          def: 0,
+        },
+      },
     },
 
     equippedSkills: {

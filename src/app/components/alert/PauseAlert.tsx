@@ -10,7 +10,7 @@ interface PauseAlertProp {
 const PauseAlert = ({ onContinue, onExit, onRestart }: PauseAlertProp) => {
   return (
     <div
-      className={`${CLASS_COATING_SM}`}
+      className={`${CLASS_COATING_SM} z-20`}
     >
       <div
         className="

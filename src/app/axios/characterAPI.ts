@@ -139,3 +139,19 @@ export async function rewardCultivationOfflineAPI(characterId: string) {
 
   return res.data;
 }
+
+// nhận tu vi offline
+export async function changeNameAPI(
+  characterId: string,
+  name: string,
+): Promise<{
+  name: string;
+  countChangeName: number;
+  spiritStone: number;
+}> {
+  const res = await api.post(`/api/character/${characterId}/changeName`, {
+    name,
+  });
+
+  return res.data;
+}

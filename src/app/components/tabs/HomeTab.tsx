@@ -9,7 +9,6 @@ import {
 } from "@/lib/constants/imageConstants";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import Image from "next/image";
 import UserInfo from "../alert/UserInfo";
 import { Menu, Plus } from "lucide-react";
 import SingleInputForm from "../form/SingleInputForm";
@@ -18,9 +17,12 @@ import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { showError, showSuccess } from "@/lib/toast";
 import Loading from "../ui/Loading";
 import SettingAlert from "../alert/SettingAlert";
+import ImageIcon from "../ui/ImageIcon";
+import { CHANGE_NAME_COST_ONCE } from "@/lib/constants/numberConstants";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
+
   const { alertUserInfo, setAalertUserInfo } = useToggleStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
@@ -45,8 +47,6 @@ export default function HomeTab() {
       setActionLoadingName("");
     }
   };
-
-
 
   return (
     <section
@@ -120,13 +120,7 @@ export default function HomeTab() {
             className="flex items-center gap-2 rounded-xl border border-cyan-200 
             bg-white/70 px-3 py-1 shadow-sm"
           >
-            <Image
-              src={SPIRITSTONE_ICON}
-              alt="Linh thạch"
-              height={80}
-              width={80}
-              className="h-8 w-8 drop-shadow-sm"
-            />
+            <ImageIcon src={SPIRITSTONE_ICON} />
 
             <span className="min-w-fit text-right text-lg font-bold text-cyan-600">
               {(character?.spiritStone || 0).toLocaleString()}
@@ -161,11 +155,23 @@ export default function HomeTab() {
         <SingleInputForm
           title="NHẬP TÊN MỚI"
           type="changeName"
-          btnLabel="ĐỔI TÊN"
-          placeholderInput="Tối đa 30 kí tự, không bao gồm kí tự đặc biệt"
+          btnLabel={
+            character.countChangeName <= 0 ? (
+              `ĐỔI TÊN (Miễn phí x${Math.abs(character.countChangeName) + 1})`
+            ) : (
+              <div className="flex justify-center items-center gap-2">
+                ĐỔI TÊN (
+                <div className="flex justify-center items-center">
+                  {(Math.abs(character.countChangeName)) * CHANGE_NAME_COST_ONCE}
+                  <ImageIcon src={SPIRITSTONE_ICON} />
+                </div>)
+              </div>
+            )
+          }
+          placeholderInput="Tối đa 30 kí tự"
         />
       )}
-       {alertUserInfo === "setting" && <SettingAlert />}
+      {alertUserInfo === "setting" && <SettingAlert />}
     </section>
   );
 }
