@@ -8,7 +8,11 @@ interface useAuthState {
 
   setError: (err: string | null) => void;
   updateDataSigninForm: (field: keyof SignInPayload, value: string) => void;
-  updateDataSignupForm: (field: keyof SignUpPayload, value: string) => void;
+  updateDataSignupForm: (data: {
+    email?: string;
+    password?: string;
+    passwordAgain?: string;
+  }) => void;
   deletePassword: () => void;
   initForm: () => void;
 }
@@ -27,12 +31,12 @@ export const useAuthStore = create<useAuthState>()((set) => ({
       },
     }));
   },
-  updateDataSignupForm: (field, value) => {
+  updateDataSignupForm: (data) => {
     set((state) => ({
       ...state,
       dataSignupForm: {
         ...state.dataSignupForm,
-        [field]: value,
+        ...data,
       },
     }));
   },

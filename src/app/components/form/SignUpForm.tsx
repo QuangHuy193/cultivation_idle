@@ -1,3 +1,6 @@
+import { signUpAPI } from "@/app/axios/userAPI";
+import { validateDataAuthForm } from "@/lib/helper";
+import { showSuccess } from "@/lib/toast";
 import { useAuthStore } from "@/lib/useStore/useAuthStore";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
@@ -11,20 +14,34 @@ const SignUpForm = () => {
     error,
     setError,
     deletePassword,
+    updateDataSigninForm,
   } = useAuthStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
-    setActionLoadingName("signup");
 
-    try {
-      setFormOpen("signin");
-    } catch (err: unknown) {
-      setError((err as { message?: string })?.message || "Đăng kí thất bại");
-    } finally {
-      setActionLoadingName("");
+    const validate = validateDataAuthForm(dataSignupForm);
+
+    if (validate.check) {
+      try {
+        setActionLoadingName("signup");
+        await signUpAPI({
+          email: dataSignupForm.email,
+          password: dataSignupForm.password,
+        });
+        updateDataSigninForm("email", dataSignupForm.email);
+        updateDataSignupForm({ email: "", password: "", passwordAgain: "" });
+        showSuccess("Đăng kí thành công")
+        setFormOpen("signin");
+      } catch (err: unknown) {
+        setError((err as { message?: string })?.message || "Đăng kí thất bại");
+      } finally {
+        setActionLoadingName("");
+      }
+    } else {
+      setError(validate.mess);
     }
   };
 
@@ -55,7 +72,8 @@ const SignUpForm = () => {
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-900">Đăng kí</h2>
           <p className="mt-2 text-sm text-slate-500">
-            Đăng kí bằng email và mật khẩu để tạo tài khoản trong thế giới tu tiên.
+            Đăng kí bằng email và mật khẩu để tạo tài khoản trong thế giới tu
+            tiên.
           </p>
         </div>
 
@@ -65,7 +83,7 @@ const SignUpForm = () => {
             <input
               type="email"
               value={dataSignupForm.email}
-              onChange={(e) => updateDataSignupForm("email", e.target.value)}
+              onChange={(e) => updateDataSignupForm({ email: e.target.value })}
               className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
               placeholder="nhập email"
               required
@@ -77,7 +95,9 @@ const SignUpForm = () => {
             <input
               type="password"
               value={dataSignupForm.password}
-              onChange={(e) => updateDataSignupForm("password", e.target.value)}
+              onChange={(e) =>
+                updateDataSignupForm({ password: e.target.value })
+              }
               className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
               placeholder="nhập mật khẩu"
               required
@@ -90,7 +110,7 @@ const SignUpForm = () => {
               type="password"
               value={dataSignupForm.passwordAgain}
               onChange={(e) =>
-                updateDataSignupForm("passwordAgain", e.target.value)
+                updateDataSignupForm({ passwordAgain: e.target.value })
               }
               className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
               placeholder="nhập lại mật khẩu"

@@ -13,3 +13,17 @@ export async function signInAPI(
     );
   }
 }
+
+// đăng kí cũng chỉ cần email, pass
+export async function signUpAPI(
+  payload: SignInPayload,
+): Promise<string> {
+  try {
+    const res = await api.post("/api/signup", payload);
+    return res.data.userId;
+  } catch (err: unknown) {
+    throw new Error(
+      (err as { message?: string })?.message || "Lỗi khi đăng kí",
+    );
+  }
+}

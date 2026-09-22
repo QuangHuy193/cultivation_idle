@@ -23,33 +23,30 @@ export default function SignInForm() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
-    setActionLoadingName("signin");
 
-    try {
-      const validate = validateDataAuthForm(dataSigninForm);
-      // if (validate.check) {
-      //   const result = await signInAPI(dataSigninForm);
-      //   setAuth({
-      //     email: result.user.email,
-      //     token: result.token,
-      //     _id: result.user._id,
-      //   });
-      //   setFormOpen("");
-      // } else {
-      //   setError(validate.mess);
-      // }
+    const validate = validateDataAuthForm(dataSigninForm);
 
-       const result = await signInAPI(dataSigninForm);
+    if (validate.check) {
+      try {
+        setActionLoadingName("signin");
+        const result = await signInAPI(dataSigninForm);
         setAuth({
           email: result.user.email,
           token: result.token,
           _id: result.user._id,
         });
         setFormOpen("");
-    } catch (err: unknown) {
-      setError((err as { message?: string })?.message || "Đăng nhập thất bại");
-    } finally {
-      setActionLoadingName("");
+
+        setFormOpen("");
+      } catch (err: unknown) {
+        setError(
+          (err as { message?: string })?.message || "Đăng nhập thất bại",
+        );
+      } finally {
+        setActionLoadingName("");
+      }
+    } else {
+      setError(validate.mess);
     }
   };
 

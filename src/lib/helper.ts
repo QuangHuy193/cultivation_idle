@@ -4,6 +4,12 @@ import {
   CharacterResponse,
   CultivationPerMinute,
 } from "./types/characterTypes";
+import { createHash } from "crypto";
+
+// tạo hash pass
+export function hashPassword(password: string) {
+  return createHash("sha256").update(password).digest("hex");
+}
 
 export const characterPopulate = [
   { path: "realmId" },

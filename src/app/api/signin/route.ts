@@ -1,14 +1,9 @@
-import { createHash } from "crypto";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 import "@/lib/models";
 import connectDB from "@/lib/db/db";
 import User from "@/lib/models/User";
-import Character from "@/lib/models/Character";
-
-function hashPassword(password: string) {
-  return createHash("sha256").update(password).digest("hex");
-}
+import { hashPassword } from "@/lib/helper";
 
 export async function POST(request: Request) {
   try {

@@ -1,11 +1,9 @@
-import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/db/db";
 import "@/lib/models";
-function hashPassword(password: string) {
-  return createHash("sha256").update(password).digest("hex");
-}
+import { hashPassword, validateDataAuthForm } from "@/lib/helper";
+import User from "@/lib/models/User";
 
 export async function POST(request: Request) {
   try {
@@ -21,19 +19,16 @@ export async function POST(request: Request) {
       );
     }
 
-    if (password.length < 8) {
+    if (!validateDataAuthForm({ email, password }).check) {
       return NextResponse.json(
-        { message: "Mật khẩu phải có ít nhất 8 ký tự" },
+        { message: "Dữ liệu không hợp lệ" },
         { status: 400 },
       );
     }
 
-    const db = await connectDB();
-    const users = db.collection("users");
+    await connectDB();
 
-    const existingUser = await users.findOne({
-      email,
-    });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return NextResponse.json(
@@ -42,7 +37,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await users.insertOne({
+    const result = await User.insertOne({
       email,
       password: hashPassword(password),
       createdAt: new Date(),
@@ -51,8 +46,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        message: "Đăng ký thành công",
-        userId: result.insertedId.toString(),
+        userId: result.insertedId,
       },
       { status: 201 },
     );
