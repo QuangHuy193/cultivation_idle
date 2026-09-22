@@ -19,6 +19,7 @@ import Loading from "../ui/Loading";
 import SettingAlert from "../alert/SettingAlert";
 import ImageIcon from "../ui/ImageIcon";
 import { CHANGE_NAME_COST_ONCE } from "@/lib/constants/numberConstants";
+import FeatureListInHome from "../ui/FeatureListInHome";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -142,6 +143,10 @@ export default function HomeTab() {
         </div>
       </div>
 
+      <div className="relative flex justify-end z-10 pr-2">
+        <FeatureListInHome />
+      </div>
+
       {alertUserInfo === "menu" && <UserInfo />}
       {alertUserInfo === "code" && (
         <SingleInputForm
@@ -162,9 +167,10 @@ export default function HomeTab() {
               <div className="flex justify-center items-center gap-2">
                 ĐỔI TÊN (
                 <div className="flex justify-center items-center">
-                  {(Math.abs(character.countChangeName)) * CHANGE_NAME_COST_ONCE}
+                  {Math.abs(character.countChangeName) * CHANGE_NAME_COST_ONCE}
                   <ImageIcon src={SPIRITSTONE_ICON} />
-                </div>)
+                </div>
+                )
               </div>
             )
           }
