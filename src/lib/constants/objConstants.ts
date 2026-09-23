@@ -64,7 +64,6 @@ export const MAIN_TABS = [
   },
 ] as const;
 
-
 export const EQUIPMENT_SLOTS = [
   {
     key: "weapon",
@@ -117,3 +116,30 @@ export const SECRET_REALM_TABS = [
   },
 ];
 
+export const REALM_NAME_LIST = [
+  {
+    _id: "luyenkhi",
+    name: "Luyện Khí",
+    order: 1,
+  },
+  {
+    _id: "trucco",
+    name: "Trúc Cơ",
+    order: 2,
+  },
+  {
+    _id: "nguyenanh",
+    name: "Nguyên Anh",
+    order: 3,
+  },
+  {
+    _id: "kimdan",
+    name: "Kim Đan",
+    order: 4,
+  },
+  {
+    _id: "hoathan",
+    name: "Hóa Thần",
+    order: 5,
+  },
+];

@@ -1,4 +1,5 @@
 import { useSettingStore } from "@/lib/useStore/useSetting";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import {
   CalendarDays,
   CalendarHeart,
@@ -29,6 +30,7 @@ const iconCss = `
 const FeatureListInHome = () => {
   const { featureListInHomeStatus, setFeatureListInHomeStatus } =
     useSettingStore();
+  const { setIsOpenMailbox } = useToggleStore();
 
   const handleToggle = () => {
     if (featureListInHomeStatus === "open") {
@@ -40,9 +42,9 @@ const FeatureListInHome = () => {
   return (
     <div
       className="flex flex-col gap-3 rounded-full bg-linear-to-b from-amber-100 
-    to-amber-300 p-2 border border-amber-500 shadow-lg"
+    to-gray-300 p-2 border border-amber-500 shadow-lg"
     >
-      <div className={`${wrapperIconCss}`}>
+      <div className={`${wrapperIconCss}`} onClick={()=>setIsOpenMailbox(true)}>
         <Mail className={`${iconCss} text-red-700`} />
       </div>
 

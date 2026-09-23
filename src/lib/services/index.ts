@@ -2,6 +2,7 @@ import {
   getCharacterClassMisionsAPI,
   getClassesAPI,
 } from "@/app/axios/classApi";
+import { getMailboxAPI } from "@/app/axios/mailbox";
 import { progressMapAPI } from "@/app/axios/map";
 import { getSkinsAPI } from "@/app/axios/skinAPI";
 
@@ -12,13 +13,15 @@ export const init = async (
   setClasses,
   setCharacterClassMission,
   setProgressMap,
+  setMailboxes
 ) => {
-  const [skinResult, classResult, classMisionsResult, mapResult] =
+  const [skinResult, classResult, classMisionsResult, mapResult, mailboxResult] =
     await Promise.allSettled([
       getSkinsAPI(),
       getClassesAPI(),
       getCharacterClassMisionsAPI(characterId),
       progressMapAPI(),
+      getMailboxAPI(characterId),
     ]);
 
   // tải danh sách skin từ API
@@ -47,5 +50,12 @@ export const init = async (
     setProgressMap(mapResult.value);
   } else {
     console.error("Load map failed", mapResult.reason);
+  }
+
+  // tải mailbox
+  if (mailboxResult.status === "fulfilled") {
+    setMailboxes(mailboxResult.value);
+  } else {
+    console.error("Load mailbox failed", mailboxResult.reason);
   }
 };

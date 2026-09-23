@@ -13,6 +13,7 @@ import CoatingButton from "../ui/CoatingButton";
 import { validateName } from "@/lib/helper";
 import { CHANGE_NAME_COST_ONCE } from "@/lib/constants/numberConstants";
 import { changeNameAPI } from "@/app/axios/characterAPI";
+import { useMailboxStore } from "@/lib/useStore/useMailBox";
 
 interface SingleInputFormProps {
   type: "redeemCode" | "changeName";
@@ -30,7 +31,8 @@ const SingleInputForm = ({
   const [formData, setFormData] = useState("");
   const { userId } = useUserStore();
   const { setAalertUserInfo, setComfirmAlert } = useToggleStore();
-  const { character, setCharacter, updateCharacter } = useCharacterStore();
+  const { character, updateCharacter } = useCharacterStore();
+  const { updateMailboxes } = useMailboxStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -118,8 +120,8 @@ const SingleInputForm = ({
       const res = await redeemCodeAPI(userId, formData, character._id);
 
       if (res.success) {
-        showSuccess(res.message);
-        setCharacter(res.character);
+        showSuccess("Quà đã được gửi vào thư của bạn");
+        updateMailboxes(res.newMailbox);
       }
     } catch (error) {
       showError(error?.message);

@@ -10,7 +10,10 @@ import {
   addBreakthroughInfo,
   calculateCharacterStats,
   characterPopulate,
+  grantRewards,
 } from "@/lib/helper";
+import Mailbox from "@/lib/models/Mailbox";
+import mongoose from "mongoose";
 
 export async function POST(
   req: NextRequest,
@@ -76,62 +79,29 @@ export async function POST(
       );
     }
 
-    // ===== Cộng thưởng =====
-    character.spiritStone += foundCode.reward.spiritStone;
-    character.cultivation += foundCode.reward.cultivation;
-
-    // Items
-    for (const rewardItem of foundCode.reward.items) {
-      const existed = character.inventory.items.find(
-        (item: any) => item.itemId.toString() === rewardItem.itemId.toString(),
-      );
-
-      if (existed) {
-        existed.quantity += rewardItem.quantity;
-      } else {
-        character.inventory.items.push({
-          itemId: rewardItem.itemId,
-          quantity: rewardItem.quantity,
-        });
-      }
-    }
-
-    // Equips
-    for (const rewardEquip of foundCode.reward.equips) {
-      for (let i = 0; i < rewardEquip.quantity; i++) {
-        character.inventory.equips.push({
-          equipId: rewardEquip.equipId,
-        });
-      }
-    }
-
-    await character.save();
-
-    const updateCharacter = await Character.findOne({ _id: characterId })
-      .populate(characterPopulate)
-      .lean();
-
-    const { finalStats } = calculateCharacterStats(updateCharacter);
-
     // ===== Lưu lịch sử đổi mã =====
-
     await CodeRedeem.create({
       codeId: foundCode._id,
       userId: id,
     });
 
     // ===== Tăng số lần dùng =====
-
     foundCode.usedCount += 1;
     await foundCode.save();
+
+    // tạo mailbox
+    const insertId = await Mailbox.insertOne({
+      characterId: new mongoose.Types.ObjectId(character._id),
+      title: `Phần thưởng từ mã quà ${code}`,
+      reward: foundCode.reward,
+    });
+
+    const newMailbox = await Mailbox.findById(insertId);
 
     return NextResponse.json({
       success: true,
       message: "Đổi mã thành công.",
-      character: {
-        finalStats,
-        ...addBreakthroughInfo(updateCharacter),
-      },
+      newMailbox,
     });
   } catch (error) {
     console.error(error);

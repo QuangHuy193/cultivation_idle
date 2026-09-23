@@ -1,20 +1,27 @@
 import { NextResponse } from "next/server";
-
 import connectDB from "@/lib/db/db";
 
 import "@/lib/models";
-import Realm from "@/lib/models/Realm";
+import Mailbox from "@/lib/models/Mailbox";
 
-export async function GET() {
+export async function GET(
+  request: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ id: string }>;
+  },
+) {
   try {
     await connectDB();
 
-    const realms = await Realm.find().select("_id name order").lean()
+    const { id } = await params;
+
+    const mails = await Mailbox.find({ characterId: id });
 
     return NextResponse.json({
-      realms,
+      mails,
     });
-    
   } catch (error) {
     console.error(error);
 

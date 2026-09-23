@@ -89,7 +89,13 @@ const InventorySchema = new Schema(
           },
         },
       ],
-      default: [],
+      default: [
+        {
+          skillId: "tram_kich",
+          level: 1,
+          shard: 0,
+        },
+      ],
     },
     skins: {
       type: [
@@ -233,7 +239,7 @@ const CharacterSchema = new Schema(
 
     countChangeName: {
       type: Number,
-      defalut: -2, // miễn phí đổi tên 3 lần
+      default: -2, // miễn phí đổi tên 3 lần
     },
 
     skinId: {
@@ -293,7 +299,7 @@ const CharacterSchema = new Schema(
 
     spiritStone: {
       type: Number,
-      default: 0,
+      default: 100,
     },
 
     stats: {
@@ -344,7 +350,12 @@ const CharacterSchema = new Schema(
           slot: Number,
         },
       ],
-      default: [],
+      default: [
+        {
+          skillId: "tram_kich",
+          slot: 1,
+        },
+      ],
     },
 
     equipments: {

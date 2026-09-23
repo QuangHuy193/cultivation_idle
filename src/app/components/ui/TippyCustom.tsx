@@ -3,7 +3,7 @@ import { InfoIcon } from "lucide-react";
 import React from "react";
 
 interface TippyCustomProps {
-  content: string;
+  content: React.ReactElement;
   btn?: React.ReactElement;
   trigger?: "click" | "mouseenter";
 }

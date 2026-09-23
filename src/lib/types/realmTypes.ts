@@ -16,3 +16,9 @@ export interface Realm {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface RealmNameList {
+  _id: string;
+  name: string;
+  order: number;
+}

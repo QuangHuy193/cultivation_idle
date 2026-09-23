@@ -20,11 +20,12 @@ import SettingAlert from "../alert/SettingAlert";
 import ImageIcon from "../ui/ImageIcon";
 import { CHANGE_NAME_COST_ONCE } from "@/lib/constants/numberConstants";
 import FeatureListInHome from "../ui/FeatureListInHome";
+import MailboxAlert from "../alert/MailboxAlert";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
 
-  const { alertUserInfo, setAalertUserInfo } = useToggleStore();
+  const { alertUserInfo, setAalertUserInfo, isOpenMailbox } = useToggleStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const realmStyle =
@@ -114,8 +115,8 @@ export default function HomeTab() {
 
         {/* linh thạch, menu */}
         <div
-          className="fixed top-2 right-1 z-50 flex items-center gap-3 rounded-2xl border 
-          border-amber-200/60 bg-amber-50/95 px-3 py-2 shadow-lg backdrop-blur-sm"
+          className="fixed top-2 right-1 z-50 flex items-center gap-2 rounded-2xl border 
+          border-amber-200/60  px-3 py-2 backdrop-blur-sm"
         >
           <div
             className="flex items-center gap-2 rounded-xl border border-cyan-200 
@@ -178,6 +179,7 @@ export default function HomeTab() {
         />
       )}
       {alertUserInfo === "setting" && <SettingAlert />}
+      {isOpenMailbox && <MailboxAlert />}
     </section>
   );
 }

@@ -37,6 +37,8 @@ interface UserToggleState {
     onYes: () => void;
     onNo: () => void;
   };
+  // quản lý hộp thư
+  isOpenMailbox: boolean;
 
   setFormOpen: (name: "" | "signin" | "signup") => void;
   setItemInfoToggle: (payload: {
@@ -58,6 +60,7 @@ interface UserToggleState {
     onYes?: () => void;
     onNo?: () => void;
   }) => void;
+  setIsOpenMailbox: (open: boolean) => void;
 }
 
 export const useToggleStore = create<UserToggleState>()((set) => ({
@@ -90,6 +93,8 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
     onNo: () => {},
   },
 
+  isOpenMailbox: false,
+
   setFormOpen: (open) => {
     set({ formOpen: open });
   },
@@ -119,5 +124,9 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
     set((state) => ({
       comfirmAlert: { ...state.comfirmAlert, ...alert },
     }));
+  },
+
+  setIsOpenMailbox: (open) => {
+    set({ isOpenMailbox: open });
   },
 }));
