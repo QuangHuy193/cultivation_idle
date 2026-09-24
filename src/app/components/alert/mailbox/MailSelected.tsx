@@ -3,10 +3,31 @@ import {
   SPIRITSTONE_ICON,
 } from "@/lib/constants/imageConstants";
 import { useMailboxStore } from "@/lib/useStore/useMailBox";
-import IconItemReward from "./IconItemReward";
+import IconItemReward from "../../ui/IconItemReward";
+import { checkHasReward } from "@/lib/helper";
+import { mailboxService } from "@/lib/services/mailbox.service";
+import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { showSuccess } from "@/lib/toast";
 
 const MailSelected = () => {
+  const { character } = useCharacterStore();
   const { selectedMail } = useMailboxStore();
+
+  const hasReward = selectedMail && checkHasReward(selectedMail.reward);
+
+  const handleReward = async () => {
+    try {
+      await mailboxService.rewardMailbox(
+        character._id,
+        selectedMail?._id || "",
+      );
+      showSuccess("Đã nhận thưởng");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 
   if (!selectedMail) {
     return (
@@ -45,7 +66,11 @@ const MailSelected = () => {
 
       {/* Phần thưởng */}
       <div className="mt-3">
-        <div className="mb-2 text-sm font-bold text-amber-800">Phần thưởng</div>
+        {hasReward && (
+          <div className="mb-2 text-sm font-bold text-amber-800">
+            Phần thưởng
+          </div>
+        )}
 
         <div className="flex flex-wrap gap-2">
           {selectedMail.reward.spiritStone > 0 && (
@@ -69,29 +94,18 @@ const MailSelected = () => {
       </div>
 
       {/* Nút nhận */}
-      {selectedMail.status !== 2 && (
+      {selectedMail.status !== 2 && hasReward && (
         <button
-          className="
-            mt-4
-            rounded-xl
-            bg-linear-to-b
-            from-yellow-400
-            to-amber-500
-            py-2
-            font-bold
-            text-white
-            shadow            
-            active:scale-95
-          "
+          className="mt-4 rounded-xl bg-linear-to-b from-yellow-400 to-amber-500 py-2
+          font-bold text-white shadow active:scale-95"
+          onClick={handleReward}
         >
           Nhận thưởng
         </button>
       )}
 
       {selectedMail.status === 2 && (
-        <div
-          className="text-center mt-4 rounded-xl text-yellow-400 py-2 font-bold"
-        >
+        <div className="text-center mt-4 rounded-xl text-yellow-400 py-2 font-bold">
           Đã nhận
         </div>
       )}

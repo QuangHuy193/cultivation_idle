@@ -2,27 +2,33 @@ import {
   getCharacterClassMisionsAPI,
   getClassesAPI,
 } from "@/app/axios/classApi";
-import { getMailboxAPI } from "@/app/axios/mailbox";
+import { getMailboxAPI } from "@/app/axios/mailboxAPI";
 import { progressMapAPI } from "@/app/axios/map";
 import { getSkinsAPI } from "@/app/axios/skinAPI";
 
 // tải các phần khác của game
 export const init = async (
-  characterId,
+  characterId: string,
   setSkins,
   setClasses,
   setCharacterClassMission,
   setProgressMap,
-  setMailboxes
+  setMailboxes,
+  
 ) => {
-  const [skinResult, classResult, classMisionsResult, mapResult, mailboxResult] =
-    await Promise.allSettled([
-      getSkinsAPI(),
-      getClassesAPI(),
-      getCharacterClassMisionsAPI(characterId),
-      progressMapAPI(),
-      getMailboxAPI(characterId),
-    ]);
+  const [
+    skinResult,
+    classResult,
+    classMisionsResult,
+    mapResult,
+    mailboxResult,
+  ] = await Promise.allSettled([
+    getSkinsAPI(),
+    getClassesAPI(),
+    getCharacterClassMisionsAPI(characterId),
+    progressMapAPI(),
+    getMailboxAPI(characterId),
+  ]);
 
   // tải danh sách skin từ API
   if (skinResult.status === "fulfilled") {

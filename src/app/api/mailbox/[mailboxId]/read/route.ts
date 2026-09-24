@@ -4,23 +4,37 @@ import connectDB from "@/lib/db/db";
 import "@/lib/models";
 import Mailbox from "@/lib/models/Mailbox";
 
-export async function GET(
+export async function POST(
   request: Request,
   {
     params,
   }: {
-    params: Promise<{ id: string }>;
+    params: Promise<{ mailboxId: string }>;
   },
 ) {
   try {
     await connectDB();
 
-    const { id } = await params;
+    const { mailboxId } = await params;
 
-    const mails = await Mailbox.find({ characterId: id, status: { $ne: -1 } });
+    const mail = await Mailbox.findById(mailboxId);
+
+    if (!mail) {
+      return NextResponse.json(
+        {
+          message: "Không tìm thấy mail!",
+        },
+        { status: 404 },
+      );
+    }
+
+    if (mail.status === 0) {
+      mail.status = 1;
+      await mail.save();
+    }
 
     return NextResponse.json({
-      mails,
+      mail,
     });
   } catch (error) {
     console.error(error);

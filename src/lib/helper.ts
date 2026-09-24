@@ -1,3 +1,4 @@
+import { IRewards, Rewards } from "./models/Code";
 import { Types } from "mongoose";
 import { ICharacter } from "./models/Character";
 import {
@@ -5,6 +6,7 @@ import {
   CultivationPerMinute,
 } from "./types/characterTypes";
 import { createHash } from "crypto";
+import { Mailbox } from "./types/mailboxTypes";
 
 // tạo hash pass
 export function hashPassword(password: string) {
@@ -253,4 +255,29 @@ export const validateName = (name: string) => {
     check: true,
     mess: null,
   };
+};
+
+// kiểm tra có thưởng k
+export const checkHasReward = (reward: IRewards) => {
+  return [
+    reward.cultivation,
+    reward.spiritStone,
+    reward.equips.length,
+    reward.items.length,
+    reward.skins.length,
+    reward.skills.length,
+  ].some((value) => value > 0);
+};
+
+// tính độ ưu tiển hiện mail
+export const getMailPriority = (mail: Mailbox) => {
+  if (mail.status === 0) return 0; // chưa đọc
+
+  if (mail.status === 1 && checkHasReward(mail.reward)) {
+    return 1; // đã đọc nhưng còn thưởng chưa nhận
+  }
+
+  if (mail.status === 2) return 2; // đã nhận thưởng
+
+  return 3; // -1 hoặc trạng thái khác
 };

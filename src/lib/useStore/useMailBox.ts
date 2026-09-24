@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import { Mailbox } from "../types/mailboxTypes";
+import { getMailPriority } from "../helper";
 
 interface useMailboxState {
-  mailboxes: Mailbox[] | [];
+  mailboxes: Mailbox[] | [] | null;
   selectedMail: Mailbox | null;
 
   setMailboxes: (mailboxes: Mailbox[]) => void;
@@ -11,7 +12,7 @@ interface useMailboxState {
 }
 
 export const useMailboxStore = create<useMailboxState>()((set) => ({
-  mailboxes: [],
+  mailboxes: null,
   selectedMail: null,
 
   setMailboxes: (mailboxes) => {
@@ -20,19 +21,30 @@ export const useMailboxStore = create<useMailboxState>()((set) => ({
 
   updateMailboxes: (mail) => {
     set((state) => {
-      const exists = state.mailboxes.some((m) => m._id === mail._id);
+      const mailboxes = [...state.mailboxes];
 
-      if (exists) {
-        return {
-          mailboxes: state.mailboxes.map((m) =>
-            m._id === mail._id ? mail : m,
-          ),
-        };
+      const index = mailboxes.findIndex((m) => m._id === mail._id);
+
+      if (index >= 0) {
+        mailboxes[index] = mail;
+      } else {
+        mailboxes.unshift(mail);
       }
 
-      return {
-        mailboxes: [mail, ...state.mailboxes],
-      };
+      mailboxes.sort((a, b) => {
+        const priorityA = getMailPriority(a);
+        const priorityB = getMailPriority(b);
+
+        if (priorityA !== priorityB) {
+          return priorityA - priorityB;
+        }
+
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      });
+
+      return { mailboxes };
     });
   },
 

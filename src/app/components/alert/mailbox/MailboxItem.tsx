@@ -1,6 +1,9 @@
+import { checkHasReward } from "@/lib/helper";
+import { mailboxService } from "@/lib/services/mailbox.service";
 import { Mailbox } from "@/lib/types/mailboxTypes";
 import { useMailboxStore } from "@/lib/useStore/useMailBox";
 import { Mail as Mail_lucide } from "lucide-react";
+import DotCustom from "../../ui/DotCustom";
 
 interface MailboxItemProps {
   mail: Mailbox;
@@ -11,6 +14,11 @@ const MailboxItem = ({ mail }: MailboxItemProps) => {
 
   const handleSelectedMail = async () => {
     setSelectedMail(mail);
+    try {
+      await mailboxService.readMailbox(mail._id);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div
@@ -41,8 +49,9 @@ const MailboxItem = ({ mail }: MailboxItemProps) => {
       </div>
 
       <div className="flex flex-2/12 justify-end items-center pr-2">
-        {mail.status === 0 && (
-          <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+        {(mail.status === 0 ||
+          (mail.status === 1 && checkHasReward(mail.reward))) && (
+          <DotCustom/>
         )}
       </div>
     </div>

@@ -20,7 +20,7 @@ import SettingAlert from "../alert/SettingAlert";
 import ImageIcon from "../ui/ImageIcon";
 import { CHANGE_NAME_COST_ONCE } from "@/lib/constants/numberConstants";
 import FeatureListInHome from "../ui/FeatureListInHome";
-import MailboxAlert from "../alert/MailboxAlert";
+import MailboxAlert from "../alert/mailbox/MailboxAlert";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
