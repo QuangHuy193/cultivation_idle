@@ -46,29 +46,28 @@ export default function GamePage() {
     }
   }, [character._id]);
 
-  useEffect(() => {
-    const refreshOnline = async () => {
-      try {
-        console.log("character._id:", character._id);
+ useEffect(() => {
+  if (!character?._id) return;
 
-        const url = `/api/character/${character._id}/online/refresh`;
+  const refreshOnline = async () => {
+    try {
+      await updateTimeCharacterOnlineAPI(character._id);
+      console.log("online");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-        console.log("URL:", url);
-        await updateTimeCharacterOnlineAPI(character._id);
-        console.log("online");
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // cập nhật ngay khi đã có character
+  refreshOnline();
 
-    const timer = setInterval(() => {
-      refreshOnline();
-    }, 60 * 1000); // 1 phút
+  // sau đó mỗi 1 phút
+  const timer = setInterval(refreshOnline, 60 * 1000);
 
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  return () => {
+    clearInterval(timer);
+  };
+}, [character?._id]);
 
   return (
     <main className="h-screen min-h-screen overflow-hidden text-zinc-800 sm:min-h-screen">

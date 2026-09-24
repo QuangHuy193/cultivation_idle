@@ -8,15 +8,19 @@ import { checkHasReward } from "@/lib/helper";
 import { mailboxService } from "@/lib/services/mailbox.service";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { showSuccess } from "@/lib/toast";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
+import CoatingButton from "../../ui/CoatingButton";
 
 const MailSelected = () => {
   const { character } = useCharacterStore();
   const { selectedMail } = useMailboxStore();
+  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const hasReward = selectedMail && checkHasReward(selectedMail.reward);
 
   const handleReward = async () => {
     try {
+      setActionLoadingName("rewardMailbox");
       await mailboxService.rewardMailbox(
         character._id,
         selectedMail?._id || "",
@@ -24,10 +28,10 @@ const MailSelected = () => {
       showSuccess("Đã nhận thưởng");
     } catch (error) {
       console.log(error);
+    } finally {
+      setActionLoadingName("");
     }
   };
-
-
 
   if (!selectedMail) {
     return (
@@ -97,10 +101,11 @@ const MailSelected = () => {
       {selectedMail.status !== 2 && hasReward && (
         <button
           className="mt-4 rounded-xl bg-linear-to-b from-yellow-400 to-amber-500 py-2
-          font-bold text-white shadow active:scale-95"
+          font-bold text-white shadow active:scale-95 relative"
           onClick={handleReward}
         >
           Nhận thưởng
+          {actionLoadingName === "rewardMailbox" && <CoatingButton />}
         </button>
       )}
 
