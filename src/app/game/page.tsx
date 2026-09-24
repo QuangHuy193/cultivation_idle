@@ -49,6 +49,11 @@ export default function GamePage() {
   useEffect(() => {
     const refreshOnline = async () => {
       try {
+        console.log("character._id:", character._id);
+
+        const url = `/api/character/${character._id}/online/refresh`;
+
+        console.log("URL:", url);
         await updateTimeCharacterOnlineAPI(character._id);
         console.log("online");
       } catch (error) {
@@ -57,7 +62,6 @@ export default function GamePage() {
     };
 
     const timer = setInterval(() => {
-      console.log("online");
       refreshOnline();
     }, 60 * 1000); // 1 phút
 
