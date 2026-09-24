@@ -95,9 +95,9 @@ export async function POST(
       character.realmLevel = 1;
 
       // tăng chỉ số cơ bản của cảnh giới mới
-      character.stats.realm.atk = nextRealm.levels[0].atkBouns;
-      character.stats.realm.hp = nextRealm.levels[0].hpBonus;
-      character.stats.realm.def = nextRealm.levels[0].defBonus;
+      character.stats.realm.atk = nextRealm.levels?.[0]?.atkBouns;
+      character.stats.realm.hp = nextRealm.levels?.[0]?.hpBonus;
+      character.stats.realm.def = nextRealm.levels?.[0]?.defBonus;
     }
 
     await character.save();

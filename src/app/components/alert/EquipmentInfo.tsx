@@ -10,7 +10,7 @@ import Image from "next/image";
 import CoatingButton from "../ui/CoatingButton";
 
 interface EquipmentInfoProps {
-  equip: Equip;
+  equip: Equip|any;
   isEquipped?: boolean;
   onClose?: () => void;
 }

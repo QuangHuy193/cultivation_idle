@@ -1,13 +1,13 @@
 import { create } from "zustand";
-import type { CharacterResponse } from "@/lib/interface";
+import type { CharacterResponse } from "@/lib/types/characterTypes";
 import { persist } from "zustand/middleware";
 import { CharacterState } from "../types/store";
 
-const defaultCharacter: CharacterResponse = {
+const defaultCharacter: any = {
   _id: "",
   userId: "",
   name: "",
-  realmId: undefined,
+  realmId: "",
   realmLevel: 1,
   cultivation: 0,
   cultivationPerSecond: { base: 1, fromMap: 0, fromItem: 0, fromVip: 0 },

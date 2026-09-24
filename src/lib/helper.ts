@@ -59,9 +59,9 @@ export const calculateCharacterStats = (character: ICharacter) => {
 
   const finalStats = sources.reduce(
     (total, stat) => ({
-      hp: total.hp + (stat?.hp || 0),
-      atk: total.atk + (stat?.atk || 0),
-      def: total.def + (stat?.def || 0),
+      hp: total?.hp ?? 0 + (stat?.hp || 0),
+      atk: total?.atk ?? 0 + (stat?.atk || 0),
+      def: total?.def ?? 0 + (stat?.def || 0),
     }),
     {
       hp: 0,
@@ -104,7 +104,7 @@ export const rollChance = (chance: number): boolean => {
 
 // cập nhật thưởng cho nhân vật
 export const grantRewards = async (
-  character,
+  character:any,
   rewards: {
     cultivation?: number;
     spiritStone?: number;

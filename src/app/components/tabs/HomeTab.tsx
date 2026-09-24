@@ -90,7 +90,7 @@ export default function HomeTab() {
               className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}
             >
               {character.realmId?.name} -{" "}
-              {character.realmId.levels[character.realmLevel - 1].name}
+              {character.realmId?.levels?.[character.realmLevel - 1]?.name}
             </span>
 
             <div className="relative mt-2 h-2 w-full overflow-hidden rounded-full bg-white">

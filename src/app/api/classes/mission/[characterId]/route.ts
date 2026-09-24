@@ -39,7 +39,7 @@ const RARITY_CONFIG = {
 };
 
 function getTodayString() {
-  return new Date().toISOString().split("T")[0];
+  return new Date().toISOString().split("T")?.[0];
 }
 
 function randomRarity() {

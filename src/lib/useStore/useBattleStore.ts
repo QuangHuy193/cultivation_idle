@@ -4,6 +4,7 @@ import { BattleState } from "../types/battleTypes";
 export const battleStateDefault = {
   _id: "",
   characterId: "",
+  battleType: "mainStage",
   turn: 1,
 
   playerHp: 1,
@@ -23,7 +24,12 @@ export const battleStateDefault = {
 
   stage: 1,
 
-  skills: [],
+  skills: [
+    {
+      skillId: "tram_kich",
+      currentCooldown: 1,
+    },
+  ],
 
   battleStatus: "fighting",
 

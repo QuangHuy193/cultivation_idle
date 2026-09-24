@@ -6,12 +6,6 @@ import "@/lib/models";
 import Code from "@/lib/models/Code";
 import CodeRedeem from "@/lib/models/CodeRedeem";
 import Character from "@/lib/models/Character";
-import {
-  addBreakthroughInfo,
-  calculateCharacterStats,
-  characterPopulate,
-  grantRewards,
-} from "@/lib/helper";
 import Mailbox from "@/lib/models/Mailbox";
 import mongoose from "mongoose";
 

@@ -41,7 +41,10 @@ export const RARITY_CSS: Record<
   },
 };
 
-export const REALM_CSS = {
+export const REALM_CSS: Record<
+  string,
+  { border: string; text: string; glow: string }
+> = {
   luyenkhi: {
     text: "text-slate-300",
     border: "border-slate-400",

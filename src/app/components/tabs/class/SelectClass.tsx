@@ -8,7 +8,6 @@ import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 import { useState } from "react";
-import CoatingButton from "../../ui/CoatingButton";
 import Loading from "../../ui/Loading";
 
 const SelectClass = () => {
@@ -98,20 +97,20 @@ const SelectClass = () => {
 
                   <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
                     <div className="font-semibold text-amber-700">
-                      {cls.levels[0].name}
+                      {cls.levels?.[0]?.name}
                     </div>
 
                     <div className="mt-2 space-y-1 text-sm">
-                      <div>⚔️ Công: +{cls.levels[0].buffs.atk}</div>
+                      <div>⚔️ Công: +{cls.levels?.[0]?.buffs?.atk}</div>
 
-                      <div>❤️ Máu: +{cls.levels[0].buffs.hp}</div>
+                      <div>❤️ Máu: +{cls.levels?.[0]?.buffs?.hp}</div>
 
-                      <div>🛡️ Thủ: +{cls.levels[0].buffs.def}</div>
+                      <div>🛡️ Thủ: +{cls.levels?.[0]?.buffs?.def}</div>
 
                       <div className="font-medium text-blue-600">
                         ✦ Tấn công kỹ năng hệ{" "}
                         {SKILL_TYPE_TEXT_MAP(cls.typeSkillBuff)} +
-                        {cls.levels[0].buffs.skill}%
+                        {cls.levels?.[0]?.buffs?.skill}%
                       </div>
                     </div>
                   </div>

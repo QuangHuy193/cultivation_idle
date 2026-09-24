@@ -47,7 +47,7 @@ export async function POST(
 
     // tìm trang bị trong túi
     const equipIndex = character.inventory.equips.findIndex(
-      (item) => item.equipId?.toString() === equipId,
+      (item:any) => item.equipId?.toString() === equipId,
     );
 
     if (equipIndex === -1) {

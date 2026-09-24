@@ -60,7 +60,7 @@ export async function POST(
 
     for (let turn = 1; turn <= MAX_TURN; turn++) {
       // giảm CD
-      skills.forEach((skill) => {
+      skills.forEach((skill: any) => {
         if (skill.currentCooldown > 0) {
           skill.currentCooldown--;
         }
@@ -127,7 +127,10 @@ export async function POST(
       const monsterDamage = battle.monster.attack || 1;
 
       // trừ máu player
-      const finalDamgeOfMons = Math.max(monsterDamage - finalStats.def, 1);
+      const finalDamgeOfMons = Math.max(
+        monsterDamage - (finalStats?.def ?? 0),
+        1,
+      );
 
       playerHp -= finalDamgeOfMons;
 

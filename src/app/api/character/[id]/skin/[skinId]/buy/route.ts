@@ -46,7 +46,7 @@ export async function POST(
     }
 
     const isHasSkin = character.inventory.skins.find(
-      (sk) => sk.skinId === skinId,
+      (sk:any) => sk.skinId === skinId,
     );
 
     if (isHasSkin) {

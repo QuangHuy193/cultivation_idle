@@ -124,7 +124,7 @@ const SingleInputForm = ({
         updateMailboxes(res.newMailbox);
       }
     } catch (error) {
-      showError(error?.message);
+      console.log(error);
     } finally {
       setFormData("");
       setActionLoadingName("");

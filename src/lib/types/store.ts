@@ -2,7 +2,7 @@ import { CharacterResponse } from "./characterTypes";
 
 
 export interface CharacterState {
-  character: CharacterResponse;
+  character: CharacterResponse|any;
 
   setCharacter: (character: CharacterResponse) => void;
 

@@ -1,10 +1,7 @@
 "use client";
 
 import {} from "@/lib/constants/numberConstants";
-import {
-  DEFAULT_IMG_CHARACTER,
-  DEFAULT_IMG_THE_GIOI,
-} from "@/lib/constants/imageConstants";
+import { DEFAULT_IMG_THE_GIOI } from "@/lib/constants/imageConstants";
 import { showWarning } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useMapStore } from "@/lib/useStore/useMapStore";
@@ -23,8 +20,8 @@ export default function MainStageTab() {
   const { tabState, setTabState } = useToggleStore();
 
   const pushBattle = (mapId: string) => {
-    const currentCLickMap: MapsResponse = maps?.find((m) => m._id === mapId);
-
+    const currentCLickMap: any = maps?.find((m) => m._id === mapId);
+    //MapsResponse
     if (character.currentMap.map.order < currentCLickMap?.order) {
       showWarning("Bạn chưa hoàn thành bản đồ trước đó");
     } else if (character.realmId?.order < currentCLickMap.requiredRealm.order) {

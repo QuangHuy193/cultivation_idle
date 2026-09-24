@@ -17,7 +17,7 @@ const SkinTabBottom = ({ skins }: SkinTabBottomProps) => {
       {skins &&
         skins.length > 0 &&
         skins.map((skin: Skin) => {
-          const isHas = character?.inventory?.skins.find((s) => {
+          const isHas = character?.inventory?.skins.find((s:any) => {
             return skin._id === s.skinId._id;
           });
 

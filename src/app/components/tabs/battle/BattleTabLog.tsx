@@ -18,15 +18,15 @@ const BattleTabLog = () => {
         <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => {
             const equippedSkill = character.equippedSkills?.find(
-              (skill) => skill.slot === index + 1,
+              (skill:any) => skill.slot === index + 1,
             );
 
             const skillData = character.inventory.skills?.find(
-              (skill) => skill.skillId._id === equippedSkill?.skillId,
+              (skill:any) => skill.skillId._id === equippedSkill?.skillId,
             );
 
             const battleSkill = battle.skills.find(
-              (s) => s.skillId === skillData?.skillId._id,
+              (s:any) => s.skillId === skillData?.skillId._id,
             );
 
             return (

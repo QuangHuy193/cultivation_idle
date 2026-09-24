@@ -24,18 +24,17 @@ export interface BattleSkill {
   currentCooldown: number;
 }
 
-
 export interface BattleState {
   _id: string;
 
   characterId: string;
 
-  battleType: "mainStage" | "wildMap";
+  battleType: "mainStage" | "wildMap" | string;
 
   turn: number;
 
   playerHp: number;
-  
+
   playerMaxHp: number;
 
   monster: BattleMonster;
@@ -48,12 +47,11 @@ export interface BattleState {
 
   battleStatus: string; //"fighting" | "win" | "lose"
 
-  lastTurnAt: Date;
+  lastTurnAt: string;
 
   logs: Log[];
 }
 
-
 export interface MonstersResponse {
-  monsterId: Monster
+  monsterId: Monster;
 }

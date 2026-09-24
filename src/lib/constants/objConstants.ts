@@ -12,6 +12,21 @@ export const MAIN_TABS_LABEL = {
 
 export type TabType = (typeof MAIN_TABS_LABEL)[keyof typeof MAIN_TABS_LABEL];
 
+export interface SecretRealmTabType {
+  key: TabType;
+  name: string;
+  bg: string;
+  description: string;
+}
+
+export interface CharacterTabType {
+  key: TabType;
+  label: string;
+  icon: React.ReactNode;
+  accent: string;
+  display: boolean;
+}
+
 export const MAIN_TABS = [
   {
     key: "character",
@@ -101,7 +116,7 @@ export const EQUIPMENT_SLOTS_LABEL = [
   "boots",
 ];
 
-export const SECRET_REALM_TABS = [
+export const SECRET_REALM_TABS: SecretRealmTabType[] = [
   {
     key: "mainStage",
     name: "Ải Chính Tuyến",

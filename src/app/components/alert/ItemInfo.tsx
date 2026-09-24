@@ -10,7 +10,7 @@ import Image from "next/image";
 import CoatingButton from "../ui/CoatingButton";
 
 interface ItemInfoProps {
-  item: Item;
+  item: Item|any;
   onClose?: () => void;
 }
 

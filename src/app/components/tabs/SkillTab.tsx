@@ -22,7 +22,7 @@ export default function SkillTab() {
 
   // lấy dl từ equippedSkills để hiện các skill đang trang bị (hiện "eq" ở phần inventory)
   const equippedSkillSet = new Set(
-    character.equippedSkills?.map((skill) => skill.skillId) || [],
+    character.equippedSkills?.map((skill:any) => skill.skillId) || [],
   );
 
   return (
@@ -49,11 +49,11 @@ export default function SkillTab() {
         <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => {
             const equippedSkill = character.equippedSkills?.find(
-              (skill) => skill.slot === index + 1,
+              (skill:any) => skill.slot === index + 1,
             );
 
             const skillData = character.inventory.skills?.find(
-              (skill) => skill.skillId._id === equippedSkill?.skillId,
+              (skill:any) => skill.skillId._id === equippedSkill?.skillId,
             );
 
             return (
@@ -123,7 +123,7 @@ export default function SkillTab() {
         </div>
 
         <div className="grid grid-cols-5 gap-3">
-          {character.inventory.skills?.map((skill, ind) => {
+          {character.inventory.skills?.map((skill:any, ind:number) => {
             const isEquipped = equippedSkillSet.has(skill.skillId._id);
 
             return (

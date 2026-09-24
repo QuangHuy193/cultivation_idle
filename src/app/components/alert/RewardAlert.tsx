@@ -10,8 +10,8 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
 interface RewardAlertProps {
-  status: "win" | "lose";
-  newCharacter?: CharacterResponse;
+  status: "win" | "lose" | string;
+  newCharacter?: CharacterResponse | any;
   rewards?: any;
   onClose: () => void;
 }
@@ -32,7 +32,7 @@ const RewardAlert = ({
     onClose();
 
     // chuyển trang
-    setTabState("mainStage", tabState);
+    setTabState("mainStage", tabState.activeTab);
   };
   return (
     <div className={`${CLASS_COATING_L} flex items-center justify-center`}>
@@ -85,7 +85,7 @@ const RewardAlert = ({
           </div>
 
           {rewards?.equips &&
-            rewards?.equips.map((e) => (
+            rewards?.equips.map((e: any) => (
               <div
                 key={e._id}
                 className="flex h-20 w-20 items-end justify-center rounded-xl border-2 

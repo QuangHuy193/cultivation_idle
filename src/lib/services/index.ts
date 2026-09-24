@@ -9,11 +9,11 @@ import { getSkinsAPI } from "@/app/axios/skinAPI";
 // tải các phần khác của game
 export const init = async (
   characterId: string,
-  setSkins,
-  setClasses,
-  setCharacterClassMission,
-  setProgressMap,
-  setMailboxes,
+  setSkins:any,
+  setClasses:any,
+  setCharacterClassMission:any,
+  setProgressMap:any,
+  setMailboxes:any,
   
 ) => {
   const [

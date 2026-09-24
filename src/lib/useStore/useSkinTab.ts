@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { Skin } from "../interface";
+import { Skin } from "@/lib/types/skinTypes";
 
 interface UserSkinState {
-  selectedSkin: Skin;
+  selectedSkin: Skin|any;
 
   owner: boolean;
 

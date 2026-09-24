@@ -8,33 +8,37 @@ import WildMapTab from "@/app/components/tabs/secretRealm/WildMapTab";
 import SkillTab from "@/app/components/tabs/SkillTab";
 import SkinTab from "@/app/components/tabs/skin/SkinTab";
 import { Shirt } from "lucide-react";
+import { CharacterTabType } from "./objConstants";
 
 export const RENDER_CONTENT = (activeTab: string) => {
   switch (activeTab) {
-    case "home":
-      return <HomeTab />;
-    case "secretRealm":
-      return <SecretRealmTab />;
-    case "skill":
-      return <SkillTab />;
-    case "class":
-      return <ClassTab />;
-    case "character":
-      return <CharacterTab />;
-    case "battle":
-      return <BattleTab />;
-    case "skin":
-      return <SkinTab />;
-    case "mainStage":
-      return <MainStageTab />;
-    case "wildMap":
-      return <WildMapTab />;
+    // case "home":
+    //   return <HomeTab />;
+    // case "secretRealm":
+    //   return <SecretRealmTab />;
+    // case "skill":
+    //   return <SkillTab />;
+    // case "class":
+    //   return <ClassTab />;
+    // case "character":
+    //   return <CharacterTab />;
+    // case "battle":
+    //   return <BattleTab />;
+    // case "skin":
+    //   return <SkinTab />;
+    // case "mainStage":
+    //   return <MainStageTab />;
+    // case "wildMap":
+    //   return <WildMapTab />;
     default:
+       //return <div>Test</div>;
       return <HomeTab />;
   }
 };
 
-export const CHARACTER_TABS = [
+
+
+export const CHARACTER_TABS:CharacterTabType[] = [
   {
     key: "skin",
     label: "Trang phục",

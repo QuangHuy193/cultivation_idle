@@ -36,11 +36,11 @@ const BattleTab = () => {
   const { battleSpeed } = useSettingStore();
 
   // danh sách turns từ api {battleStatus, turns}
-  const [turns, setTurns] = useState([]);
+  const [turns, setTurns] = useState<any[]>([]);
   // lượt hiện tại
   const [currentTurn, setCurrentTurn] = useState(0);
   // trả về từ api lấy rewward {character, rewwards}
-  const [resReward, setResReawrd] = useState({});
+  const [resReward, setResReawrd] = useState<any>({});
 
   // tạo battle
   useEffect(() => {

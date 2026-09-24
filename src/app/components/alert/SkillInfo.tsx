@@ -12,7 +12,7 @@ import Image from "next/image";
 import CoatingButton from "../ui/CoatingButton";
 
 interface SkillInfoProps {
-  skill: Skill;
+  skill: Skill|any;
   level: number;
   shard: number;
   isEquipped?: boolean;

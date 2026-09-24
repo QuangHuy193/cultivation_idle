@@ -27,7 +27,7 @@ const SkinTabTop = () => {
         {/* Độ hiếm */}
         <div className="mb-4 flex items-center justify-between border-b border-zinc-200 pb-3">
           <div className="font-medium text-zinc-500 flex items-center gap-1">
-            Độ hiếm <TippyCustom content=""/>
+            Độ hiếm <TippyCustom content={<div></div>}/>
           </div>
 
           <span

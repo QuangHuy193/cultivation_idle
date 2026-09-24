@@ -1,7 +1,7 @@
 "use client";
 
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import MainTabsBar from "@/app/components/navbar/MainTabsBar";
+import MainTabsBar from "@/app/components/navbar/CharacterTabsBar";
 import { RENDER_CONTENT } from "@/lib/constants/tsxConstants";
 import { useEffect } from "react";
 import { init } from "@/lib/services";

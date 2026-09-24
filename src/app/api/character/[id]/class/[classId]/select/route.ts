@@ -70,9 +70,9 @@ export async function POST(
       character.class.classId = classId;
       character.class.classLevelCharacter = 1;
 
-      character.stats.class.atk = cls.levels[0].buffs.atk;
-      character.stats.class.hp = cls.levels[0].buffs.hp;
-      character.stats.class.def = cls.levels[0].buffs.def;
+      character.stats.class.atk = cls.levels?.[0]?.buffs?.atk;
+      character.stats.class.hp = cls.levels?.[0]?.buffs?.hp;
+      character.stats.class.def = cls.levels?.[0]?.buffs?.def;
     } else {
       return NextResponse.json(
         {

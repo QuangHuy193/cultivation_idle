@@ -1,9 +1,6 @@
 "use client";
 
-import { getClassesAPI } from "@/app/axios/classApi";
 import { DEFAULT_IMG_HOME } from "@/lib/constants/imageConstants";
-import { useClassStore } from "@/lib/useStore/useClassStore";
-import { useEffect } from "react";
 import SelectClass from "./SelectClass";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import ClassMission from "./ClassMission";

@@ -55,7 +55,7 @@ export async function POST(
 
     // lấy quái từ stage của map
     const monster = await Monster.findById(
-      currentMap.stages.find((s) => s.stage === character.currentMap.stage)
+      currentMap.stages.find((s:any) => s.stage === character.currentMap.stage)
         ?.monsterId,
     );
 

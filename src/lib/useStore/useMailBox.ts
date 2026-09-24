@@ -21,30 +21,33 @@ export const useMailboxStore = create<useMailboxState>()((set) => ({
 
   updateMailboxes: (mail) => {
     set((state) => {
-      const mailboxes = [...state.mailboxes];
+      if (state.mailboxes) {
+        const mailboxes = [...state.mailboxes];
 
-      const index = mailboxes.findIndex((m) => m._id === mail._id);
+        const index = mailboxes.findIndex((m) => m._id === mail._id);
 
-      if (index >= 0) {
-        mailboxes[index] = mail;
-      } else {
-        mailboxes.unshift(mail);
-      }
-
-      mailboxes.sort((a, b) => {
-        const priorityA = getMailPriority(a);
-        const priorityB = getMailPriority(b);
-
-        if (priorityA !== priorityB) {
-          return priorityA - priorityB;
+        if (index >= 0) {
+          mailboxes[index] = mail;
+        } else {
+          mailboxes.unshift(mail);
         }
 
-        return (
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-      });
+        mailboxes.sort((a, b) => {
+          const priorityA = getMailPriority(a);
+          const priorityB = getMailPriority(b);
 
-      return { mailboxes };
+          if (priorityA !== priorityB) {
+            return priorityA - priorityB;
+          }
+
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+        });
+
+        return { mailboxes };
+      }
+      return { mailboxes: state.mailboxes };
     });
   },
 

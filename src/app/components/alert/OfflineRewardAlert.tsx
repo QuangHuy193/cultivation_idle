@@ -56,7 +56,9 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
             <h1 className="mt-2 text-xl font-bold text-amber-700">
               Thưởng Offline
             </h1>
-            <TippyCustom content="Nhận thưởng tu vi khi offline tối đa 8h" />
+            <TippyCustom
+              content={<div>Nhận thưởng tu vi khi offline tối đa 8h</div>}
+            />
           </div>
         </div>
 
