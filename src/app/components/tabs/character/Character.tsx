@@ -3,7 +3,7 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import Image from "next/image";
 import EquipmentInfo from "../../alert/EquipmentInfo";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import CharacterTabsBar from "@/app/components/navbar/tempcharacterTabsBar";
+import CharacterTabsBar from "@/app/components/navbar/CharacterTabsBar";
 import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { EQUIPMENT_SLOTS, REALM_NAME_LIST } from "@/lib/constants/objConstants";
