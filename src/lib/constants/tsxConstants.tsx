@@ -12,26 +12,25 @@ import { CharacterTabType } from "./objConstants";
 
 export const RENDER_CONTENT = (activeTab: string) => {
   switch (activeTab) {
-    // case "home":
-    //   return <HomeTab />;
-    // case "secretRealm":
-    //   return <SecretRealmTab />;
-    // case "skill":
-    //   return <SkillTab />;
-    // case "class":
-    //   return <ClassTab />;
-    // case "character":
-    //   return <CharacterTab />;
-    // case "battle":
-    //   return <BattleTab />;
-    // case "skin":
-    //   return <SkinTab />;
-    // case "mainStage":
-    //   return <MainStageTab />;
-    // case "wildMap":
-    //   return <WildMapTab />;
-    default:
-       //return <div>Test</div>;
+    case "home":
+      return <HomeTab />;
+    case "secretRealm":
+      return <SecretRealmTab />;
+    case "skill":
+      return <SkillTab />;
+    case "class":
+      return <ClassTab />;
+    case "character":
+      return <CharacterTab />;
+    case "battle":
+      return <BattleTab />;
+    case "skin":
+      return <SkinTab />;
+    case "mainStage":
+      return <MainStageTab />;
+    case "wildMap":
+      return <WildMapTab />;
+    default:       
       return <HomeTab />;
   }
 };
