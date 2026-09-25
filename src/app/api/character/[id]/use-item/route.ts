@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/db/db";
-import Character from "@/lib/models/Character";
+import Character, { ICharacter } from "@/lib/models/Character";
 import Item from "@/lib/models/Item";
 import {
   addBreakthroughInfo,
@@ -30,7 +30,8 @@ export async function POST(
     }
 
     const inventoryItem = character.inventory.items.find(
-      (item: any) => item.itemId.toString() === itemId,
+      (item: ICharacter["inventory"]["items"][number]) =>
+        item.itemId.toString() === itemId,
     );
 
     if (!inventoryItem) {
@@ -66,7 +67,8 @@ export async function POST(
 
     if (inventoryItem.quantity <= 0) {
       const index = character.inventory.items.findIndex(
-        (item: any) => item.itemId.toString() === itemId,
+        (item: ICharacter["inventory"]["items"][number]) =>
+          item.itemId.toString() === itemId,
       );
 
       if (index !== -1) {

@@ -1,4 +1,4 @@
-import { IRewards, Rewards } from "./models/Code";
+import { IRewards } from "./models/Code";
 import { Types } from "mongoose";
 import { ICharacter } from "./models/Character";
 import {
@@ -104,7 +104,7 @@ export const rollChance = (chance: number): boolean => {
 
 // cập nhật thưởng cho nhân vật
 export const grantRewards = async (
-  character:any,
+  character: ICharacter,
   rewards: {
     cultivation?: number;
     spiritStone?: number;
@@ -137,7 +137,8 @@ export const grantRewards = async (
   // items
   for (const reward of rewards.items || []) {
     const inventoryItem = character.inventory.items.find(
-      (i: any) => i.itemId.toString() === reward.itemId.toString(),
+      (i: ICharacter["inventory"]["items"][number]) =>
+        i.itemId.toString() === reward.itemId.toString(),
     );
 
     if (inventoryItem) {
@@ -162,7 +163,7 @@ export const grantRewards = async (
   // skills
   for (const reward of rewards.skills || []) {
     const inventorySkill = character.inventory.skills.find(
-      (s: any) => s.skillId === reward.skillId,
+      (s: ICharacter["inventory"]["skills"][number]) => s.skillId === reward.skillId,
     );
 
     if (inventorySkill) {
@@ -179,7 +180,7 @@ export const grantRewards = async (
   // skins
   for (const reward of rewards.skins || []) {
     const existed = character.inventory.skins.some(
-      (s: any) => s.skinId === reward.skinId,
+      (s: ICharacter["inventory"]["skins"][number]) => s.skinId === reward.skinId,
     );
 
     if (!existed) {

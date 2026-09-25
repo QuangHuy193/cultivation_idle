@@ -5,14 +5,16 @@ import {
   CULTIVATION_ICON,
   SPIRITSTONE_ICON,
 } from "@/lib/constants/imageConstants";
+import { BattleRewards } from "@/lib/types/battleTypes";
 import { CharacterResponse } from "@/lib/types/characterTypes";
+import { RewardItems } from "@/lib/types/mapTypes";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
 interface RewardAlertProps {
   status: "win" | "lose" | string;
-  newCharacter?: CharacterResponse | any;
-  rewards?: any;
+  newCharacter?: Partial<CharacterResponse> | null;
+  rewards?: BattleRewards;
   onClose: () => void;
 }
 
@@ -85,9 +87,9 @@ const RewardAlert = ({
           </div>
 
           {rewards?.equips &&
-            rewards?.equips.map((e: any) => (
+            rewards?.equips.map((e) => (
               <div
-                key={e._id}
+                key={e.equipId._id}
                 className="flex h-20 w-20 items-end justify-center rounded-xl border-2 
                 border-yellow-500"
                 style={{

@@ -8,6 +8,8 @@ import Monster from "@/lib/models/Monster";
 import "@/lib/models/Map";
 import "@/lib/models/Skill";
 import { calculateCharacterStats } from "@/lib/helper";
+import { StageInMap } from "@/lib/types/mapTypes";
+import { SkillInEquippedSkills } from "@/lib/types/characterTypes";
 
 export async function POST(
   req: Request,
@@ -55,8 +57,9 @@ export async function POST(
 
     // lấy quái từ stage của map
     const monster = await Monster.findById(
-      currentMap.stages.find((s:any) => s.stage === character.currentMap.stage)
-        ?.monsterId,
+      currentMap.stages.find(
+        (s: StageInMap) => s.stage === character.currentMap.stage,
+      )?.monsterId,
     );
 
     if (!monster) {
@@ -77,7 +80,7 @@ export async function POST(
 
     // khởi tạo CD
     const battleSkills =
-      character.equippedSkills?.map((skill: any) => ({
+      character.equippedSkills?.map((skill: SkillInEquippedSkills) => ({
         skillId: skill.skillId,
         currentCooldown: 0,
       })) || [];

@@ -4,7 +4,7 @@ import { CharacterClassMission } from "../types/characterTypes";
 interface useMisionState {
   loadingUseMision: boolean;
 
-  characterClassMission: CharacterClassMission[] | [];
+  characterClassMission: CharacterClassMission[] | null;
 
   setLoadingUseMision: (loading: boolean) => void;
 
@@ -16,7 +16,7 @@ interface useMisionState {
 export const useMisionStore = create<useMisionState>()((set) => ({
   loadingUseMision: false,
 
-  characterClassMission: [],
+  characterClassMission: null,
 
   setLoadingUseMision: (loading) => {
     set((state) => ({

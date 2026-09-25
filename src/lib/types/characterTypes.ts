@@ -34,11 +34,30 @@ export interface CharacterEquipments {
   boots?: Equip;
 }
 
+export interface SkillItemInInventory {
+  skillId: Skill;
+  level: number;
+  shard: number;
+}
+
+export interface ItemItemInInventory {
+  itemId: Item;
+  quantity: number;
+}
+
+export interface EquipItemInInventory {
+  equipId: Equip;
+}
+
+export interface SkinItemInInventory {
+  skinId: Skin;
+}
+
 export interface CharacterInventoryItem {
-  equips: Array<{ equipId: Equip }> | [];
-  items: Array<{ itemId: Item; quantity: number }> | [];
-  skills: Array<{ skillId: Skill; level: number; shard: number }> | [];
-  skins: Array<{ skinId: Skin }> | [];
+  equips: Array<EquipItemInInventory> | [];
+  items: Array<ItemItemInInventory> | [];
+  skills: Array<SkillItemInInventory> | [];
+  skins: Array<SkinItemInInventory> | [];
 }
 
 export interface CultivationPerMinute {
@@ -79,6 +98,11 @@ export interface CharacterClassMission {
   date: string;
 }
 
+export interface SkillInEquippedSkills {
+  skillId: string;
+  slot: number;
+}
+
 export interface CharacterResponse {
   _id: string;
   userId: string;
@@ -96,7 +120,7 @@ export interface CharacterResponse {
   spiritStone: number;
   stats: CharacterAllStats;
   finalStats?: CharacterStats;
-  equippedSkills: Array<{ skillId: string; slot: number }>;
+  equippedSkills: Array<SkillInEquippedSkills>;
   equipments: CharacterEquipments;
   inventory: CharacterInventoryItem;
   lastOnlineAt: string;

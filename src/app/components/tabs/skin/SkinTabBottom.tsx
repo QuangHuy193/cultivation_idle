@@ -1,6 +1,7 @@
 import { Skin } from "@/lib/types/skinTypes";
 import SkinImage from "./SkinImage";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
+import { SkinItemInInventory } from "@/lib/types/characterTypes";
 
 interface SkinTabBottomProps {
   skins: Skin[];
@@ -17,16 +18,18 @@ const SkinTabBottom = ({ skins }: SkinTabBottomProps) => {
       {skins &&
         skins.length > 0 &&
         skins.map((skin: Skin) => {
-          const isHas = character?.inventory?.skins.find((s:any) => {
-            return skin._id === s.skinId._id;
-          });
+          const isHas = character?.inventory?.skins.find(
+            (s: SkinItemInInventory) => {
+              return skin._id === s.skinId._id;
+            },
+          );
 
           return (
             <div key={skin._id}>
               <SkinImage skin={skin} isHas={isHas ? true : false} />
             </div>
           );
-        })}      
+        })}
     </div>
   );
 };

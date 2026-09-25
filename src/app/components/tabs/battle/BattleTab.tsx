@@ -18,6 +18,10 @@ import {
 } from "@/app/axios/battleAPI";
 import Loading from "../../ui/Loading";
 import RewardAlert from "../../alert/RewardAlert";
+import {
+  ResponseRewardBattleApi,
+  ResponseTurns,
+} from "@/lib/types/battleTypes";
 
 const BattleTab = () => {
   const [rewardAlertOpen, setRewardAlertOpen] = useState(false);
@@ -35,19 +39,21 @@ const BattleTab = () => {
   } = useBattleStore();
   const { battleSpeed } = useSettingStore();
 
-  // danh sách turns từ api {battleStatus, turns}
-  const [turns, setTurns] = useState<any[]>([]);
+  // danh sách turns từ api {battleStatus, turns, resaon?}
+  const [turns, setTurns] = useState<ResponseTurns | null>(null);
   // lượt hiện tại
   const [currentTurn, setCurrentTurn] = useState(0);
   // trả về từ api lấy rewward {character, rewwards}
-  const [resReward, setResReawrd] = useState<any>({});
+  const [resReward, setResReawrd] = useState<ResponseRewardBattleApi | null>(
+    null,
+  );
 
   // tạo battle
   useEffect(() => {
     const createBattleApi = async () => {
       try {
         setLoadingUseBattle(true);
-        const res = await createBattleAPI(character._id, "mainStage");
+        const res = await createBattleAPI(character?._id ?? "", "mainStage");
         setBattle(res);
       } catch (error) {
         console.log(error);
@@ -97,18 +103,18 @@ const BattleTab = () => {
 
     if (isBattlePause) return;
 
-    if (!turns.length) return;
+    if (!turns?.turns?.length) return;
 
     const timer = setTimeout(() => {
       updateBattle((battle) => {
         return {
           ...battle,
-          playerHp: turns[currentTurn].playerHp,
+          playerHp: turns.turns[currentTurn].playerHp,
           monster: {
             ...battle.monster,
-            hp: turns[currentTurn].monsterHp,
+            hp: turns.turns[currentTurn].monsterHp,
           },
-          logs: [...battle.logs, ...turns[currentTurn].logs],
+          logs: [...battle.logs, ...turns.turns[currentTurn].logs],
         };
       });
 
@@ -122,6 +128,7 @@ const BattleTab = () => {
   const getRewardApi = async () => {
     try {
       const res = await rewardBattleAPI(battle._id);
+      console.log("ssss", res);
       setResReawrd(res);
     } catch (error) {
       console.log(error);
@@ -134,9 +141,9 @@ const BattleTab = () => {
 
     if (isBattlePause) return;
 
-    if (!turns.length) return;
+    if (!turns?.turns?.length) return;
 
-    if (currentTurn >= turns.length) {
+    if (currentTurn >= turns?.turns?.length) {
       if (battle.battleStatus === "win") {
         setRewardAlertOpen(true);
         getRewardApi();

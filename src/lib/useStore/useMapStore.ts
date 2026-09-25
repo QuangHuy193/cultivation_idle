@@ -2,30 +2,15 @@ import { create } from "zustand";
 import { MapsResponse } from "../types/mapTypes";
 
 interface UserMapState {
+  maps: MapsResponse[] | null;
 
-  maps: MapsResponse[] | [];
-  
-  setMaps: (maps: MapsResponse[]) => void;
-
-  updateMaps: (data: any) => void;
+  setMaps: (maps: MapsResponse[]|[]) => void;
 }
 
 export const useMapStore = create<UserMapState>()((set) => ({
- 
+  maps: null,
 
-  maps: [],
-
- 
   setMaps: (maps) => {
     set({ maps });
-  },
-
-  updateMaps: (data) => {
-    set((state) => ({
-      maps: {
-        ...state.maps,
-        ...data,
-      },
-    }));
   },
 }));

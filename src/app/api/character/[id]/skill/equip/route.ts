@@ -6,6 +6,7 @@ import Character from "@/lib/models/Character";
 import "@/lib/models";
 
 import { characterPopulate } from "@/lib/helper";
+import { SkillInEquippedSkills, SkillItemInInventory } from "@/lib/types/characterTypes";
 
 export async function POST(
   request: Request,
@@ -55,7 +56,7 @@ export async function POST(
 
     // kiểm tra có sở hữu skill không
     const ownedSkill = character.inventory.skills.find(
-      (skill: any) => skill.skillId === skillId,
+      (skill: SkillItemInInventory) => skill.skillId === skillId,
     );
 
     if (!ownedSkill) {
@@ -71,7 +72,7 @@ export async function POST(
 
     // slot đã có skill
     const occupiedSlot = character.equippedSkills.find(
-      (skill: any) => skill.slot === slot,
+      (skill: SkillInEquippedSkills) => skill.slot === slot,
     );
 
     if (occupiedSlot) {
@@ -87,12 +88,12 @@ export async function POST(
     
     // Nếu skill này đang ở slot khác thì gỡ trước
     character.equippedSkills = character.equippedSkills.filter(
-      (skill: any) => skill.skillId !== skillId,
+      (skill: SkillInEquippedSkills) => skill.skillId !== skillId,
     );
 
     // Nếu slot đã có skill thì gỡ skill cũ
     character.equippedSkills = character.equippedSkills.filter(
-      (skill: any) => skill.slot !== slot,
+      (skill: SkillInEquippedSkills) => skill.slot !== slot,
     );
 
     // Trang bị skill mới

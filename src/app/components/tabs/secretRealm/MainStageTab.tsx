@@ -20,19 +20,21 @@ export default function MainStageTab() {
   const { tabState, setTabState } = useToggleStore();
 
   const pushBattle = (mapId: string) => {
-    const currentCLickMap: any = maps?.find((m) => m._id === mapId);
-    //MapsResponse
-    if (character.currentMap.map.order < currentCLickMap?.order) {
+    const currentCLickMap: MapsResponse | null =
+      maps?.find((m) => m._id === mapId) ?? null;
+
+    if (character.currentMap.map.order < (currentCLickMap?.order ?? 0)) {
       showWarning("Bạn chưa hoàn thành bản đồ trước đó");
-    } else if (character.realmId?.order < currentCLickMap.requiredRealm.order) {
+    } else if (
+      character.realmId?.order < (currentCLickMap?.requiredRealm?.order ?? 0)
+    ) {
       showWarning("Cảnh giới của bạn chưa đủ");
     } else {
       setTabState("battle", tabState.activeTab);
     }
   };
 
-  useEffect(() => {
-    console.log(maps);
+  useEffect(() => {    
     if (!maps || maps.length === 0) mapService.getMaps();
   }, [maps]);
 

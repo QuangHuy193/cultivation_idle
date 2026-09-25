@@ -6,6 +6,7 @@ import Character from "@/lib/models/Character";
 import "@/lib/models";
 
 import { characterPopulate } from "@/lib/helper";
+import { SkillInEquippedSkills } from "@/lib/types/characterTypes";
 
 export async function POST(
   request: Request,
@@ -43,7 +44,7 @@ export async function POST(
     }
 
     const equippedSkill = character.equippedSkills.find(
-      (skill: any) => skill.skillId === skillId,
+      (skill: SkillInEquippedSkills) => skill.skillId === skillId,
     );
 
     if (!equippedSkill) {
@@ -59,7 +60,7 @@ export async function POST(
 
     character.equippedSkills =
       character.equippedSkills.filter(
-        (skill: any) => skill.skillId !== skillId,
+        (skill: SkillInEquippedSkills) => skill.skillId !== skillId,
       );
 
     await character.save();

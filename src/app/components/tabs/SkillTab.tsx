@@ -9,6 +9,7 @@ import { equipSkillAPI } from "@/app/axios/characterAPI";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import CoatingButton from "../ui/CoatingButton";
+import { SkillInEquippedSkills, SkillItemInInventory } from "@/lib/types/characterTypes";
 
 export default function SkillTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -22,7 +23,9 @@ export default function SkillTab() {
 
   // lấy dl từ equippedSkills để hiện các skill đang trang bị (hiện "eq" ở phần inventory)
   const equippedSkillSet = new Set(
-    character.equippedSkills?.map((skill:any) => skill.skillId) || [],
+    character.equippedSkills?.map(
+      (skill: SkillInEquippedSkills) => skill.skillId,
+    ) || [],
   );
 
   return (
@@ -49,11 +52,11 @@ export default function SkillTab() {
         <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => {
             const equippedSkill = character.equippedSkills?.find(
-              (skill:any) => skill.slot === index + 1,
+              (skill: SkillInEquippedSkills) => skill.slot === index + 1,
             );
 
             const skillData = character.inventory.skills?.find(
-              (skill:any) => skill.skillId._id === equippedSkill?.skillId,
+              (skill: SkillItemInInventory) => skill.skillId._id === equippedSkill?.skillId,
             );
 
             return (
@@ -123,7 +126,7 @@ export default function SkillTab() {
         </div>
 
         <div className="grid grid-cols-5 gap-3">
-          {character.inventory.skills?.map((skill:any, ind:number) => {
+          {character.inventory.skills?.map((skill: SkillItemInInventory, ind: number) => {
             const isEquipped = equippedSkillSet.has(skill.skillId._id);
 
             return (

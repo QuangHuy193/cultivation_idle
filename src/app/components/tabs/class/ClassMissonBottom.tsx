@@ -7,6 +7,7 @@ import Image from "next/image";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { Check } from "lucide-react";
 import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
+import { ItemItemInInventory } from "@/lib/types/characterTypes";
 
 const ClassMissonBottom = () => {
   const { characterClassMission } = useMisionStore();
@@ -19,7 +20,8 @@ const ClassMissonBottom = () => {
         <div>
           {characterClassMission.map((clsMission) => {
             const itemMission = character.inventory.items.find(
-              (it:any) => it.itemId._id === clsMission.missionId.itemId._id,
+              (it: ItemItemInInventory) =>
+                it.itemId._id === clsMission.missionId.itemId._id,
             );
 
             return (

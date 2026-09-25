@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db/db";
 
 import "@/lib/models";
-import Character from "@/lib/models/Character";
+import Character, { ICharacter } from "@/lib/models/Character";
 import Skin from "@/lib/models/Skin";
 import { characterPopulate } from "@/lib/helper";
 
@@ -46,7 +46,7 @@ export async function POST(
     }
 
     const isHasSkin = character.inventory.skins.find(
-      (sk:any) => sk.skinId === skinId,
+      (sk: ICharacter["inventory"]["skins"][number]) => sk.skinId === skinId,
     );
 
     if (!isHasSkin) {

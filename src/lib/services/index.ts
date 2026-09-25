@@ -5,16 +5,22 @@ import {
 import { getMailboxAPI } from "@/app/axios/mailboxAPI";
 import { progressMapAPI } from "@/app/axios/map";
 import { getSkinsAPI } from "@/app/axios/skinAPI";
+import { Skin } from "../types/skinTypes";
+import { Class } from "../types/classTypes";
+import { CharacterClassMission } from "../types/characterTypes";
+import { MapsResponse } from "../types/mapTypes";
+import { Mailbox } from "../types/mailboxTypes";
 
 // tải các phần khác của game
 export const init = async (
   characterId: string,
-  setSkins:any,
-  setClasses:any,
-  setCharacterClassMission:any,
-  setProgressMap:any,
-  setMailboxes:any,
-  
+  setSkins: (data: Skin[]) => void,
+  setClasses: (classes: Class[] | []) => void,
+  setCharacterClassMission: (
+    characterClassMission: CharacterClassMission[] | [],
+  ) => void,
+  setProgressMap: (maps: MapsResponse[] | []) => void,
+  setMailboxes: (mailboxes: Mailbox[] | []) => void,
 ) => {
   const [
     skinResult,

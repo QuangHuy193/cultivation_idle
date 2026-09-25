@@ -3,12 +3,12 @@ import { Mailbox } from "../types/mailboxTypes";
 import { getMailPriority } from "../helper";
 
 interface useMailboxState {
-  mailboxes: Mailbox[] | [] | null;
+  mailboxes: Mailbox[] | null;
   selectedMail: Mailbox | null;
 
-  setMailboxes: (mailboxes: Mailbox[]) => void;
+  setMailboxes: (mailboxes: Mailbox[] | []) => void;
   updateMailboxes: (mail: Mailbox) => void;
-  setSelectedMail: (mail: Mailbox | null) => void;
+  setSelectedMail: (mail: Mailbox) => void;
 }
 
 export const useMailboxStore = create<useMailboxState>()((set) => ({

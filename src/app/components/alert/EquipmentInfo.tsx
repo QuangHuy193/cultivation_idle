@@ -10,7 +10,7 @@ import Image from "next/image";
 import CoatingButton from "../ui/CoatingButton";
 
 interface EquipmentInfoProps {
-  equip: Equip|any;
+  equip: Equip | null;
   isEquipped?: boolean;
   onClose?: () => void;
 }
@@ -22,7 +22,7 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
   const unequipApi = async (slot: string) => {
     try {
       setActionLoadingName("unequip");
-      const res = await unequipAPI(character._id, slot);
+      const res = await unequipAPI(character?._id ?? "", slot);
       updateCharacter(res);
       if (onClose) onClose();
     } catch (error) {
@@ -35,7 +35,11 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
   const equipApi = async (equipId: string) => {
     try {
       setActionLoadingName("equip");
-      const res = await equipAPI(character._id, equip.type, equipId);
+      const res = await equipAPI(
+        character?._id ?? "",
+        equip?.type ?? "",
+        equipId,
+      );
       updateCharacter(res);
       if (onClose) onClose();
     } catch (error) {
@@ -59,17 +63,17 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
       >
         {/* Header */}
         <div
-          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[equip.rarity].text}`}
+          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[equip?.rarity ?? ""].text}`}
         >
-          {equip.name} - {RARITY_TEXT_MAP(equip.rarity)}
+          {equip?.name} - {RARITY_TEXT_MAP(equip?.rarity ?? "")}
         </div>
 
         {/* Body */}
         <div className="p-4">
           <div className="flex justify-center mb-4">
             <Image
-              src={equip.icon}
-              alt={equip.name}
+              src={equip?.icon ?? ""}
+              alt={equip?.name ?? ""}
               width={80}
               height={80}
               className="w-20 h-20 object-contain"
@@ -80,21 +84,21 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
             <div className="flex justify-between">
               <span className="text-zinc-600">⚔️ Công kích</span>
               <span className="font-semibold text-red-600">
-                +{equip.stats.atk}
+                +{equip?.stats?.atk ?? 0}
               </span>
             </div>
 
             <div className="flex justify-between">
               <span className="text-zinc-600">❤️ Sinh lực</span>
               <span className="font-semibold text-green-600">
-                +{equip.stats.hp}
+                +{equip?.stats?.hp ?? 0}
               </span>
             </div>
 
             <div className="flex justify-between">
               <span className="text-zinc-600">🛡️ Phòng thủ</span>
               <span className="font-semibold text-blue-600">
-                +{equip.stats.def}
+                +{equip?.stats?.def ?? 0}
               </span>
             </div>
           </div>
@@ -110,7 +114,7 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
 
             {isEquipped ? (
               <button
-                onClick={() => unequipApi(equip.type)}
+                onClick={() => unequipApi(equip?.type ?? "")}
                 className={`flex-1 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 
                 text-white transition font-medium relative`}
                 disabled={actionLoadingName === "unequip"}
@@ -122,7 +126,7 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
               </button>
             ) : (
               <button
-                onClick={() => equipApi(equip._id)}
+                onClick={() => equipApi(equip?._id ?? "")}
                 className={`flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700
                 text-white transition font-medium relative`}
                 disabled={actionLoadingName === "equip"}

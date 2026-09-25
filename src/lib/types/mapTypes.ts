@@ -5,36 +5,42 @@ import { Realm } from "./realmTypes";
 import { Skill } from "./skillTypes";
 import { Skin } from "./skinTypes";
 
-export interface Droppable {
+export interface RewardItems {
+  items: {
+    itemId: Item;
+    quantity: number;
+  }[];
+
+  equips: {
+    equipId: Equip;
+    quantity: number;
+  }[];
+
+  skills: {
+    skillId: Skill;
+    quantity: number;
+  }[];
+
+  skins: {
+    skinId: Skin;
+    quantity: number;
+  }[];
+}
+
+export interface Droppable extends RewardItems {
   spiritStone: {
     amount: number;
     chance: number;
   };
+}
 
-  items: [
-    {
-      itemId: Item;
-      quantity: number;
-    },
-  ];
-  equips: [
-    {
-      equipId: Equip;
-      quantity: number;
-    },
-  ];
-  skills: [
-    {
-      skillId: Skill;
-      quantity: number;
-    },
-  ];
-  skins: [
-    {
-      skinId: Skin;
-      quantity: number;
-    },
-  ];
+export interface StageInMap {
+  stage: number;
+  monsterId: MonstersResponse;
+  firstClearReward: {
+    cultivation: number;
+    rewards: Droppable;
+  };
 }
 
 export interface MapsResponse {
@@ -46,14 +52,5 @@ export interface MapsResponse {
   requiredRealm: Realm;
   monsterStatMultiplier: number;
   cultivationPerMinuteBouns: number;
-  stages: [
-    {
-      stage: number;
-      monsterId: MonstersResponse;
-      firstClearReward: {
-        cultivation: number;
-        rewards: Droppable;
-      };
-    },
-  ];
+  stages: [StageInMap];
 }

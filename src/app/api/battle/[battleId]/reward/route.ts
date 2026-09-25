@@ -49,6 +49,8 @@ export async function POST(
 
     const stage = map.stages[battle.stage - 1];
 
+    console.log("stage", stage);
+
     let realmReward = 0;
     let spiritStoneReward = 0;
 

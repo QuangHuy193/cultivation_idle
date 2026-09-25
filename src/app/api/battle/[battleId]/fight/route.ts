@@ -6,6 +6,8 @@ import Battle from "@/lib/models/Battle";
 import Character from "@/lib/models/Character";
 import "@/lib/models/Skill";
 import { calculateCharacterStats } from "@/lib/helper";
+import { SkillInBattle } from "@/lib/types/battleTypes";
+import { SkillItemInInventory } from "@/lib/types/characterTypes";
 
 const MAX_TURN = 30;
 
@@ -49,7 +51,7 @@ export async function POST(
 
     let monsterHp = battle.monster.hp;
 
-    const skills = battle.skills.map((s: any) => ({
+    const skills = battle.skills.map((s: SkillInBattle) => ({
       skillId: s.skillId,
       currentCooldown: s.currentCooldown,
     }));
@@ -60,7 +62,7 @@ export async function POST(
 
     for (let turn = 1; turn <= MAX_TURN; turn++) {
       // giảm CD
-      skills.forEach((skill: any) => {
+      skills.forEach((skill: SkillInBattle) => {
         if (skill.currentCooldown > 0) {
           skill.currentCooldown--;
         }
@@ -69,17 +71,17 @@ export async function POST(
       // player turn
       let totalDamage = 0;
 
-      for (const battleSkill of skills) {
-        if (battleSkill.currentCooldown > 0) continue;
+      for (const SkillInBattle of skills) {
+        if (SkillInBattle.currentCooldown > 0) continue;
 
         const skillData = character.inventory.skills.find(
-          (s: any) => s.skillId._id.toString() === battleSkill.skillId,
+          (s: SkillItemInInventory) => s.skillId._id.toString() === SkillInBattle.skillId,
         );
 
         if (!skillData) continue;
 
         const levelData = skillData.skillId.levels.find(
-          (l: any) => l.level === skillData.level,
+          (l: SkillItemInInventory) => l.level === skillData.level,
         );
 
         const damage = (levelData?.attackPower * (finalStats?.atk ?? 1)) / 100;
@@ -93,7 +95,7 @@ export async function POST(
           skill: skillData.skillId.name,
         });
 
-        battleSkill.currentCooldown = skillData.skillId.cooldown;
+        SkillInBattle.currentCooldown = skillData.skillId.cooldown;
       }
 
       // trừ máu quái
@@ -164,7 +166,9 @@ export async function POST(
     }
 
     battle.logs = logs;
+
     await battle.save();
+    
     return NextResponse.json({
       battleStatus: "lose",
       reason: "max_turn",

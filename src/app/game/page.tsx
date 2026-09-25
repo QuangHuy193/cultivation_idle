@@ -34,7 +34,7 @@ export default function GamePage() {
     // return () => {
     //   window.removeEventListener("beforeunload", handleBeforeUnload);
     // };
-    if (character._id) {
+    if (character?._id) {
       init(
         character._id,
         setSkins,
@@ -44,30 +44,30 @@ export default function GamePage() {
         setMailboxes,
       );
     }
-  }, [character._id]);
+  }, [character?._id]);
 
- useEffect(() => {
-  if (!character?._id) return;
+  useEffect(() => {
+    if (!character?._id) return;
 
-  const refreshOnline = async () => {
-    try {
-      await updateTimeCharacterOnlineAPI(character._id);
-      console.log("online");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const refreshOnline = async () => {
+      try {
+        await updateTimeCharacterOnlineAPI(character._id);
+        console.log("online");
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  // cập nhật ngay khi đã có character
-  refreshOnline();
+    // cập nhật ngay khi đã có character
+    refreshOnline();
 
-  // sau đó mỗi 1 phút
-  const timer = setInterval(refreshOnline, 60 * 1000);
+    // sau đó mỗi 1 phút
+    const timer = setInterval(refreshOnline, 60 * 1000);
 
-  return () => {
-    clearInterval(timer);
-  };
-}, [character?._id]);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [character?._id]);
 
   return (
     <main className="h-screen min-h-screen overflow-hidden text-zinc-800 sm:min-h-screen">

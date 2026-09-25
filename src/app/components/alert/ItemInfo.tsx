@@ -10,7 +10,7 @@ import Image from "next/image";
 import CoatingButton from "../ui/CoatingButton";
 
 interface ItemInfoProps {
-  item: Item|any;
+  item: Item | null;
   onClose?: () => void;
 }
 
@@ -21,12 +21,12 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
   const useItemApi = async () => {
     try {
       setActionLoadingName("useItem");
-      const res = await takeItemAPI(character._id, item._id);
+      const res = await takeItemAPI(character?._id ?? "", item?._id ?? "");
       updateCharacter(res);
       if (onClose) {
         onClose();
       }
-      showSuccess(`Đã dùng ${item.name}`);
+      showSuccess(`Đã dùng ${item?.name}`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -47,17 +47,17 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
       >
         {/* Header */}
         <div
-          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[item.rarity].text}`}
+          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[item?.rarity ?? ""].text}`}
         >
-          {item.name} - {RARITY_TEXT_MAP(item.rarity)}
+          {item?.name} - {RARITY_TEXT_MAP(item?.rarity ?? "")}
         </div>
 
         {/* Body */}
         <div className="p-4">
           <div className="flex justify-center mb-4">
             <Image
-              src={item.icon}
-              alt={item.name}
+              src={item?.icon ?? ""}
+              alt={item?.name ?? ""}
               width={80}
               height={80}
               className="w-20 h-20 object-contain"
@@ -66,7 +66,7 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
 
           <div className="rounded-xl border border-amber-200 bg-white/70 p-3 min-h-25">
             <div className="text-zinc-700 leading-relaxed text-sm">
-              {item.description}
+              {item?.description}
             </div>
           </div>
 

@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { Skin } from "@/lib/types/skinTypes";
 
 interface UserSkinState {
-  selectedSkin: Skin|any;
+  selectedSkin: Skin | null;
 
   owner: boolean;
 
@@ -13,25 +13,8 @@ interface UserSkinState {
   setSelectedSkin: (skin: Skin, owner: boolean) => void;
 }
 
-const defaultSkin = {
-  _id: "",
-  name: "",
-  icon: "",
-  bg: "",
-  rarity: "",
-  price: {
-    number: 0,
-    unity: "",
-  },
-  buffs: {
-    attack: 0,
-    hp: 0,
-    defense: 0,
-  },
-};
-
 export const useSkinStore = create<UserSkinState>()((set) => ({
-  selectedSkin: defaultSkin,
+  selectedSkin: null,
 
   owner: true,
 

@@ -1,4 +1,10 @@
+import { CharacterResponse, CurrentMap } from "./characterTypes";
+import { Equip } from "./equipTypes";
+import { Item } from "./itemTypes";
+import { RewardItems } from "./mapTypes";
 import { Monster } from "./monsterTypes";
+import { Skill } from "./skillTypes";
+import { Skin } from "./skinTypes";
 
 export interface BattleMonster {
   monsterId: string;
@@ -19,9 +25,31 @@ export interface Log {
   skill: string;
 }
 
-export interface BattleSkill {
+export interface SkillInBattle {
   skillId: string;
   currentCooldown: number;
+}
+
+export interface BattleRewards extends RewardItems {
+  realmReward: number;
+  spiritStoneReward: number;
+}
+
+export interface ResponseRewardBattleApi {
+  character: Partial<CharacterResponse>;
+  rewards: BattleRewards;
+}
+export interface Turn {
+  turn: number;
+  playerHp: number;
+  monsterHp: number;
+  logs: Log[];
+}
+
+export interface ResponseTurns {
+  battleStatus: string;
+  turns: Turn[];
+  reason?: string;
 }
 
 export interface BattleState {
@@ -39,7 +67,7 @@ export interface BattleState {
 
   monster: BattleMonster;
 
-  skills: BattleSkill[];
+  skills: SkillInBattle[];
 
   mapId: string;
 

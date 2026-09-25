@@ -4,7 +4,7 @@ import { Class } from "../types/classTypes";
 interface useClassState {
   loadingUseClass: boolean;
 
-  classes: Class[] | [];
+  classes: Class[] | null;
 
   setLoadingUseClass: (loading: boolean) => void;
 
@@ -14,7 +14,7 @@ interface useClassState {
 export const useClassStore = create<useClassState>()((set) => ({
   loadingUseClass: false,
 
-  classes: [],
+  classes: null,
 
   setLoadingUseClass: (loading) => {
     set((state) => ({

@@ -12,7 +12,7 @@ import Image from "next/image";
 import CoatingButton from "../ui/CoatingButton";
 
 interface SkillInfoProps {
-  skill: Skill|any;
+  skill: Skill | null;
   level: number;
   shard: number;
   isEquipped?: boolean;
@@ -33,7 +33,7 @@ const SkillInfo = ({
   const unequipSkillApi = async () => {
     try {
       setActionLoadingName("unequipSkill");
-      const res = await unequipSkillAPI(character._id, skill._id);
+      const res = await unequipSkillAPI(character?._id ?? "", skill?._id ?? "");
       updateCharacter(res);
       onClose?.();
     } catch (error) {
@@ -57,18 +57,18 @@ const SkillInfo = ({
       >
         {/* Header */}
         <div
-          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[skill.rarity].text}
+          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[skill?.rarity ?? ""].text}
   `}
         >
-          {skill.name} - {RARITY_TEXT_MAP(skill.rarity)}
+          {skill?.name} - {RARITY_TEXT_MAP(skill?.rarity ?? "")}
         </div>
 
         {/* Body */}
         <div className="p-4">
           <div className="flex justify-center mb-4">
             <Image
-              src={skill.icon}
-              alt={skill.name}
+              src={skill?.icon ?? ""}
+              alt={skill?.name ?? ""}
               width={80}
               height={80}
               className="w-20 h-20 object-contain"
@@ -77,12 +77,12 @@ const SkillInfo = ({
 
           <div className="rounded-xl border border-amber-200 bg-white/70 p-3 min-h-25">
             <div className="text-zinc-700 leading-relaxed text-sm">
-              {skill.description}
+              {skill?.description}
 
               <div>
-                Gây sát thương bằng {skill.levels[level].attackPower} % ATK
+                Gây sát thương bằng {skill?.levels[level]?.attackPower} % ATK
               </div>
-              <div>CD: {skill.cooldown}</div>
+              <div>CD: {skill?.cooldown}</div>
               <div>Hiện có: {shard} mảnh</div>
             </div>
           </div>
@@ -111,7 +111,7 @@ const SkillInfo = ({
                 onClick={() => {
                   setEquipSkillSelect({
                     active: true,
-                    skillId: skill._id,
+                    skillId: skill?._id ?? "",
                   });
 
                   onClose?.();

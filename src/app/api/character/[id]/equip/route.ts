@@ -5,6 +5,7 @@ import Character from "@/lib/models/Character";
 import { calculateCharacterStats, characterPopulate } from "@/lib/helper";
 import Equip from "@/lib/models/Equip";
 import { EQUIPMENT_SLOTS_LABEL } from "@/lib/constants/objConstants";
+import { EquipItemInInventory } from "@/lib/types/characterTypes";
 
 export async function POST(
   request: Request,
@@ -47,7 +48,7 @@ export async function POST(
 
     // tìm trang bị trong túi
     const equipIndex = character.inventory.equips.findIndex(
-      (item:any) => item.equipId?.toString() === equipId,
+      (eq: EquipItemInInventory) => eq.equipId?.toString() === equipId,
     );
 
     if (equipIndex === -1) {

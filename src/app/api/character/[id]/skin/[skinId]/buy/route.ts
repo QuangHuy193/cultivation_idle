@@ -1,3 +1,4 @@
+import { ICharacter } from "./../../../../../../../lib/models/Character";
 import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/db/db";
@@ -46,7 +47,7 @@ export async function POST(
     }
 
     const isHasSkin = character.inventory.skins.find(
-      (sk:any) => sk.skinId === skinId,
+      (sk: ICharacter["inventory"]["skins"][number]) => sk.skinId === skinId,
     );
 
     if (isHasSkin) {

@@ -1,5 +1,7 @@
 "use client";
 
+import { SkillInBattle } from "@/lib/types/battleTypes";
+import { SkillInEquippedSkills, SkillItemInInventory } from "@/lib/types/characterTypes";
 import { useBattleStore } from "@/lib/useStore/useBattleStore";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import Image from "next/image";
@@ -18,15 +20,15 @@ const BattleTabLog = () => {
         <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => {
             const equippedSkill = character.equippedSkills?.find(
-              (skill:any) => skill.slot === index + 1,
+              (skill:SkillInEquippedSkills) => skill.slot === index + 1,
             );
 
             const skillData = character.inventory.skills?.find(
-              (skill:any) => skill.skillId._id === equippedSkill?.skillId,
+              (skill:SkillItemInInventory) => skill.skillId._id === equippedSkill?.skillId,
             );
 
             const battleSkill = battle.skills.find(
-              (s:any) => s.skillId === skillData?.skillId._id,
+              (s:SkillInBattle) => s.skillId === skillData?.skillId._id,
             );
 
             return (
