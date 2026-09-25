@@ -103,6 +103,12 @@ export interface SkillInEquippedSkills {
   slot: number;
 }
 
+export interface DailyLoginInCharacter {
+  total: number;
+  rewardDay: number;
+  lastClaimAt: string;
+}
+
 export interface CharacterResponse {
   _id: string;
   userId: string;
@@ -123,6 +129,7 @@ export interface CharacterResponse {
   equippedSkills: Array<SkillInEquippedSkills>;
   equipments: CharacterEquipments;
   inventory: CharacterInventoryItem;
+  dailyLogin: DailyLoginInCharacter;
   lastOnlineAt: string;
   breakthroughRequired?: number;
   canBreakthrough?: boolean;

@@ -13,6 +13,7 @@ import { useMapStore } from "@/lib/useStore/useMapStore";
 import ComfirmAlert from "../components/alert/ComfirmAlert";
 import { updateTimeCharacterOnlineAPI } from "../axios/characterAPI";
 import { useMailboxStore } from "@/lib/useStore/useMailBox";
+import { useDailyLoginStore } from "@/lib/useStore/useDailyLoginStore";
 
 export default function GamePage() {
   const { tabState } = useToggleStore();
@@ -23,6 +24,7 @@ export default function GamePage() {
   const { setMaps } = useMapStore();
   const { comfirmAlert } = useToggleStore();
   const { setMailboxes } = useMailboxStore();
+  const { setDailyLogins } = useDailyLoginStore();
   useEffect(() => {
     // const handleBeforeUnload = (event: BeforeUnloadEvent) => {
     //   event.preventDefault();
@@ -42,6 +44,7 @@ export default function GamePage() {
         setCharacterClassMission,
         setMaps,
         setMailboxes,
+        setDailyLogins,
       );
     }
   }, [character?._id]);

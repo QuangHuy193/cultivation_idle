@@ -10,6 +10,8 @@ import { Class } from "../types/classTypes";
 import { CharacterClassMission } from "../types/characterTypes";
 import { MapsResponse } from "../types/mapTypes";
 import { Mailbox } from "../types/mailboxTypes";
+import { ResponseDailyLogin } from "../types/dailyLoginTypes";
+import { getDailyLoginListAPI } from "@/app/axios/dailyLoginApi";
 
 // tải các phần khác của game
 export const init = async (
@@ -21,6 +23,7 @@ export const init = async (
   ) => void,
   setProgressMap: (maps: MapsResponse[] | []) => void,
   setMailboxes: (mailboxes: Mailbox[] | []) => void,
+  setDailyLogins: (daily: ResponseDailyLogin | null) => void,
 ) => {
   const [
     skinResult,
@@ -28,12 +31,14 @@ export const init = async (
     classMisionsResult,
     mapResult,
     mailboxResult,
+    dailyLoginResult,
   ] = await Promise.allSettled([
     getSkinsAPI(),
     getClassesAPI(),
     getCharacterClassMisionsAPI(characterId),
     progressMapAPI(),
     getMailboxAPI(characterId),
+    getDailyLoginListAPI(),
   ]);
 
   // tải danh sách skin từ API
@@ -69,5 +74,12 @@ export const init = async (
     setMailboxes(mailboxResult.value);
   } else {
     console.error("Load mailbox failed", mailboxResult.reason);
+  }
+
+  // tải sự kiện đăng nhập hằng ngày
+  if (dailyLoginResult.status === "fulfilled") {
+    setDailyLogins(dailyLoginResult.value);
+  } else {
+    console.error("Load mailbox failed", dailyLoginResult.reason);
   }
 };

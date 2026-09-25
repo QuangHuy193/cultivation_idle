@@ -20,12 +20,14 @@ import SettingAlert from "../alert/SettingAlert";
 import ImageIcon from "../ui/ImageIcon";
 import { CHANGE_NAME_COST_ONCE } from "@/lib/constants/numberConstants";
 import FeatureListInHome from "../ui/FeatureListInHome";
-import MailboxAlert from "../alert/mailbox/MailboxAlert";
+import MailboxAlert from "../alert/featureInHome/mailbox/MailboxAlert";
+import DailyLogin from "../alert/featureInHome/dailyLogin/DailyLogin";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
 
-  const { alertUserInfo, setAalertUserInfo, isOpenMailbox } = useToggleStore();
+  const { alertUserInfo, setAalertUserInfo, openFeatureListInHome } =
+    useToggleStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const realmStyle =
@@ -178,7 +180,8 @@ export default function HomeTab() {
         />
       )}
       {alertUserInfo === "setting" && <SettingAlert />}
-      {isOpenMailbox && <MailboxAlert />}
+      {openFeatureListInHome === "mailbox" && <MailboxAlert />}
+      {openFeatureListInHome === "dailyLogin" && <DailyLogin />}
       <OfflineRewardIcon />
     </section>
   );

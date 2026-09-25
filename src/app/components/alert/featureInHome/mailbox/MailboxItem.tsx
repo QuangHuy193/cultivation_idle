@@ -3,7 +3,7 @@ import { mailboxService } from "@/lib/services/mailbox.service";
 import { Mailbox } from "@/lib/types/mailboxTypes";
 import { useMailboxStore } from "@/lib/useStore/useMailBox";
 import { Mail as Mail_lucide } from "lucide-react";
-import DotCustom from "../../ui/DotCustom";
+import DotCustom from "../../../ui/DotCustom";
 
 interface MailboxItemProps {
   mail: Mailbox;

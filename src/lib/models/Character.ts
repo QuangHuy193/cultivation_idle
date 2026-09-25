@@ -347,6 +347,26 @@ const CharacterSchema = new Schema(
       },
     },
 
+    dailyLogin: {
+      // tổng số ngày đăng nhập
+      total: {
+        type: Number,
+        default: 1,
+      },
+      // lần đăng nhập tiếp theo sẽ nhận ngày nào
+      rewardDay: {
+        type: Number,
+        default: 1,
+        min: 1,
+        max: 30,
+      },
+      // lần cuối nhận là khi nào
+      lastClaimAt: {
+        type: Date,
+        default: null,
+      },
+    },
+
     equippedSkills: {
       type: [
         {

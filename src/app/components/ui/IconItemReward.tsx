@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, CircleCheck } from "lucide-react";
 
 const SIZE = {
   M: "w-16 h-16",
@@ -36,10 +36,15 @@ const IconItemReward = ({
       </div>
       {claimed && (
         <div
-          className={`absolute inset-0 z-40 bg-black/20 rounded-xl flex justify-center
-        items-center`}
+          className={`absolute inset-0 z-40 border border-green-400 rounded-xl 
+            flex justify-center items-center`}
         >
-          <Check size={48} className="text-green-500" />
+          <div
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500
+            text-white shadow-lg"
+          >
+            <Check size={30} strokeWidth={3} />
+          </div>
         </div>
       )}
     </div>

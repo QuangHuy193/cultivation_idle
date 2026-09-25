@@ -8,7 +8,7 @@ import MailSelected from "./MailSelected";
 
 const MailboxAlert = () => {
   const { mailboxes, selectedMail, setSelectedMail } = useMailboxStore();
-  const { setIsOpenMailbox } = useToggleStore();
+  const { setOpenFeatureListInHome } = useToggleStore();
 
   return (
     <div className={`${CLASS_COATING_SM} z-30`}>
@@ -16,7 +16,7 @@ const MailboxAlert = () => {
         <X
           className={`${CLASS_X_ALERT} text-red-500`}
           onClick={() => {
-            setIsOpenMailbox(false);
+            setOpenFeatureListInHome('');
             setSelectedMail(null);
           }}
         />

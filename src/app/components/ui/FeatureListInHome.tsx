@@ -10,7 +10,6 @@ import {
 import DotCustom from "./DotCustom";
 import { useMailboxStore } from "@/lib/useStore/useMailBox";
 import { checkHasReward } from "@/lib/helper";
-import { Mailbox } from "@/lib/types/mailboxTypes";
 
 const wrapperIconCss = `relative rounded-full h-12 w-12 flex justify-center items-center
 cursor-pointer border-2 border-amber-700/50 bg-gradient-to-b from-yellow-100 to-amber-300
@@ -21,7 +20,7 @@ const iconCss = `h-6 w-6 text-amber-900 drop-shadow-[0_1px_1px_rgba(255,255,255,
 const FeatureListInHome = () => {
   const { featureListInHomeStatus, setFeatureListInHomeStatus } =
     useSettingStore();
-  const { setIsOpenMailbox } = useToggleStore();
+  const { setOpenFeatureListInHome } = useToggleStore();
   const { mailboxes } = useMailboxStore();
 
   const handleToggle = () => {
@@ -49,7 +48,7 @@ const FeatureListInHome = () => {
     >
       <div
         className={`${wrapperIconCss}`}
-        onClick={() => setIsOpenMailbox(true)}
+        onClick={() => setOpenFeatureListInHome("mailbox")}
       >
         <Mail className={`${iconCss} text-red-700`} />
         {checkNoti() && (
@@ -63,12 +62,11 @@ const FeatureListInHome = () => {
 
       {featureListInHomeStatus === "open" && (
         <div className="flex flex-col gap-3">
-          <div className={`${wrapperIconCss}`}>
+          <div
+            className={`${wrapperIconCss}`}
+            onClick={() => setOpenFeatureListInHome("dailyLogin")}
+          >
             <CalendarDays className={`${iconCss} text-cyan-700`} />
-          </div>
-
-          <div className={`${wrapperIconCss}`}>
-            <CalendarHeart className={`${iconCss} text-purple-700`} />
           </div>
         </div>
       )}

@@ -37,8 +37,8 @@ interface UserToggleState {
     onYes: () => void;
     onNo: () => void;
   };
-  // quản lý hộp thư
-  isOpenMailbox: boolean;
+  // quản lý mở các tính năng ở home như hộp thư, sự kiện, đăng nhập hằng ngày
+  openFeatureListInHome: "" | "mailbox" | "dailyLogin";
 
   setFormOpen: (name: "" | "signin" | "signup") => void;
   setItemInfoToggle: (payload: {
@@ -60,7 +60,9 @@ interface UserToggleState {
     onYes?: () => void;
     onNo?: () => void;
   }) => void;
-  setIsOpenMailbox: (open: boolean) => void;
+  setOpenFeatureListInHome: (open: "" | "mailbox" | "dailyLogin") => void;
+
+  setInitAll: () => void;
 }
 
 export const useToggleStore = create<UserToggleState>()((set) => ({
@@ -93,7 +95,7 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
     onNo: () => {},
   },
 
-  isOpenMailbox: false,
+  openFeatureListInHome: "",
 
   setFormOpen: (open) => {
     set({ formOpen: open });
@@ -126,7 +128,37 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
     }));
   },
 
-  setIsOpenMailbox: (open) => {
-    set({ isOpenMailbox: open });
+  setOpenFeatureListInHome: (open) => {
+    set({ openFeatureListInHome: open });
+  },
+
+  // khởi tạo lại tất cả
+  setInitAll: () => {
+    set({
+      formOpen: "",
+      itemInfoToggle: {
+        open: false,
+        state: "",
+        item: null,
+      },
+      equipSkillSelect: {
+        active: false,
+        skillId: "",
+      },
+      tabState: {
+        activeTab: "home",
+        prevousTab: "home",
+      },
+      isOpenPause: false,
+      alertUserInfo: "",
+      comfirmAlert: {
+        isOpen: false,
+        text: "",
+        onYes: () => {},
+        onNo: () => {},
+      },
+
+      openFeatureListInHome: "",
+    });
   },
 }));

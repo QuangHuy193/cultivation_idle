@@ -3,13 +3,13 @@ import {
   SPIRITSTONE_ICON,
 } from "@/lib/constants/imageConstants";
 import { useMailboxStore } from "@/lib/useStore/useMailBox";
-import IconItemReward from "../../ui/IconItemReward";
+import IconItemReward from "../../../ui/IconItemReward";
 import { checkHasReward } from "@/lib/helper";
 import { mailboxService } from "@/lib/services/mailbox.service";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { showSuccess } from "@/lib/toast";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
-import CoatingButton from "../../ui/CoatingButton";
+import CoatingButton from "../../../ui/CoatingButton";
 
 const MailSelected = () => {
   const { character } = useCharacterStore();
