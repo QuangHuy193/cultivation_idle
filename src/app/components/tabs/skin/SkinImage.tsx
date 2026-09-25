@@ -10,7 +10,7 @@ import CoatingButton from "../../ui/CoatingButton";
 import { showWarning } from "@/lib/toast";
 
 interface SkinImageProps {
-  skin: Skin;
+  skin: Skin | null;
   isHas: boolean;
 }
 
@@ -19,14 +19,14 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
   const { character, updateCharacter } = useCharacterStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
-  const isEQ = character.skinId._id === skin._id ? true : false;
+  const isEQ = character?.skinId._id === skin?._id ? true : false;
 
-  const rarityCSS = RARITY_CSS[skin.rarity] ?? RARITY_CSS.common;
+  const rarityCSS = RARITY_CSS[skin?.rarity ?? ""] ?? RARITY_CSS.common;
 
   const equipSkinApi = async () => {
     try {
-      setActionLoadingName(skin._id);
-      const res = await equipSkinAPI(character._id, skin._id);
+      setActionLoadingName(skin?._id ?? "");
+      const res = await equipSkinAPI(character?._id ?? "", skin?._id ?? "");
       updateCharacter({ skinId: res });
     } catch (error) {
       console.log(error);
@@ -37,13 +37,13 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
 
   const buySkinApi = async () => {
     try {
-      if (skin.price.unity === "linhthach") {
-        if (character.spiritStone < skin.price.number) {
+      if (skin?.price.unity === "linhthach") {
+        if ((character?.spiritStone ?? 0) < (skin?.price.number ?? 0)) {
           showWarning("Bạn không đủ linh thạch mua trang phục này!");
         } else {
           setActionLoadingName(skin._id);
-          const res = await buySkinAPI(character._id, skin._id);
-          
+          const res = await buySkinAPI(character?._id ?? "", skin?._id ?? "");
+
           updateCharacter({ ...res });
         }
       } else {
@@ -71,20 +71,20 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
           }}
           height={80}
           width={80}
-          src={skin.icon}
-          alt={skin.name}
+          src={skin?.icon ?? ""}
+          alt={skin?.name ?? ""}
           className="h-full w-full object-contain"
         />
       </div>
 
       <div className={`mt-2 text-center text-sm font-bold ${rarityCSS.text}`}>
-        {skin.name}
+        {skin?.name}
       </div>
 
       <div
         className={`mt-3 w-full rounded-xl px-3 py-2 text-sm font-semibold text-white
           transition-all flex justify-center relative
-          ${!isHas ? "bg-yellow-400" : isEQ ? "bg-zinc-500" : "bg-blue-300"}
+          ${isHas ? "bg-yellow-400" : isEQ ? "bg-zinc-500" : "bg-blue-300"}
         `}
       >
         {!isHas ? (
@@ -93,17 +93,19 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
               className="flex items-center justify-center gap-1.5"
               onClick={buySkinApi}
             >
-              {actionLoadingName === skin._id && (
+              {actionLoadingName === skin?._id && (
                 <CoatingButton borderRadius="rounded-xl" />
               )}
-              {skin.price.number}
-              <Image
-                height={80}
-                width={80}
-                alt="linhthach"
-                src={SPIRITSTONE_ICON}
-                className="w-5 h-5"
-              />
+              {!isEQ && skin?.price.number}
+              {!isEQ && (
+                <Image
+                  height={80}
+                  width={80}
+                  alt="linhthach"
+                  src={SPIRITSTONE_ICON}
+                  className="w-5 h-5"
+                />
+              )}
             </div>
           </div>
         ) : isEQ ? (
@@ -111,7 +113,7 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
         ) : (
           <button onClick={equipSkinApi}>
             Trang bị
-            {actionLoadingName === skin._id && (
+            {actionLoadingName === skin?._id && (
               <CoatingButton borderRadius="rounded-xl" />
             )}
           </button>

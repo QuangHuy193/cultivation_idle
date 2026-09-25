@@ -73,7 +73,7 @@ const BattleTabBattle = () => {
           <div className="absolute bottom-2 left-4">
             <div className="mb-2 w-32">
               <div className="mb-1 text-xs font-semibold text-white">
-                {character.name}
+                {character?.name}
               </div>
 
               <div

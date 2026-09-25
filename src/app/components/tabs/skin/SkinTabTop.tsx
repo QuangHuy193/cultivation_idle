@@ -10,7 +10,7 @@ const SkinTabTop = () => {
   const { character } = useCharacterStore();
   const { owner, selectedSkin, setSelectedSkin } = useSkinStore();
 
-  const rarityCss = RARITY_CSS[selectedSkin.rarity] ?? RARITY_CSS.common;
+  const rarityCss = RARITY_CSS[selectedSkin?.rarity ?? ""] ?? RARITY_CSS.common;
 
   useEffect(() => {
     if (character) {
@@ -27,7 +27,7 @@ const SkinTabTop = () => {
         {/* Độ hiếm */}
         <div className="mb-4 flex items-center justify-between border-b border-zinc-200 pb-3">
           <div className="font-medium text-zinc-500 flex items-center gap-1">
-            Độ hiếm <TippyCustom content={<div></div>}/>
+            Độ hiếm <TippyCustom content={<div></div>} />
           </div>
 
           <span
@@ -36,7 +36,7 @@ const SkinTabTop = () => {
         ${rarityCss.text}
       `}
           >
-            {RARITY_TEXT_MAP(selectedSkin.rarity).toUpperCase()}
+            {RARITY_TEXT_MAP(selectedSkin?.rarity ?? "").toUpperCase()}
           </span>
         </div>
 
@@ -47,7 +47,7 @@ const SkinTabTop = () => {
           </div>
 
           <div className="space-y-2">
-            {selectedSkin.buffs.atk > 0 && (
+            {(selectedSkin?.buffs?.atk ?? 0) > 0 && (
               <div
                 className="
             flex items-center justify-between
@@ -55,12 +55,12 @@ const SkinTabTop = () => {
           "
               >
                 <span className="font-semibold text-red-500">
-                  ⚔️ +{selectedSkin.buffs.atk}
+                  ⚔️ +{selectedSkin?.buffs?.atk}
                 </span>
               </div>
             )}
 
-            {selectedSkin.buffs.hp > 0 && (
+            {(selectedSkin?.buffs?.hp ?? 0) > 0 && (
               <div
                 className="
             flex items-center justify-between
@@ -68,12 +68,12 @@ const SkinTabTop = () => {
           "
               >
                 <span className="font-semibold text-green-500">
-                  ❤️ +{selectedSkin.buffs.hp}
+                  ❤️ +{selectedSkin?.buffs?.hp}
                 </span>
               </div>
             )}
 
-            {selectedSkin.buffs.def > 0 && (
+            {(selectedSkin?.buffs?.def ?? 0) > 0 && (
               <div
                 className="
             flex items-center justify-between
@@ -81,14 +81,14 @@ const SkinTabTop = () => {
           "
               >
                 <span className="font-semibold text-blue-500">
-                  🛡️ +{selectedSkin.buffs.def}
+                  🛡️ +{selectedSkin?.buffs?.def}
                 </span>
               </div>
             )}
 
-            {selectedSkin.buffs.attack === 0 &&
-              selectedSkin.buffs.hp === 0 &&
-              selectedSkin.buffs.defense === 0 && (
+            {selectedSkin?.buffs?.atk === 0 &&
+              selectedSkin?.buffs?.hp === 0 &&
+              selectedSkin?.buffs?.def === 0 && (
                 <div className="italic text-zinc-500">không</div>
               )}
           </div>

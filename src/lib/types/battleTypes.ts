@@ -19,6 +19,8 @@ export interface BattleMonster {
 }
 
 export interface Log {
+  turn: number;
+  type: "player" | "monster";
   name: string;
   enemyName: string;
   dmg: number;

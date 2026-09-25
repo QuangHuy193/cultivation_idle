@@ -2,6 +2,16 @@ import { InferSchemaType, Schema, model, models } from "mongoose";
 
 const LogBattle = new Schema(
   {
+    turn: {
+      type: Number,
+      default: 1,
+    },
+
+    type: {
+      type: String,
+      default: "player",
+    },
+
     name: {
       type: String,
       default: "",

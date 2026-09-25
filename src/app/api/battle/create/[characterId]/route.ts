@@ -86,7 +86,7 @@ export async function POST(
       })) || [];
 
     const { finalStats } = calculateCharacterStats(character);
-
+    
     // tạo battle
     const battle = await Battle.create({
       characterId,

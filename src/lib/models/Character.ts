@@ -107,7 +107,11 @@ const InventorySchema = new Schema(
           },
         },
       ],
-      default: [],
+      default: [
+        {
+          skillId: "macdinh",
+        },
+      ],
     },
   },
   {

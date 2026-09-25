@@ -61,6 +61,8 @@ export async function POST(
     const logs = [];
 
     for (let turn = 1; turn <= MAX_TURN; turn++) {
+      const turnLogs = [];
+
       // giảm CD
       skills.forEach((skill: SkillInBattle) => {
         if (skill.currentCooldown > 0) {
@@ -75,7 +77,8 @@ export async function POST(
         if (SkillInBattle.currentCooldown > 0) continue;
 
         const skillData = character.inventory.skills.find(
-          (s: SkillItemInInventory) => s.skillId._id.toString() === SkillInBattle.skillId,
+          (s: SkillItemInInventory) =>
+            s.skillId._id.toString() === SkillInBattle.skillId,
         );
 
         if (!skillData) continue;
@@ -88,12 +91,17 @@ export async function POST(
 
         totalDamage += damage;
 
-        logs.push({
+        const playerLog = {
+          turn,
+          type: "player" as const,
           name: character.name,
           enemyName: battle.monster.name,
           dmg: damage,
           skill: skillData.skillId.name,
-        });
+        };
+
+        turnLogs.push(playerLog);
+        logs.push(playerLog);
 
         SkillInBattle.currentCooldown = skillData.skillId.cooldown;
       }
@@ -113,11 +121,17 @@ export async function POST(
           turn,
           playerHp,
           monsterHp,
-          logs,
+          logs: turnLogs,
         });
 
-        battle.logs = logs;
-        await battle.save();
+        await Battle.updateOne(
+          { _id: battleId },
+          {
+            $set: {
+              logs,
+            },
+          },
+        );
 
         return NextResponse.json({
           battleStatus: "win",
@@ -126,38 +140,47 @@ export async function POST(
       }
 
       // lượt quái
-      const monsterDamage = battle.monster.attack || 1;
+      const monsterDamage = battle.monster.atk || 1;
 
       // trừ máu player
-      const finalDamgeOfMons = Math.max(
+      const finalDamageOfMons = Math.max(
         monsterDamage - (finalStats?.def ?? 0),
         1,
       );
 
-      playerHp -= finalDamgeOfMons;
+      playerHp -= finalDamageOfMons;
+      playerHp = Math.max(playerHp, 0);
 
-      if (playerHp < 0) {
-        playerHp = 0;
-      }
-
-      logs.push({
+      const monsterLog = {
+        turn,
+        type: "monster" as const,
         name: battle.monster.name,
         enemyName: character.name,
-        damage: monsterDamage,
-      });
+        dmg: finalDamageOfMons,
+      };
+
+      turnLogs.push(monsterLog);
+      logs.push(monsterLog);
 
       // lưu turn
       turns.push({
         turn,
         playerHp,
         monsterHp,
-        logs,
+        logs: turnLogs,
       });
 
       // kiểm tra thua
       if (playerHp <= 0) {
-        battle.logs = logs;
-        await battle.save();
+        await Battle.updateOne(
+          { _id: battleId },
+          {
+            $set: {
+              logs,
+            },
+          },
+        );
+
         return NextResponse.json({
           battleStatus: "lose",
           turns,
@@ -165,10 +188,15 @@ export async function POST(
       }
     }
 
-    battle.logs = logs;
+    await Battle.updateOne(
+      { _id: battleId },
+      {
+        $set: {
+          logs,
+        },
+      },
+    );
 
-    await battle.save();
-    
     return NextResponse.json({
       battleStatus: "lose",
       reason: "max_turn",

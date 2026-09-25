@@ -17,12 +17,12 @@ const MainTabsBar = () => {
       {MAIN_TABS.map((tab) => {
         const isActive = tabState.activeTab === tab.key;
         const isLock =
-          tab.key === "class" && (character.realmId?.order ?? 1) < 2;
+          tab.key === "class" && (character?.realmId?.order ?? 1) < 2;
         return tab.display ? (
           <div
             key={tab.key}
-            className={`relative flex h-full w-full items-center justify-center rounded-xl text-3xl 
-                transition ${
+            className={`relative flex h-full w-full items-center justify-center rounded-xl 
+              text-3xl transition ${
                   isActive
                     ? `bg-linear-to-r ${tab.accent} text-white shadow-md`
                     : "bg-zinc-100 text-zinc-700"

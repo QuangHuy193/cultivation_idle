@@ -48,20 +48,20 @@ export const equipmentPopulate = [
 ];
 
 // tính chỉ số cuối của nhân vật
-export const calculateCharacterStats = (character: ICharacter) => {
+export const calculateCharacterStats = (character: ICharacter) => {  
   const sources = [
-    character.stats?.base,
-    character.stats?.equips,
-    character.stats?.skins,
-    character.stats?.items,
-    character.stats?.realm,
+    character.stats.base,
+    character.stats.equips,
+    character.stats.skins,
+    character.stats.items,
+    character.stats.realm,
   ];
 
   const finalStats = sources.reduce(
     (total, stat) => ({
-      hp: total?.hp ?? 0 + (stat?.hp || 0),
-      atk: total?.atk ?? 0 + (stat?.atk || 0),
-      def: total?.def ?? 0 + (stat?.def || 0),
+      hp: (total?.hp ?? 1) + (stat?.hp || 1),
+      atk: (total?.atk ?? 1) + (stat?.atk || 1),
+      def: (total?.def ?? 1) + (stat?.def || 1),
     }),
     {
       hp: 0,
@@ -163,7 +163,8 @@ export const grantRewards = async (
   // skills
   for (const reward of rewards.skills || []) {
     const inventorySkill = character.inventory.skills.find(
-      (s: ICharacter["inventory"]["skills"][number]) => s.skillId === reward.skillId,
+      (s: ICharacter["inventory"]["skills"][number]) =>
+        s.skillId === reward.skillId,
     );
 
     if (inventorySkill) {
@@ -180,7 +181,8 @@ export const grantRewards = async (
   // skins
   for (const reward of rewards.skins || []) {
     const existed = character.inventory.skins.some(
-      (s: ICharacter["inventory"]["skins"][number]) => s.skinId === reward.skinId,
+      (s: ICharacter["inventory"]["skins"][number]) =>
+        s.skinId === reward.skinId,
     );
 
     if (!existed) {

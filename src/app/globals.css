@@ -36,14 +36,14 @@
   border-top-color: #c89b3c !important;
 }
 
-.tippy-tooltip {
+/* .tippy-tooltip {
   background: linear-gradient(to bottom, #c89b3c, #a8741f);
   padding: 4px;
   border-radius: 10px;
   box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.2),
     0 0 8px rgba(200, 155, 60, 0.25);
-}
+} */
 
 .tippy-content {
   background: linear-gradient(to bottom, #fff7d6, #fef0c0);

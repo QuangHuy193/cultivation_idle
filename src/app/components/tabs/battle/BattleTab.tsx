@@ -48,13 +48,34 @@ const BattleTab = () => {
     null,
   );
 
-  // tạo battle
   useEffect(() => {
-    const createBattleApi = async () => {
+    if (!character?._id) return;
+
+    const startBattle = async () => {
       try {
         setLoadingUseBattle(true);
-        const res = await createBattleAPI(character?._id ?? "", "mainStage");
-        setBattle(res);
+
+        // reset state
+        setIsBattleStart(false);
+        setIsBattlePause(false);
+        setBattle(battleStateDefault);
+        setTurns(null);
+        setCurrentTurn(0);
+
+        // 1. Tạo battle
+        const battle = await createBattleAPI(character._id, "mainStage");
+
+        setBattle(battle);
+
+        // 2. Đánh battle ngay sau khi tạo thành công
+        const result = await fightBattleAPI(battle._id, "mainStage");
+
+        setTurns(result);
+
+        updateBattle((prev) => ({
+          ...prev,
+          battleStatus: result.battleStatus,
+        }));
       } catch (error) {
         console.log(error);
       } finally {
@@ -62,40 +83,8 @@ const BattleTab = () => {
       }
     };
 
-    // tạo lại các tham số khác
-    setIsBattleStart(false);
-    setIsBattlePause(false);
-
-    if (character?._id) {
-      setBattle(battleStateDefault);
-      createBattleApi();
-    }
-  }, []);
-
-  // tải trước turn
-  useEffect(() => {
-    const fightBattleApi = async () => {
-      try {
-        const res = await fightBattleAPI(battle._id, "mainStage");
-        setTurns(res.turns);
-
-        updateBattle((battle) => {
-          return {
-            ...battle,
-            battleStatus: res.battleStatus,
-          };
-        });
-
-        setCurrentTurn(0);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (battle?._id) {
-      fightBattleApi();
-    }
-  }, [battle?._id]);
+    startBattle();
+  }, [character?._id]);
 
   // chạy từng lượt
   useEffect(() => {
@@ -109,6 +98,7 @@ const BattleTab = () => {
       updateBattle((battle) => {
         return {
           ...battle,
+          turn: turns.turns[currentTurn].turn,
           playerHp: turns.turns[currentTurn].playerHp,
           monster: {
             ...battle.monster,
@@ -128,7 +118,6 @@ const BattleTab = () => {
   const getRewardApi = async () => {
     try {
       const res = await rewardBattleAPI(battle._id);
-      console.log("ssss", res);
       setResReawrd(res);
     } catch (error) {
       console.log(error);
