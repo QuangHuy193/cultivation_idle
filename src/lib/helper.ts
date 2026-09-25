@@ -7,6 +7,9 @@ import {
 } from "./types/characterTypes";
 import { createHash } from "crypto";
 import { Mailbox } from "./types/mailboxTypes";
+import { Equip } from "./types/equipTypes";
+import { Item } from "./types/itemTypes";
+import { Skill } from "./types/skillTypes";
 
 // tạo hash pass
 export function hashPassword(password: string) {
@@ -48,7 +51,7 @@ export const equipmentPopulate = [
 ];
 
 // tính chỉ số cuối của nhân vật
-export const calculateCharacterStats = (character: ICharacter) => {  
+export const calculateCharacterStats = (character: ICharacter) => {
   const sources = [
     character.stats.base,
     character.stats.equips,
@@ -283,4 +286,17 @@ export const getMailPriority = (mail: Mailbox) => {
   if (mail.status === 2) return 2; // đã nhận thưởng
 
   return 3; // -1 hoặc trạng thái khác
+};
+
+// kiểm tra xem là Item, Equip hay Skill
+export const isEquipType = (item: Equip | Skill | null): item is Equip => {
+  return !!item && "stats" in item && "sellPrice" in item;
+};
+
+export const isSkillType = (item: Equip | Skill | Item | null): item is Skill => {
+  return !!item && "attackPower" in item;
+};
+
+export const isItemType = (item: Equip | Skill | Item | null): item is Item => {
+  return !!item && "sellPrice" in item;
 };

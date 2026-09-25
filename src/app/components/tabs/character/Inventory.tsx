@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import ItemInfo from "../../alert/ItemInfo";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
+import { isItemType } from "@/lib/helper";
 
 export default function Inventory() {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
@@ -98,7 +99,9 @@ export default function Inventory() {
                 className="z-1 relative aspect-square rounded-lg border border-zinc-300 bg-white shadow-sm overflow-hidden"
               >
                 {item ? (
-                  <div className={`${RARITY_CSS[item.itemId.rarity].bg} h-full w-full`}>
+                  <div
+                    className={`${RARITY_CSS[item.itemId.rarity].bg} h-full w-full`}
+                  >
                     <Image
                       src={item.itemId.icon || "/sword_1.png"}
                       alt={item.itemId.name}
@@ -129,7 +132,7 @@ export default function Inventory() {
       </div>
       {itemInfoToggle.open && itemInfoToggle.state === "item" && (
         <ItemInfo
-          item={itemInfoToggle.item}
+          item={isItemType(itemInfoToggle.item) ? itemInfoToggle.item : null}
           onClose={() =>
             setItemInfoToggle({ open: false, state: "", item: null })
           }

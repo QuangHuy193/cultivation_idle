@@ -8,7 +8,7 @@ interface useMailboxState {
 
   setMailboxes: (mailboxes: Mailbox[] | []) => void;
   updateMailboxes: (mail: Mailbox) => void;
-  setSelectedMail: (mail: Mailbox) => void;
+  setSelectedMail: (mail: Mailbox | null) => void;
 }
 
 export const useMailboxStore = create<useMailboxState>()((set) => ({

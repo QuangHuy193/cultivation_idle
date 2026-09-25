@@ -8,6 +8,7 @@ import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { EQUIPMENT_SLOTS, REALM_NAME_LIST } from "@/lib/constants/objConstants";
 import TippyCustom from "../../ui/TippyCustom";
+import { isEquipType } from "@/lib/helper";
 
 const Character = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
@@ -149,7 +150,9 @@ const Character = () => {
         itemInfoToggle.state !== "item" &&
         itemInfoToggle.item && (
           <EquipmentInfo
-            equip={itemInfoToggle.item}
+            equip={
+              isEquipType(itemInfoToggle.item) ? itemInfoToggle.item : null
+            }
             isEquipped={itemInfoToggle.state === "equip"}
             onClose={() =>
               setItemInfoToggle({ open: false, item: null, state: "" })

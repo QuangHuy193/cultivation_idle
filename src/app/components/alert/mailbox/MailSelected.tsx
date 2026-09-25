@@ -22,7 +22,7 @@ const MailSelected = () => {
     try {
       setActionLoadingName("rewardMailbox");
       await mailboxService.rewardMailbox(
-        character._id,
+        character?._id ?? "",
         selectedMail?._id || "",
       );
       showSuccess("Đã nhận thưởng");

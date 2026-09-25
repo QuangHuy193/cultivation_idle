@@ -13,6 +13,7 @@ import {
   SkillInEquippedSkills,
   SkillItemInInventory,
 } from "@/lib/types/characterTypes";
+import { isSkillType } from "@/lib/helper";
 
 export default function SkillTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -182,7 +183,7 @@ export default function SkillTab() {
 
       {itemInfoToggle.open && itemInfoToggle.item && (
         <SkillInfo
-          skill={itemInfoToggle.item}
+          skill={isSkillType(itemInfoToggle.item) ? itemInfoToggle.item : null}
           isEquipped={itemInfoToggle.state === "equip"}
           level={itemInfoToggle.levelSKill || 1}
           shard={itemInfoToggle.shardSKill || 0}
