@@ -1,7 +1,4 @@
 "use client";
-
-import { getSkinsAPI } from "@/app/axios/skinAPI";
-import { useEffect } from "react";
 import SplitLayout from "../../layout/SplitLayout";
 import SkinTabTop from "./SkinTabTop";
 import SkinTabBottom from "./SkinTabBottom";

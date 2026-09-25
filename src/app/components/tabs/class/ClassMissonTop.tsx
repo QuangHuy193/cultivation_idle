@@ -7,9 +7,9 @@ const milestones = [25, 50, 75, 100];
 const ClassMissonTop = () => {
   const { character } = useCharacterStore();
 
-  const charCls = character.class.classId;
-  const charClsLevel = character.class.classLevelCharacter - 1;
-  const charClsExp = character.class.exp;
+  const charCls = character?.class.classId;
+  const charClsLevel = (character?.class.classLevelCharacter ?? 1) - 1;
+  const charClsExp = character?.class.exp ?? 1;
 
   const percentExp = charCls?.levels[charClsLevel]?.requiredExp
     ? (charClsExp / charCls?.levels[charClsLevel]?.requiredExp) * 100
@@ -24,19 +24,19 @@ const ClassMissonTop = () => {
             <Image
               width={80}
               height={80}
-              src={charCls.icon}
-              alt={charCls.name}
+              src={charCls?.icon??""}
+              alt={charCls?.name??""}
               className="h-20 w-20 shrink-0 object-contain"
             />
             <RefreshCw className="text-blue-400" />
           </div>
           <div>
             <div className="text-lg font-bold text-amber-700">
-              {charCls.name}
+              {charCls?.name}
             </div>
 
             <div className="mt-1 text-sm text-zinc-600">
-              {charCls.description}
+              {charCls?.description}
             </div>
           </div>
         </div>
@@ -49,18 +49,18 @@ const ClassMissonTop = () => {
               className="absolute -top-7 left-1/2 -translate-x-1/2 rounded-lg bg-amber-500 
               px-3 py-1 text-xs font-bold text-white shadow"
             >
-              {character.class.exp} /{" "}
+              {character?.class.exp} /{" "}
               {charCls?.levels[charClsLevel]?.requiredExp}
             </div>
 
             {/* Tên cấp hiện tại */}
             <div className="absolute -top-8 left-0 text-sm font-semibold text-emerald-600">
-              {charCls.levels[charClsLevel]?.name}
+              {charCls?.levels[charClsLevel]?.name}
             </div>
 
             {/* Tên cấp tiếp theo */}
             <div className="absolute -top-8 right-0 text-sm font-semibold text-amber-600">
-              {charCls.levels[charClsLevel + 1]?.name ?? "MAX"}
+              {charCls?.levels[charClsLevel + 1]?.name ?? "MAX"}
             </div>
 
             {/* Thanh nền */}

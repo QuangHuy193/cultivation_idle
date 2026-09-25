@@ -21,8 +21,9 @@ const SettingAlert = () => {
       onYes: () => {
         clearAuth();
         initForm();
-        router.push("/");
         setComfirmAlert({ isOpen: false });
+        setAalertUserInfo("");
+        router.push("/");
       },
     });
   };

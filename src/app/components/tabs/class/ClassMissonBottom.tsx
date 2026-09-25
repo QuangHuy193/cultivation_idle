@@ -19,7 +19,7 @@ const ClassMissonBottom = () => {
       {characterClassMission ? (
         <div>
           {characterClassMission.map((clsMission) => {
-            const itemMission = character.inventory.items.find(
+            const itemMission = character?.inventory.items.find(
               (it: ItemItemInInventory) =>
                 it.itemId._id === clsMission.missionId.itemId._id,
             );

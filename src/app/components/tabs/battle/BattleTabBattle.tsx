@@ -83,7 +83,7 @@ const BattleTabBattle = () => {
                 <div
                   className="h-full bg-green-500"
                   style={{
-                    width: `${(battle?.playerHp / battle?.playerMaxHp) * 100}%`,
+                    width: `${((battle?.playerHp ?? 1) / (battle?.playerMaxHp ?? 1)) * 100}%`,
                   }}
                 />
               </div>
@@ -102,7 +102,7 @@ const BattleTabBattle = () => {
           <div className="absolute bottom-2 right-4">
             <div className="mb-2 w-32">
               <div className="mb-1 text-right text-xs font-semibold text-white">
-                {battle.monster?.name || "Quái vật"}
+                {battle?.monster?.name || "Quái vật"}
               </div>
 
               <div
@@ -113,7 +113,9 @@ const BattleTabBattle = () => {
                   className="h-full bg-red-500 "
                   style={{
                     width: `${
-                      (battle.monster.hp / battle.monster.maxHp) * 100
+                      ((battle?.monster.hp ?? 1) /
+                        (battle?.monster.maxHp ?? 1)) *
+                      100
                     }%`,
                   }}
                 />
@@ -121,7 +123,7 @@ const BattleTabBattle = () => {
             </div>
 
             <Image
-              src={battle.monster?.icon || ""}
+              src={battle?.monster?.icon || ""}
               alt="Monster"
               width={130}
               height={130}

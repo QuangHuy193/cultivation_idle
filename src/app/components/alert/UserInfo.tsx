@@ -19,16 +19,16 @@ const UserInfo = () => {
   const { classes } = useClassStore();
 
   const classInfo =
-    character.class?.classId &&
+    character?.class?.classId &&
     classes?.find((cls) => {
       return cls._id === character?.class?.classId._id;
     });
 
   const realmStyle =
-    REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
+    REALM_CSS[character?.realmId?._id as keyof typeof REALM_CSS];
 
   const rarityCtyle =
-    RARITY_CSS[character.skinId.rarity] ?? RARITY_CSS["common"];
+    RARITY_CSS[character?.skinId?.rarity ?? "common"] ?? RARITY_CSS["common"];
 
   return (
     <div className={`${CLASS_COATING_SM} z-50`}>
@@ -53,8 +53,8 @@ const UserInfo = () => {
             <Image
               height={88}
               width={88}
-              src={character.skinId.icon || DEFAULT_IMG_CHARACTER}
-              alt={character.skinId.name || ""}
+              src={character?.skinId.icon || DEFAULT_IMG_CHARACTER}
+              alt={character?.skinId.name || ""}
               className="h-full w-full"
             />
           </div>
@@ -63,7 +63,7 @@ const UserInfo = () => {
           <div className="flex-1">
             <div className="flex items-center justify-between">
               <div className="text-lg font-bold text-zinc-800">
-                {character.name}
+                {character?.name}
               </div>
 
               <button className="rounded-lg bg-white/70 p-2 transition hover:bg-white">
@@ -82,8 +82,8 @@ const UserInfo = () => {
               ${realmStyle.glow}
             `}
             >
-              {character.realmId?.name} -{" "}
-              {character.realmId.levels[character.realmLevel - 1].name}
+              {character?.realmId?.name} -{" "}
+              {character?.realmId.levels[character.realmLevel - 1].name}
             </div>
 
             <div className="mt-2 text-sm text-zinc-500">
@@ -110,8 +110,8 @@ const UserInfo = () => {
             <div className="text-sm font-semibold text-zinc-700">Tu vi</div>
 
             <div className="mt-1 text-sm text-zinc-600">
-              Kinh nghiệm {character.cultivation}/
-              {character.breakthroughRequired}
+              Kinh nghiệm {character?.cultivation}/
+              {character?.breakthroughRequired}
             </div>
 
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-zinc-200">
@@ -119,8 +119,8 @@ const UserInfo = () => {
                 className="h-full bg-blue-500"
                 style={{
                   width: `${
-                    (character.cultivation /
-                      (character.breakthroughRequired ?? 1)) *
+                    ((character?.cultivation ?? 0) /
+                      (character?.breakthroughRequired ?? 1)) *
                     100
                   }%`,
                 }}
@@ -138,12 +138,12 @@ const UserInfo = () => {
             </div>
 
             <div className="mt-1 text-lg font-bold text-amber-700">
-              {character.currentMap.map.name}
+              {character?.currentMap.map.name}
             </div>
 
             <div className="mt-1 text-sm text-zinc-600">
-              Ải {character.currentMap.stage}/
-              {character.currentMap.map.maxStage}
+              Ải {character?.currentMap.stage}/
+              {character?.currentMap.map.maxStage}
             </div>
 
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-zinc-200">
@@ -151,8 +151,8 @@ const UserInfo = () => {
                 className="h-full bg-yellow-500"
                 style={{
                   width: `${
-                    (character.currentMap.stage /
-                      character.currentMap.map.maxStage) *
+                    ((character?.currentMap.stage ?? 0) /
+                      (character?.currentMap.map.maxStage ?? 1)) *
                     100
                   }%`,
                 }}

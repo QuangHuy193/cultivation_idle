@@ -14,7 +14,7 @@ const Character = () => {
   const { character } = useCharacterStore();
 
   const realmStyle =
-    REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
+    REALM_CSS[character?.realmId?._id as keyof typeof REALM_CSS];
 
   return (
     <section className="flex flex-col w-full h-full px-5">
@@ -25,8 +25,8 @@ const Character = () => {
               ${realmStyle?.text} ${realmStyle?.glow}`}
           >
             <div>
-              {character.realmId?.name} -{" "}
-              {character.realmId.levels[character.realmLevel - 1].name}
+              {character?.realmId?.name} -{" "}
+              {character?.realmId.levels[character.realmLevel - 1].name}
             </div>
 
             <TippyCustom
@@ -47,7 +47,7 @@ const Character = () => {
           {/* Trang bị bên trái (3 ô) */}
           <div className="flex flex-col gap-5">
             {EQUIPMENT_SLOTS.slice(0, 3).map((slot) => {
-              const equip = character.equipments?.[slot.key];
+              const equip = character?.equipments?.[slot.key];
 
               return (
                 <div
@@ -84,19 +84,19 @@ const Character = () => {
             <Image
               height={50}
               width={50}
-              src={character.skinId.icon || DEFAULT_IMG_CHARACTER}
+              src={character?.skinId.icon || DEFAULT_IMG_CHARACTER}
               alt="Nhân vật"
               className="h-full w-full object-contain rounded-lg mb-4"
             />
             <div className="flex justify-between gap-4">
               <div className="text-red-400">
-                ⚔️ {character.finalStats?.atk || character.stats.base.atk}
+                ⚔️ {character?.finalStats?.atk || character?.stats.base.atk}
               </div>
               <div className="text-green-400">
-                ❤️ {character.finalStats?.hp || character.stats.base.hp}
+                ❤️ {character?.finalStats?.hp || character?.stats.base.hp}
               </div>
               <div className="text-blue-400">
-                🛡️ {character.finalStats?.def || character.stats.base.def}
+                🛡️ {character?.finalStats?.def || character?.stats.base.def}
               </div>
             </div>
           </div>
@@ -104,7 +104,7 @@ const Character = () => {
           {/* Trang bị bên phải (3 ô) */}
           <div className="flex flex-col gap-5">
             {EQUIPMENT_SLOTS.slice(3, 6).map((slot) => {
-              const equip = character.equipments?.[slot.key];
+              const equip = character?.equipments?.[slot.key];
 
               return (
                 <div

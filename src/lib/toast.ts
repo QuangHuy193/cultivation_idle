@@ -23,3 +23,9 @@ export const showWarning = (
 ) => {
   toast.warning(message);
 };
+
+export const showToast = (
+  message: string,
+) => {
+  toast(message);
+};

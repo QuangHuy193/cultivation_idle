@@ -29,7 +29,7 @@ export default function HomeTab() {
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
   const realmStyle =
-    REALM_CSS[character.realmId?._id as keyof typeof REALM_CSS];
+    REALM_CSS[character?.realmId?._id as keyof typeof REALM_CSS];
 
   const percent = character?.breakthroughRequired
     ? (character.cultivation / character.breakthroughRequired) * 100
@@ -38,7 +38,7 @@ export default function HomeTab() {
   const breakthroughApi = async () => {
     try {
       setActionLoadingName("break");
-      const res = await breakthroughAPI(character._id);
+      const res = await breakthroughAPI(character?._id ?? "");
 
       updateCharacter(res);
       showSuccess("Đột phá thành công");
@@ -68,14 +68,12 @@ export default function HomeTab() {
         className="absolute inset-0"
         style={{
           backgroundImage: `url('${
-            character.skinId?.icon || DEFAULT_IMG_CHARACTER
+            character?.skinId?.icon || DEFAULT_IMG_CHARACTER
           }')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-
-      <OfflineRewardIcon />
 
       {/* Nội dung */}
       <div className="relative z-10">
@@ -89,8 +87,8 @@ export default function HomeTab() {
             <span
               className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}
             >
-              {character.realmId?.name} -{" "}
-              {character.realmId?.levels?.[character.realmLevel - 1]?.name}
+              {character?.realmId?.name} -{" "}
+              {character?.realmId?.levels?.[character.realmLevel - 1]?.name}
             </span>
 
             <div className="relative mt-2 h-2 w-full overflow-hidden rounded-full bg-white">
@@ -100,7 +98,7 @@ export default function HomeTab() {
               />
             </div>
 
-            {character.canBreakthrough && (
+            {character?.canBreakthrough && (
               <div className="flex justify-center">
                 <button
                   onClick={breakthroughApi}
@@ -162,13 +160,14 @@ export default function HomeTab() {
           title="NHẬP TÊN MỚI"
           type="changeName"
           btnLabel={
-            character.countChangeName <= 0 ? (
-              `ĐỔI TÊN (Miễn phí x${Math.abs(character.countChangeName) + 1})`
+            (character?.countChangeName ?? 0) <= 0 ? (
+              `ĐỔI TÊN (Miễn phí x${Math.abs(character?.countChangeName ?? 0) + 1})`
             ) : (
               <div className="flex justify-center items-center gap-2">
                 ĐỔI TÊN (
                 <div className="flex justify-center items-center">
-                  {Math.abs(character.countChangeName) * CHANGE_NAME_COST_ONCE}
+                  {Math.abs(character?.countChangeName ?? 0) *
+                    CHANGE_NAME_COST_ONCE}
                   <ImageIcon src={SPIRITSTONE_ICON} />
                 </div>
                 )
@@ -180,6 +179,7 @@ export default function HomeTab() {
       )}
       {alertUserInfo === "setting" && <SettingAlert />}
       {isOpenMailbox && <MailboxAlert />}
+      <OfflineRewardIcon />
     </section>
   );
 }

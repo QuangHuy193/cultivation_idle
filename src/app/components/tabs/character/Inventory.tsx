@@ -17,12 +17,12 @@ export default function Inventory() {
 
   const equipmentSlots = Array.from(
     { length: MAX_ITEM_SLOTS },
-    (_, index) => character.inventory.equips?.[index] ?? null,
+    (_, index) => character?.inventory.equips?.[index] ?? null,
   );
 
   const itemSlots = Array.from(
     { length: MAX_ITEM_SLOTS },
-    (_, index) => character.inventory.items?.[index] ?? null,
+    (_, index) => character?.inventory.items?.[index] ?? null,
   );
 
   return (

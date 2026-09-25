@@ -48,7 +48,7 @@ const SingleInputForm = ({
   };
 
   const changName = async () => {
-    if (!userId || !character._id) {
+    if (!userId || !character?._id) {
       return;
     }
 
@@ -57,7 +57,7 @@ const SingleInputForm = ({
       return;
     }
 
-    if (formData === character.name) {
+    if (formData === character?.name) {
       showWarning("Bạn chưa đổi tên!");
       return;
     }
@@ -82,31 +82,37 @@ const SingleInputForm = ({
         },
         onYes: async () => {
           try {
+            setActionLoadingName("changeName");
             const res = await changeNameAPI(character._id, formData);
             updateCharacter(res);
             setAalertUserInfo("menu");
-            showSuccess("Đã đổi tên");
+            showSuccess("Đổi tên thành công");
             setComfirmAlert({ isOpen: false });
           } catch (error) {
             console.log(error);
+          } finally {
+            setActionLoadingName("");
           }
         },
         text: "Bạn chắc chắn muốn dùng linh thạch để đổi tên chứ?",
       });
     } else {
       try {
+        setActionLoadingName("changeName");
         const res = await changeNameAPI(character._id, formData);
         updateCharacter(res);
         setAalertUserInfo("menu");
         showSuccess("Đã đổi tên");
       } catch (error) {
         console.log(error);
+      } finally {
+        setActionLoadingName("");
       }
     }
   };
 
   const redeemCode = async () => {
-    if (!userId || !character._id) {
+    if (!userId || !character?._id) {
       return;
     }
 
@@ -117,7 +123,7 @@ const SingleInputForm = ({
 
     try {
       setActionLoadingName("redeemCode");
-      const res = await redeemCodeAPI(userId, formData, character._id);
+      const res = await redeemCodeAPI(userId, formData, character?._id ?? "");
 
       if (res.success) {
         showSuccess("Quà đã được gửi vào thư của bạn");
@@ -171,9 +177,8 @@ const SingleInputForm = ({
           text-white shadow-md transition hover:scale-105 active:scale-95 relative"
         >
           {btnLabel}
-          {type === "redeemCode" && actionLoadingName === "redeemCode" && (
-            <CoatingButton />
-          )}
+          {(actionLoadingName === "redeemCode" ||
+            actionLoadingName === "changeName") && <CoatingButton />}
         </button>
       </form>
     </div>

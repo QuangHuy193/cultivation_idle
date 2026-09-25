@@ -18,17 +18,17 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
   const { character, updateCharacter } = useCharacterStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
 
-  const culPerMinute = calculateCharacterCultivationPerMinute(
-    character.cultivationPerMinute,
-  );
+  const culPerMinute =
+    character &&
+    calculateCharacterCultivationPerMinute(character.cultivationPerMinute);
 
   const handleClaimReward = async () => {
-    if (character.cultivationOffline <= 0) {
+    if ((character?.cultivationOffline ?? 0) <= 0) {
       showWarning("Bạn chưa có tu vi ngoại tuyến để nhận!");
     } else {
       try {
         setActionLoadingName("rewardCulOff");
-        const res = await rewardCultivationOfflineAPI(character._id);
+        const res = await rewardCultivationOfflineAPI(character?._id ?? "");
         updateCharacter(res);
         showSuccess("Đã nhận tu vi");
         setIsOpen(false); // Đóng alert sau khi nhận phần thưởng
@@ -42,7 +42,7 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
   return (
     <div
       onClick={() => setIsOpen(false)}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      className="fixed inset-0 z-51 flex items-center justify-center bg-black/50 backdrop-blur-sm"
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -65,8 +65,9 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
         {/* Nội dung */}
         <div className="rounded-xl bg-white/70 p-4 text-center shadow-inner">
           <div>
-            Thời gian đã offline: {Math.floor(character.timeReawrdOffline / 60)}{" "}
-            giờ {character.timeReawrdOffline % 60} phút
+            Thời gian đã offline:{" "}
+            {Math.floor((character?.timeReawrdOffline ?? 0) / 60)} giờ{" "}
+            {(character?.timeReawrdOffline ?? 0) % 60} phút
           </div>
 
           <div className="text-center">
@@ -76,7 +77,7 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
           <div className="text-sm text-zinc-500">Tu vi tích lũy</div>
           <div className="flex justify-center items-center my-1">
             <div className="mt-2 text-3xl font-bold text-emerald-600">
-              +{character.cultivationOffline ?? 0}{" "}
+              +{character?.cultivationOffline ?? 0}{" "}
             </div>{" "}
             <Image
               alt="ảnh tu vi"

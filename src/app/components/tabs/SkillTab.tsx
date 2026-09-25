@@ -9,7 +9,10 @@ import { equipSkillAPI } from "@/app/axios/characterAPI";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import CoatingButton from "../ui/CoatingButton";
-import { SkillInEquippedSkills, SkillItemInInventory } from "@/lib/types/characterTypes";
+import {
+  SkillInEquippedSkills,
+  SkillItemInInventory,
+} from "@/lib/types/characterTypes";
 
 export default function SkillTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -23,7 +26,7 @@ export default function SkillTab() {
 
   // lấy dl từ equippedSkills để hiện các skill đang trang bị (hiện "eq" ở phần inventory)
   const equippedSkillSet = new Set(
-    character.equippedSkills?.map(
+    character?.equippedSkills?.map(
       (skill: SkillInEquippedSkills) => skill.skillId,
     ) || [],
   );
@@ -51,12 +54,13 @@ export default function SkillTab() {
         {/* các ô skill  */}
         <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => {
-            const equippedSkill = character.equippedSkills?.find(
+            const equippedSkill = character?.equippedSkills?.find(
               (skill: SkillInEquippedSkills) => skill.slot === index + 1,
             );
 
-            const skillData = character.inventory.skills?.find(
-              (skill: SkillItemInInventory) => skill.skillId._id === equippedSkill?.skillId,
+            const skillData = character?.inventory.skills?.find(
+              (skill: SkillItemInInventory) =>
+                skill.skillId._id === equippedSkill?.skillId,
             );
 
             return (
@@ -75,7 +79,7 @@ export default function SkillTab() {
                   try {
                     setActionLoadingName("equipSkill");
                     const res = await equipSkillAPI(
-                      character._id,
+                      character?._id ?? "",
                       equipSkillSelect.skillId,
                       index + 1,
                     );
@@ -126,51 +130,53 @@ export default function SkillTab() {
         </div>
 
         <div className="grid grid-cols-5 gap-3">
-          {character.inventory.skills?.map((skill: SkillItemInInventory, ind: number) => {
-            const isEquipped = equippedSkillSet.has(skill.skillId._id);
+          {character?.inventory.skills?.map(
+            (skill: SkillItemInInventory, ind: number) => {
+              const isEquipped = equippedSkillSet.has(skill.skillId._id);
 
-            return (
-              <button
-                key={ind}
-                className={`relative aspect-square rounded-xl bg-white p-1 transition 
+              return (
+                <button
+                  key={ind}
+                  className={`relative aspect-square rounded-xl bg-white p-1 transition 
                   border-2
                   ${RARITY_CSS[skill?.skillId.rarity ?? "common"].border}`}
-              >
-                {isEquipped && (
-                  <span
-                    className="absolute top-1 left-1 z-10 rounded bg-green-600 px-1.5
-                    py-0.5 text-[10px] font-bold text-white"
-                  >
-                    EQ
-                  </span>
-                )}
-
-                <Image
-                  src={skill.skillId.icon}
-                  alt={skill.skillId.name}
-                  width={64}
-                  height={64}
-                  className={`h-full w-full object-contain`}
-                  onClick={() => {
-                    setItemInfoToggle({
-                      open: true,
-                      item: skill.skillId,
-                      state: isEquipped ? "equip" : "unequip",
-                      levelSKill: skill.level,
-                      shardSKill: skill.shard,
-                    });
-                  }}
-                />
-
-                <span
-                  className="bottom-1 absolute rounded right-1 px-1 bg-black/70
-                  text-white text-[10px]"
                 >
-                  Lv.{skill.level}
-                </span>
-              </button>
-            );
-          })}
+                  {isEquipped && (
+                    <span
+                      className="absolute top-1 left-1 z-10 rounded bg-green-600 px-1.5
+                    py-0.5 text-[10px] font-bold text-white"
+                    >
+                      EQ
+                    </span>
+                  )}
+
+                  <Image
+                    src={skill.skillId.icon}
+                    alt={skill.skillId.name}
+                    width={64}
+                    height={64}
+                    className={`h-full w-full object-contain`}
+                    onClick={() => {
+                      setItemInfoToggle({
+                        open: true,
+                        item: skill.skillId,
+                        state: isEquipped ? "equip" : "unequip",
+                        levelSKill: skill.level,
+                        shardSKill: skill.shard,
+                      });
+                    }}
+                  />
+
+                  <span
+                    className="bottom-1 absolute rounded right-1 px-1 bg-black/70
+                  text-white text-[10px]"
+                  >
+                    Lv.{skill.level}
+                  </span>
+                </button>
+              );
+            },
+          )}
         </div>
       </div>
 

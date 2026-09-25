@@ -34,13 +34,8 @@ const ComfirmAlert = ({ text, onYes, onNo }: ComfirmAlertProps) => {
 
         {/* text */}
         <div
-          className="
-            m-3 rounded-xl
-            border border-yellow-700/20
-            bg-amber-50/80
-            p-4 text-center text-zinc-800
-            min-h-24 flex items-center justify-center
-          "
+          className="m-3 rounded-xl border border-yellow-700/20 bg-amber-50/80
+          p-4 text-center text-zinc-800 min-h-24 flex items-center justify-center"
         >
           {text}
         </div>

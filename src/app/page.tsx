@@ -10,6 +10,7 @@ import { DEFAULT_IMG_Wait } from "@/lib/constants/imageConstants";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import SignUpForm from "./components/form/SignUpForm";
+import { showToast } from "@/lib/toast";
 
 export default function Home() {
   const { formOpen, setFormOpen } = useToggleStore();
@@ -23,10 +24,6 @@ export default function Home() {
 
   function openLogin() {
     setFormOpen("signin");
-  }
-
-  function closeLogin() {
-    setFormOpen("");
   }
 
   async function enterWorld() {
@@ -56,7 +53,7 @@ export default function Home() {
   useEffect(() => {
     const updateTimeCharacterOnline = async () => {
       try {
-        const res = await updateCulOffAPI(character._id);
+        const res = await updateCulOffAPI(character?._id ?? "");
 
         updateCharacter(res);
       } catch (error) {
@@ -69,18 +66,18 @@ export default function Home() {
     }
   }, [character?._id]);
 
+  useEffect(() => {
+    if (isLoggedIn && email) {
+      showToast(`Chào mừng ${email}`);
+    }
+  }, [isLoggedIn, email]);
+
   return (
     <main
       className="relative min-h-screen overflow-hidden"
       style={{ backgroundImage: `url('${DEFAULT_IMG_Wait}')` }}
       aria-hidden
     >
-      {isLoggedIn && email ? (
-        <p className="rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-slate-700 shadow">
-          Chào {email}
-        </p>
-      ) : null}
-
       <div className="fixed inset-0 bg-black/10" aria-hidden />
 
       <header className="absolute top-1/3 left-0 right-0 flex justify-center pointer-events-none">
@@ -132,15 +129,15 @@ export default function Home() {
       ) : null}
 
       {error ? (
-        <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 rounded-full 
-        bg-rose-500/95 px-4 py-2 text-sm font-medium text-white shadow-lg">
+        <div
+          className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 rounded-full 
+        bg-rose-500/95 px-4 py-2 text-sm font-medium text-white shadow-lg"
+        >
           {error}
         </div>
       ) : null}
 
-      {formOpen === "signin" && (
-        <SignInForm/>
-      )}
+      {formOpen === "signin" && <SignInForm />}
 
       {formOpen === "signup" && <SignUpForm />}
     </main>

@@ -23,10 +23,13 @@ export default function MainStageTab() {
     const currentCLickMap: MapsResponse | null =
       maps?.find((m) => m._id === mapId) ?? null;
 
-    if (character.currentMap.map.order < (currentCLickMap?.order ?? 0)) {
+    if (
+      (character?.currentMap.map.order ?? -1) < (currentCLickMap?.order ?? 0)
+    ) {
       showWarning("Bạn chưa hoàn thành bản đồ trước đó");
     } else if (
-      character.realmId?.order < (currentCLickMap?.requiredRealm?.order ?? 0)
+      (character?.realmId?.order ?? -1) <
+      (currentCLickMap?.requiredRealm?.order ?? 0)
     ) {
       showWarning("Cảnh giới của bạn chưa đủ");
     } else {
@@ -34,7 +37,7 @@ export default function MainStageTab() {
     }
   };
 
-  useEffect(() => {    
+  useEffect(() => {
     if (!maps || maps.length === 0) mapService.getMaps();
   }, [maps]);
 
@@ -57,7 +60,7 @@ export default function MainStageTab() {
             maps.length > 0 &&
             maps.map((map, index) => {
               const isLeft = index % 2 === 0;
-              const curMap = map._id === character.currentMap.map._id;
+              const curMap = map._id === character?.currentMap.map._id;
 
               return (
                 <div

@@ -15,7 +15,8 @@ export type LoadingKey =
   | "redeemCode" // đổi code
   | "selectClass" // chọn class
   | "rewardCulOff" // nhận thưởng tu vi khi offline
-  |"rewardMailbox"// nhận quà từ mail
+  | "rewardMailbox" // nhận quà từ mail
+  | "changeName" //đổi tên
   | string; // các trường hợp danh sách dùng id
 interface useLoandingState {
   actionLoadingName: LoadingKey;

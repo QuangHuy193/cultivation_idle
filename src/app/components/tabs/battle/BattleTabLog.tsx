@@ -14,7 +14,7 @@ const BattleTabLog = () => {
 
   const { battle, isBattleStart, setIsBattleStart } = useBattleStore();
 
-  const groupedLogs = battle.logs.reduce(
+  const groupedLogs = battle?.logs.reduce(
     (groups, log) => {
       if (!groups[log.turn]) {
         groups[log.turn] = [];
@@ -44,7 +44,7 @@ const BattleTabLog = () => {
                 skill.skillId._id === equippedSkill?.skillId,
             );
 
-            const battleSkill = battle.skills.find(
+            const battleSkill = battle?.skills.find(
               (s: SkillInBattle) => s.skillId === skillData?.skillId._id,
             );
 
@@ -96,68 +96,71 @@ const BattleTabLog = () => {
         </div>
 
         <div className="max-h-60 overflow-y-auto rounded-t-3xl bg-white p-4 pb-10">
-          {Object.entries(groupedLogs).map(([turn, logs]) => (
-            <div
-              key={turn}
-              className="mb-3 overflow-hidden rounded-xl border border-amber-200 
-              bg-amber-50"
-            >
-              {/* Turn header */}
+          {groupedLogs &&
+            Object.entries(groupedLogs).map(([turn, logs]) => (
               <div
-                className="border-b border-amber-200 bg-linear-to-r from-amber-100 
-                to-yellow-50 px-3 py-2 text-sm font-bold text-amber-800"
+                key={turn}
+                className="mb-3 overflow-hidden rounded-xl border border-amber-200 
+              bg-amber-50"
               >
-                Lượt {turn}
-              </div>
+                {/* Turn header */}
+                <div
+                  className="border-b border-amber-200 bg-linear-to-r from-amber-100 
+                to-yellow-50 px-3 py-2 text-sm font-bold text-amber-800"
+                >
+                  Lượt {turn}
+                </div>
 
-              {/* Logs */}
-              <div className="space-y-1 p-2">
-                {logs.map((log, index) => (
-                  <div
-                    key={index}
-                    className={`rounded-lg px-2 py-1.5 text-sm
+                {/* Logs */}
+                <div className="space-y-1 p-2">
+                  {logs.map((log, index) => (
+                    <div
+                      key={index}
+                      className={`rounded-lg px-2 py-1.5 text-sm
                       ${log.type === "player" ? "bg-blue-50" : "bg-red-50"}`}
-                  >
-                    <div className="flex items-center gap-1">
-                      <span className="font-bold">
-                        {log.type === "player" ? "⚔️" : "👹"}
-                      </span>
+                    >
+                      <div className="flex items-center gap-1">
+                        <span className="font-bold">
+                          {log.type === "player" ? "⚔️" : "👹"}
+                        </span>
 
-                      <span
-                        className={
-                          log.type === "player"
-                            ? "font-semibold text-blue-600"
-                            : "font-semibold text-red-600"
-                        }
-                      >
-                        {log.name}
-                      </span>
+                        <span
+                          className={
+                            log.type === "player"
+                              ? "font-semibold text-blue-600"
+                              : "font-semibold text-red-600"
+                          }
+                        >
+                          {log.name}
+                        </span>
 
-                      {log.skill && (
-                        <>
-                          <span className="text-zinc-600">dùng</span>
+                        {log.skill && (
+                          <>
+                            <span className="text-zinc-600">dùng</span>
 
-                          <span className="font-bold text-yellow-600">
-                            {log.skill}
-                          </span>
-                        </>
-                      )}
+                            <span className="font-bold text-yellow-600">
+                              {log.skill}
+                            </span>
+                          </>
+                        )}
 
-                      <span className="text-zinc-600">gây</span>
+                        <span className="text-zinc-600">gây</span>
 
-                      <span className="font-bold text-red-500">{log.dmg}</span>
+                        <span className="font-bold text-red-500">
+                          {log.dmg}
+                        </span>
 
-                      <span className="text-zinc-600">sát thương</span>
+                        <span className="text-zinc-600">sát thương</span>
 
-                      <span className="font-medium text-zinc-700">
-                        {log.enemyName}
-                      </span>
+                        <span className="font-medium text-zinc-700">
+                          {log.enemyName}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         {!isBattleStart && (

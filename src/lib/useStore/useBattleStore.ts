@@ -1,54 +1,10 @@
 import { create } from "zustand";
 import { BattleState } from "../types/battleTypes";
 
-export const battleStateDefault = {
-  _id: "",
-  characterId: "",
-  battleType: "mainStage",
-  turn: 1,
-
-  playerHp: 1,
-  playerMaxHp: 1,
-
-  monster: {
-    monsterId: "",
-    name: "",
-    icon: "",
-    hp: 1,
-    maxHp: 1,
-    atk: 1,
-    def: 1,
-  },
-
-  mapId: "",
-
-  stage: 1,
-
-  skills: [
-    {
-      skillId: "tram_kich",
-      currentCooldown: 1,
-    },
-  ],
-
-  battleStatus: "fighting",
-
-  lastTurnAt: Date.now().toLocaleString(),
-
-  logs: [
-    {
-      name: "",
-      enemyName: "",
-      dmg: 0,
-      skill: "",
-    },
-  ],
-};
-
 interface UseBattleStore {
   loadingUseBattle: boolean;
 
-  battle: BattleState;
+  battle: BattleState | null;
 
   isBattleStart: boolean;
 
@@ -56,7 +12,7 @@ interface UseBattleStore {
 
   setLoadingUseBattle: (loading: boolean) => void;
 
-  setBattle: (battle: BattleState) => void;
+  setBattle: (battle: BattleState | null) => void;
 
   updateBattle: (updater: (battle: BattleState) => BattleState) => void;
 
@@ -68,7 +24,7 @@ interface UseBattleStore {
 export const useBattleStore = create<UseBattleStore>()((set) => ({
   loadingUseBattle: false,
 
-  battle: battleStateDefault,
+  battle: null,
 
   isBattleStart: false,
 

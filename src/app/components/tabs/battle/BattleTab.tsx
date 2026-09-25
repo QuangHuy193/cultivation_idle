@@ -1,10 +1,7 @@
 "use client";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import {
-  battleStateDefault,
-  useBattleStore,
-} from "@/lib/useStore/useBattleStore";
+import { useBattleStore } from "@/lib/useStore/useBattleStore";
 import { useEffect, useState } from "react";
 import { showError } from "@/lib/toast";
 import { useSettingStore } from "@/lib/useStore/useSetting";
@@ -58,7 +55,7 @@ const BattleTab = () => {
         // reset state
         setIsBattleStart(false);
         setIsBattlePause(false);
-        setBattle(battleStateDefault);
+        setBattle(null);
         setTurns(null);
         setCurrentTurn(0);
 
@@ -117,7 +114,7 @@ const BattleTab = () => {
   // gọi api nhận thưởng
   const getRewardApi = async () => {
     try {
-      const res = await rewardBattleAPI(battle._id);
+      const res = await rewardBattleAPI(battle?._id ?? "");
       setResReawrd(res);
     } catch (error) {
       console.log(error);
@@ -133,7 +130,7 @@ const BattleTab = () => {
     if (!turns?.turns?.length) return;
 
     if (currentTurn >= turns?.turns?.length) {
-      if (battle.battleStatus === "win") {
+      if (battle?.battleStatus === "win") {
         setRewardAlertOpen(true);
         getRewardApi();
       } else {
@@ -153,7 +150,7 @@ const BattleTab = () => {
         <>
           {rewardAlertOpen && (
             <RewardAlert
-              status={battle?.battleStatus}
+              status={battle?.battleStatus ?? ""}
               newCharacter={resReward?.character}
               rewards={resReward?.rewards}
               onClose={() => {

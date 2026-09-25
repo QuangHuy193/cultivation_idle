@@ -1,12 +1,13 @@
 "use client";
 
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { signInAPI } from "@/app/axios/userAPI";
 import { useUserStore } from "@/lib/useStore/useUserStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { useAuthStore } from "@/lib/useStore/useAuthStore";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { validateDataAuthForm } from "@/lib/helper";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignInForm() {
   const { setFormOpen, formOpen } = useToggleStore();
@@ -19,6 +20,11 @@ export default function SignInForm() {
   } = useAuthStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
   const setAuth = useUserStore((state) => state.setAuth);
+  const [showPass, setShowPass] = useState(false);
+
+  const handleShowPass = () => {
+    setShowPass(!showPass);
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -96,14 +102,35 @@ export default function SignInForm() {
 
           <label className="grid gap-2 text-sm font-medium text-slate-700">
             <span>Mật khẩu</span>
-            <input
-              type="password"
-              value={dataSigninForm.password}
-              onChange={(e) => updateDataSigninForm("password", e.target.value)}
-              className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-              placeholder="nhập mật khẩu"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPass ? "text" : "password"}
+                value={dataSigninForm.password}
+                onChange={(e) =>
+                  updateDataSigninForm("password", e.target.value)
+                }
+                className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 
+                text-sm text-slate-900 outline-none transition focus:border-emerald-500 
+                focus:ring-2 focus:ring-emerald-100"
+                placeholder="nhập mật khẩu"
+                required
+              />
+              {dataSigninForm.password.length > 0 ? (
+                showPass ? (
+                  <EyeOff
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={handleShowPass}
+                  />
+                ) : (
+                  <Eye
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={handleShowPass}
+                  />
+                )
+              ) : (
+                ""
+              )}
+            </div>
           </label>
         </div>
 

@@ -4,7 +4,8 @@ import { showSuccess } from "@/lib/toast";
 import { useAuthStore } from "@/lib/useStore/useAuthStore";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import { FormEvent, useEffect } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
 
 const SignUpForm = () => {
   const { setFormOpen, formOpen } = useToggleStore();
@@ -17,6 +18,17 @@ const SignUpForm = () => {
     updateDataSigninForm,
   } = useAuthStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const [showPass, setShowPass] = useState({
+    pass: false,
+    passAgain: false,
+  });
+
+  const handleShowPass = (nameInput: keyof typeof showPass) => {
+    setShowPass((prev) => ({
+      ...prev,
+      [nameInput]: !prev[nameInput],
+    }));
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,7 +45,7 @@ const SignUpForm = () => {
         });
         updateDataSigninForm("email", dataSignupForm.email);
         updateDataSignupForm({ email: "", password: "", passwordAgain: "" });
-        showSuccess("Đăng kí thành công")
+        showSuccess("Đăng kí thành công");
         setFormOpen("signin");
       } catch (err: unknown) {
         setError((err as { message?: string })?.message || "Đăng kí thất bại");
@@ -92,30 +104,73 @@ const SignUpForm = () => {
 
           <label className="grid gap-2 text-sm font-medium text-slate-700">
             <span>Mật khẩu</span>
-            <input
-              type="password"
-              value={dataSignupForm.password}
-              onChange={(e) =>
-                updateDataSignupForm({ password: e.target.value })
-              }
-              className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-              placeholder="nhập mật khẩu"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPass.pass ? "text" : "password"}
+                value={dataSignupForm.password}
+                onChange={(e) =>
+                  updateDataSignupForm({ password: e.target.value })
+                }
+                className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+                placeholder="nhập mật khẩu"
+                required
+              />
+              {dataSignupForm.password.length > 0 ? (
+                showPass.pass ? (
+                  <EyeOff
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => {
+                      handleShowPass("pass");
+                    }}
+                  />
+                ) : (
+                  <Eye
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => {
+                      handleShowPass("pass");
+                    }}
+                  />
+                )
+              ) : (
+                ""
+              )}
+            </div>
           </label>
 
           <label className="grid gap-2 text-sm font-medium text-slate-700">
             <span>Nhập lại mật khẩu</span>
-            <input
-              type="password"
-              value={dataSignupForm.passwordAgain}
-              onChange={(e) =>
-                updateDataSignupForm({ passwordAgain: e.target.value })
-              }
-              className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-              placeholder="nhập lại mật khẩu"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPass.passAgain ? "text" : "password"}
+                value={dataSignupForm.passwordAgain}
+                onChange={(e) =>
+                  updateDataSignupForm({ passwordAgain: e.target.value })
+                }
+                className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+                placeholder="nhập lại mật khẩu"
+                required
+              />
+
+              {dataSignupForm.passwordAgain.length > 0 ? (
+                showPass.passAgain ? (
+                  <EyeOff
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => {
+                      handleShowPass("passAgain");
+                    }}
+                  />
+                ) : (
+                  <Eye
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => {
+                      handleShowPass("passAgain");
+                    }}
+                  />
+                )
+              ) : (
+                ""
+              )}
+            </div>
           </label>
         </div>
 
