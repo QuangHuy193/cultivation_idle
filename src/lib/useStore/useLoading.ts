@@ -17,6 +17,7 @@ export type LoadingKey =
   | "rewardCulOff" // nhận thưởng tu vi khi offline
   | "rewardMailbox" // nhận quà từ mail
   | "changeName" //đổi tên
+  | "rewarDailyLogin" // nhận quà đăng nhập hằng ngày
   | string; // các trường hợp danh sách dùng id
 interface useLoandingState {
   actionLoadingName: LoadingKey;

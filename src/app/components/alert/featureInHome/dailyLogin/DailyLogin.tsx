@@ -1,11 +1,15 @@
+import CoatingButton from "@/app/components/ui/CoatingButton";
 import IconItemReward from "@/app/components/ui/IconItemReward";
 import { CLASS_COATING_SM } from "@/lib/constants/cssConstants";
 import {
   CULTIVATION_ICON,
   SPIRITSTONE_ICON,
 } from "@/lib/constants/imageConstants";
+import { CharacterService } from "@/lib/services/character.service";
+import { showSuccess } from "@/lib/toast";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useDailyLoginStore } from "@/lib/useStore/useDailyLoginStore";
+import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { Gift, X } from "lucide-react";
 
@@ -13,9 +17,20 @@ const DailyLogin = () => {
   const { setOpenFeatureListInHome } = useToggleStore();
   const { dailyLogins } = useDailyLoginStore();
   const { character } = useCharacterStore();
+  const { actionLoadingName } = useLoadingStore();
 
   const totalClaimed = character?.dailyLogin.total ?? 0;
   const todayReward = character?.dailyLogin.rewardDay ?? 0;
+
+  const handleRewarDailyLogin = async () => {
+    try {
+      await CharacterService.rewarDailyLogin(character?._id ?? "");
+
+      showSuccess("Đã nhận quà điểm danh");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={`${CLASS_COATING_SM} z-23`}>
@@ -67,9 +82,7 @@ const DailyLogin = () => {
                   className={`relative flex min-h-28 flex-col
                     items-center justify-between
                     rounded-xl border p-2 border-cyan-500
-                    transition-all
-                   
-                  `}
+                    transition-all`}
                 >
                   {/* day */}
                   <div
@@ -119,22 +132,30 @@ const DailyLogin = () => {
         </div>
 
         {/* action */}
-        <button
-          className="
-            w-full rounded-xl
-            border-2 border-amber-600
-            bg-linear-to-b from-yellow-400 to-amber-500
-            py-3
-            text-sm font-bold tracking-wide text-white
-            shadow-md
-            transition-all
-            hover:from-yellow-300 hover:to-amber-400
-            hover:shadow-lg
-            active:scale-[0.98]
-          "
-        >
-          NHẬN THƯỞNG
-        </button>
+        {new Date(character?.dailyLogin.lastClaimAt ?? "").getDate() ===
+        new Date().getDate() ? (
+          <div className="font-bold text-xl w-full flex justify-center">
+            <div
+              className="w-fit rounded-2xl border border-amber-400 bg-amber-300 px-4 
+            py-2 font-bold text-xl text-amber-700 shadow-inner shadow-amber-700/30 
+            opacity-80"
+            >
+              Đã nhận
+            </div>
+          </div>
+        ) : (
+          <div className="relative">
+            <button
+              onClick={handleRewarDailyLogin}
+              className="w-full rounded-xl border-2 border-amber-600 bg-linear-to-b 
+              from-yellow-400 to-amber-500 py-3 text-sm font-bold tracking-wide 
+              text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
+            >
+              NHẬN THƯỞNG
+            </button>
+            {actionLoadingName === "rewarDailyLogin" && <CoatingButton />}
+          </div>
+        )}
       </div>
     </div>
   );

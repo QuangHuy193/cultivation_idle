@@ -155,3 +155,12 @@ export async function changeNameAPI(
 
   return res.data;
 }
+
+// nhận quà đăng nhập ngày
+export async function rewardailyLoginAPI(
+  characterId: string,
+): Promise<CharacterResponse> {
+  const res = await api.post(`/api/character/${characterId}/dailyLogin/reward`);
+
+  return res.data.character;
+}

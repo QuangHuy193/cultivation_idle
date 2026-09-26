@@ -1,44 +1,17 @@
-import { getCharacterAPI } from "@/app/axios/characterAPI";
-import { getCharacterInventoryAPI } from "@/app/axios/characterAPI";
-
+import { rewardailyLoginAPI } from "@/app/axios/characterAPI";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import { CharacterResponse } from "../types/characterTypes";
+import { useLoadingStore } from "../useStore/useLoading";
 
 export const CharacterService = {
-  async loadCharacter(
-    userId: string,
-  ): Promise<CharacterResponse> {
-    const response =
-      await getCharacterAPI(userId);
+  async rewarDailyLogin(characterId: string): Promise<void> {
+    try {
+      useLoadingStore.getState().setActionLoadingName("rewarDailyLogin");
 
-    useCharacterStore
-      .getState()
-      .setCharacter(response);
+      const response = await rewardailyLoginAPI(characterId);
 
-    return response;
-  },
-
-  async loadInventory(): Promise<void> {
-    const character =
-      useCharacterStore.getState().character;
-
-    if (!character?._id) {
-      return;
+      useCharacterStore.getState().updateCharacter(response);
+    } finally {
+      useLoadingStore.getState().setActionLoadingName("");
     }
-
-    const response =
-      await getCharacterInventoryAPI(
-        character._id,
-      );
-
-    useCharacterStore
-      .getState()
-      .updateCharacter(response);
-  },
-
-  getCharacter(): CharacterResponse | null {
-    return useCharacterStore
-      .getState()
-      .character;
   },
 };
