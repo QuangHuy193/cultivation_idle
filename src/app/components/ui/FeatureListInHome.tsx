@@ -1,15 +1,10 @@
 import { useSettingStore } from "@/lib/useStore/useSetting";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import {
-  CalendarDays,
-  CalendarHeart,
-  ChevronDown,
-  ChevronUp,
-  Mail,
-} from "lucide-react";
+import { CalendarDays, ChevronDown, ChevronUp, Mail } from "lucide-react";
 import DotCustom from "./DotCustom";
 import { useMailboxStore } from "@/lib/useStore/useMailBox";
 import { checkHasReward } from "@/lib/helper";
+import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 
 const wrapperIconCss = `relative rounded-full h-12 w-12 flex justify-center items-center
 cursor-pointer border-2 border-amber-700/50 bg-gradient-to-b from-yellow-100 to-amber-300
@@ -22,6 +17,7 @@ const FeatureListInHome = () => {
     useSettingStore();
   const { setOpenFeatureListInHome } = useToggleStore();
   const { mailboxes } = useMailboxStore();
+  const { character } = useCharacterStore();
 
   const handleToggle = () => {
     if (featureListInHomeStatus === "open") {
@@ -67,6 +63,14 @@ const FeatureListInHome = () => {
             onClick={() => setOpenFeatureListInHome("dailyLogin")}
           >
             <CalendarDays className={`${iconCss} text-cyan-700`} />
+            {new Date(character?.dailyLogin.lastClaimAt ?? "").getDate() !==
+              new Date().getDate() && (
+              <DotCustom
+                absolute="absolute"
+                position="-top-0.5 -right-0.5"
+                size="size4"
+              />
+            )}
           </div>
         </div>
       )}

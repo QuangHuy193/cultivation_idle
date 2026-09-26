@@ -46,7 +46,10 @@ export async function POST(
 
     const dailyLogin = await DailyLogin.findById("daily_login");
 
-    await grantRewards(char, dailyLogin.days[char.dailyLogin.rewardDay - 1]);
+    await grantRewards(
+      char,
+      dailyLogin.days[char.dailyLogin.rewardDay - 1].reward,
+    );
 
     char.dailyLogin.rewardDay += 1;
     char.dailyLogin.total += 1;
@@ -54,7 +57,9 @@ export async function POST(
 
     await char.save();
 
-    const character = await Character.findById(id).populate(characterPopulate).lean();
+    const character = await Character.findById(id)
+      .populate(characterPopulate)
+      .lean();
 
     return NextResponse.json({
       character,

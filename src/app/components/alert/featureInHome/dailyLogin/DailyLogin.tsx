@@ -35,7 +35,7 @@ const DailyLogin = () => {
   return (
     <div className={`${CLASS_COATING_SM} z-23`}>
       <div
-        className="relative flex h-[60%] w-[90%] flex-col gap-3 overflow-hidden rounded-2xl
+        className="relative flex h-[60%] w-[95%] flex-col gap-3 overflow-hidden rounded-2xl
         border-2 border-amber-500 bg-linear-to-b from-amber-100 to-yellow-100 p-4 
         shadow-2xl"
       >
@@ -66,13 +66,13 @@ const DailyLogin = () => {
             "
           >
             Đã điểm danh:{" "}
-            <span className="font-bold text-red-600">{totalClaimed}</span> ngày
+            <span className="font-bold text-red-600 ">{totalClaimed}</span> ngày
           </div>
         </div>
 
         {/* rewards */}
         <div className="flex-1 overflow-y-auto pr-1">
-          <div className="grid grid-cols-4 gap-2 sm:grid-cols-5">
+          <div className="grid grid-cols-5 gap-2 sm:grid-cols-5">
             {dailyLogins?.days.map((day) => {
               const claimed = day.day < todayReward;
 
@@ -86,10 +86,9 @@ const DailyLogin = () => {
                 >
                   {/* day */}
                   <div
-                    className={`
+                    className={`text-center
                       rounded-full px-2 py-0.5
                       text-xs font-bold
-                      
                     `}
                   >
                     Ngày {day.day}
@@ -103,7 +102,7 @@ const DailyLogin = () => {
                         url={SPIRITSTONE_ICON}
                         number={day.reward.spiritStone}
                         bgColor="bg-amber-200"
-                        size="M"
+                        size="S"
                       />
                     )}
 
@@ -113,7 +112,7 @@ const DailyLogin = () => {
                         url={CULTIVATION_ICON}
                         number={day.reward.cultivation}
                         bgColor="bg-amber-200"
-                        size="M"
+                        size="S"
                       />
                     )}
                   </div>

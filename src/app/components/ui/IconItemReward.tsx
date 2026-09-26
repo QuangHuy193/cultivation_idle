@@ -1,6 +1,7 @@
-import { Check, CircleCheck } from "lucide-react";
+import { Check } from "lucide-react";
 
 const SIZE = {
+  S: "w-14 h-14",
   M: "w-16 h-16",
   L: "w-20 h-20",
 };
@@ -9,7 +10,7 @@ interface IconItemRewardProps {
   url: string;
   number?: number;
   claimed: boolean;
-  size?: "M" | "L";
+  size?: "M" | "L" | "S";
   textColor?: string;
   bgColor?: string;
 }
