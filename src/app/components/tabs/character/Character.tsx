@@ -9,10 +9,13 @@ import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { EQUIPMENT_SLOTS, REALM_NAME_LIST } from "@/lib/constants/objConstants";
 import TooltipCustom from "../../ui/TooltipCustom";
 import { isEquipType } from "@/lib/helper";
+import { InfoIcon } from "lucide-react";
+import CharacterStat from "../../alert/CharacterStat";
 
 const Character = () => {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
   const { character } = useCharacterStore();
+  const { alertSingle, setAlertSingle } = useToggleStore();
 
   const realmStyle =
     REALM_CSS[character?.realmId?._id as keyof typeof REALM_CSS];
@@ -22,7 +25,7 @@ const Character = () => {
       <div className="flex h-full flex-col justify-center">
         <div className="text-center">
           <span
-            className={`flex justify-center gap-2 items-center font-bold text-lg
+            className={`flex justify-center gap-2 items-center font-bold text-lg mt-2
               ${realmStyle?.text} ${realmStyle?.glow}`}
           >
             <div>
@@ -89,7 +92,7 @@ const Character = () => {
               alt="Nhân vật"
               className="h-full w-full object-contain rounded-lg mb-4"
             />
-            <div className="flex justify-between gap-4">
+            <div className="flex justify-between gap-4 items-center text-lg">
               <div className="text-red-400">
                 ⚔️ {character?.finalStats?.atk || character?.stats.base.atk}
               </div>
@@ -98,6 +101,15 @@ const Character = () => {
               </div>
               <div className="text-blue-400">
                 🛡️ {character?.finalStats?.def || character?.stats.base.def}
+              </div>
+              <div>
+                <InfoIcon
+                  className="text-gray-500"
+                  size={22}
+                  onClick={() => {
+                    setAlertSingle("characterStat");
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -142,9 +154,7 @@ const Character = () => {
         </div>
       </div>
 
-      <div>
-        <CharacterTabsBar />
-      </div>
+      <CharacterTabsBar />
 
       {itemInfoToggle.open &&
         itemInfoToggle.state !== "item" &&
@@ -159,6 +169,8 @@ const Character = () => {
             }
           />
         )}
+
+      {alertSingle === "characterStat" && <CharacterStat />}
     </section>
   );
 };

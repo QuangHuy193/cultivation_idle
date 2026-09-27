@@ -26,8 +26,6 @@ interface UserToggleState {
     activeTab: TabType;
     prevousTab: TabType;
   };
-  // quản lý alert pause
-  isOpenPause: boolean;
   // quản lý alert user. code, setting,...
   alertUserInfo: "" | "menu" | "code" | "setting" | "changeName";
   // quản lý hộp thoại xác nhận
@@ -39,6 +37,11 @@ interface UserToggleState {
   };
   // quản lý mở các tính năng ở home như hộp thư, sự kiện, đăng nhập hằng ngày
   openFeatureListInHome: "" | "mailbox" | "dailyLogin";
+  // quản lý chung các alert xuất hiện đơn lẻ
+  alertSingle:
+    | ""
+    | "alertPause" //alert pause
+    | "characterStat"; //alert thông tin chỉ số nhân vật
 
   setFormOpen: (name: "" | "signin" | "signup") => void;
   setItemInfoToggle: (payload: {
@@ -50,7 +53,6 @@ interface UserToggleState {
   }) => void;
   setEquipSkillSelect: (data: { active: boolean; skillId: string }) => void;
   setTabState: (activeTab: TabType, prevousTab: TabType) => void;
-  setIsOpenPause: (open: boolean) => void;
   setAalertUserInfo: (
     alert: "" | "menu" | "code" | "setting" | "changeName",
   ) => void;
@@ -61,6 +63,7 @@ interface UserToggleState {
     onNo?: () => void;
   }) => void;
   setOpenFeatureListInHome: (open: "" | "mailbox" | "dailyLogin") => void;
+  setAlertSingle: (open: "" | "alertPause" | "characterStat") => void;
 
   setInitAll: () => void;
 }
@@ -84,8 +87,6 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
     prevousTab: "home",
   },
 
-  isOpenPause: false,
-
   alertUserInfo: "",
 
   comfirmAlert: {
@@ -96,6 +97,8 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
   },
 
   openFeatureListInHome: "",
+
+  alertSingle: "",
 
   setFormOpen: (open) => {
     set({ formOpen: open });
@@ -114,10 +117,6 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
     set({ tabState: { activeTab, prevousTab } });
   },
 
-  setIsOpenPause: (open) => {
-    set({ isOpenPause: open });
-  },
-
   setAalertUserInfo: (alert) => {
     set({ alertUserInfo: alert });
   },
@@ -130,6 +129,10 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
 
   setOpenFeatureListInHome: (open) => {
     set({ openFeatureListInHome: open });
+  },
+
+  setAlertSingle: (open) => {
+    set({ alertSingle: open });
   },
 
   // khởi tạo lại tất cả
@@ -149,7 +152,7 @@ export const useToggleStore = create<UserToggleState>()((set) => ({
         activeTab: "home",
         prevousTab: "home",
       },
-      isOpenPause: false,
+      alertSingle: "",
       alertUserInfo: "",
       comfirmAlert: {
         isOpen: false,

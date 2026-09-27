@@ -27,3 +27,22 @@ export const SKILL_TYPE_TEXT_MAP = (type: string) => {
       return "Không";
   }
 };
+
+export const NAME_STAT_TEXT_MAP = (type: string) => {
+  switch (type) {
+    case "base":
+      return "Chỉ số cơ bản của nhân vật";
+    case "items":
+      return "Chỉ số từ sử dụng vật phẩm";
+    case "equips":
+      return "Chỉ số từ trang bị";
+    case "skins":
+      return "Chỉ số từ trang phục sở hữu";
+    case "realm":
+      return "Chỉ số từ cảnh giới";
+    case "class":
+      return "Chỉ số từ hệ phái";
+    default:
+      return "Không";
+  }
+};
