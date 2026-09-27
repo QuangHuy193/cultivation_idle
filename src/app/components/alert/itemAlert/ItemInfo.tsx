@@ -1,13 +1,15 @@
 "use client";
 import { takeItemAPI } from "@/app/axios/characterAPI";
-import { RARITY_CSS } from "@/lib/constants/cssConstants";
+import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
 import { showSuccess } from "@/lib/toast";
 import { Item } from "@/lib/types/itemTypes";
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import Image from "next/image";
-import CoatingButton from "../ui/CoatingButton";
+import CoatingButton from "../../ui/CoatingButton";
+import { REALM_NAME_LIST } from "@/lib/constants/objConstants";
+import TooltipCustom from "../../ui/TooltipCustom";
 
 interface ItemInfoProps {
   item: Item | null;
@@ -41,9 +43,10 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
       />
 
       <div
-        className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        w-[320px] rounded-2xl border-2 border-amber-700 bg-linear-to-b from-stone-100 
-        to-amber-50 shadow-[0_0_30px_rgba(251,191,36,0.35)] overflow-hidden"
+        className={`fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        w-[320px] rounded-2xl border-3  bg-linear-to-b from-stone-100 
+        to-amber-50 shadow-[0_0_30px_rgba(251,191,36,0.35)] overflow-hidden 
+        ${RARITY_CSS[item?.rarity ?? ""].border}`}
       >
         {/* Header */}
         <div
@@ -64,7 +67,33 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
             />
           </div>
 
-          <div className="rounded-xl border border-amber-200 bg-white/70 p-3 min-h-25">
+          <div
+            className="rounded-xl border border-amber-200 bg-white/70 p-3 min-h-25
+          relative"
+          >
+            {item?.typeUse === "cultivation_card" && (
+              <div className=" absolute top-1 right-1">
+                <TooltipCustom
+                  content={
+                    <div>
+                      {item?.buff.cultivationBonus.cultivationMultipleForRealm.map(
+                        (cul) => (
+                          <div
+                            key={cul.order}
+                            className={`${REALM_CSS[REALM_NAME_LIST[cul.order - 1]._id ?? ""]?.text ?? ""}                            `}
+                          >
+                            {REALM_NAME_LIST[cul.order - 1].name} nhận{" "}
+                            {item?.buff.cultivationBonus.cultivation *
+                              cul.multiple}{" "}
+                            tu vi
+                          </div>
+                        ),
+                      )}
+                    </div>
+                  }
+                />
+              </div>
+            )}
             <div className="text-zinc-700 leading-relaxed text-sm">
               {item?.description}
             </div>
@@ -77,18 +106,19 @@ const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
             >
               Bán
             </button>
-
-            <button
-              onClick={useItemApi}
-              className="flex-1 px-8 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700
+            {item?.type === "consumable" && (
+              <button
+                onClick={useItemApi}
+                className="flex-1 px-8 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700
               text-white font-medium transition shadow-md relative"
-              disabled={actionLoadingName === "useItem"}
-            >
-              Sử dụng
-              {actionLoadingName === "useItem" && (
-                <CoatingButton borderRadius="rounded-xl" />
-              )}
-            </button>
+                disabled={actionLoadingName === "useItem"}
+              >
+                Sử dụng
+                {actionLoadingName === "useItem" && (
+                  <CoatingButton borderRadius="rounded-xl" />
+                )}
+              </button>
+            )}
           </div>
         </div>
       </div>

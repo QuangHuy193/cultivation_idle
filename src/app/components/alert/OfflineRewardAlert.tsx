@@ -1,7 +1,7 @@
 "use client";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
-import TippyCustom from "../ui/TippyCustom";
+import TooltipCustom from "../ui/TooltipCustom";
 import { calculateCharacterCultivationPerMinute } from "@/lib/helper";
 import Image from "next/image";
 import { CULTIVATION_ICON } from "@/lib/constants/imageConstants";
@@ -57,7 +57,7 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
             <h1 className="mt-2 text-xl font-bold text-amber-700">
               Thưởng Offline
             </h1>
-            <TippyCustom
+            <TooltipCustom
               content={
                 <div>
                   Nhận thưởng tu vi khi offline tối đa {MAX_TIME_OFFLINE / 60}h

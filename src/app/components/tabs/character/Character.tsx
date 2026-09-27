@@ -7,7 +7,7 @@ import CharacterTabsBar from "@/app/components/navbar/CharacterTabsBar";
 import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { EQUIPMENT_SLOTS, REALM_NAME_LIST } from "@/lib/constants/objConstants";
-import TippyCustom from "../../ui/TippyCustom";
+import TooltipCustom from "../../ui/TooltipCustom";
 import { isEquipType } from "@/lib/helper";
 
 const Character = () => {
@@ -30,7 +30,7 @@ const Character = () => {
               {character?.realmId.levels[character.realmLevel - 1].name}
             </div>
 
-            <TippyCustom
+            <TooltipCustom
               content={
                 <div>
                   {REALM_NAME_LIST.map((r) => (

@@ -5,7 +5,7 @@ import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { MAX_ITEM_SLOTS } from "@/lib/constants/numberConstants";
 import Image from "next/image";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
-import ItemInfo from "../../alert/ItemInfo";
+import ItemInfo from "../../alert/itemAlert/ItemInfo";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { isItemType } from "@/lib/helper";
 

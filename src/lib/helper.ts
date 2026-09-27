@@ -8,8 +8,10 @@ import {
 import { createHash } from "crypto";
 import { Mailbox } from "./types/mailboxTypes";
 import { Equip } from "./types/equipTypes";
-import { Item } from "./types/itemTypes";
+import { Item, ItemUseType } from "./types/itemTypes";
 import { Skill } from "./types/skillTypes";
+import { IItem } from "./models/Item";
+import { REALM_NAME_LIST } from "./constants/objConstants";
 
 // tạo hash pass
 export function hashPassword(password: string) {
@@ -62,9 +64,9 @@ export const calculateCharacterStats = (character: ICharacter) => {
 
   const finalStats = sources.reduce(
     (total, stat) => ({
-      hp: (total?.hp ?? 1) + (stat?.hp || 1),
-      atk: (total?.atk ?? 1) + (stat?.atk || 1),
-      def: (total?.def ?? 1) + (stat?.def || 1),
+      hp: (total?.hp ?? 0) + (stat?.hp || 0),
+      atk: (total?.atk ?? 0) + (stat?.atk || 0),
+      def: (total?.def ?? 0) + (stat?.def || 0),
     }),
     {
       hp: 0,
@@ -293,10 +295,48 @@ export const isEquipType = (item: Equip | Skill | null): item is Equip => {
   return !!item && "stats" in item && "sellPrice" in item;
 };
 
-export const isSkillType = (item: Equip | Skill | Item | null): item is Skill => {
+export const isSkillType = (
+  item: Equip | Skill | Item | null,
+): item is Skill => {
   return !!item && "attackPower" in item;
 };
 
 export const isItemType = (item: Equip | Skill | Item | null): item is Item => {
   return !!item && "sellPrice" in item;
+};
+
+// dùng từng vật phẩm khác nhau cộng cho char khác nhau
+export const consumableItemToCharacter = async (
+  character: ICharacter,
+  item: IItem,
+) => {
+  // buff chỉ số
+  character.stats!.items!.atk =
+    (character.stats.items!.atk ?? 0) + (item.buff?.statBonus?.atk ?? 0);
+
+  character.stats!.items!.hp =
+    (character.stats.items!.hp ?? 0) + (item.buff?.statBonus?.hp ?? 0);
+
+  character.stats!.items!.def =
+    (character.stats.items!.def ?? 0) + (item.buff?.statBonus?.def ?? 0);
+
+  // ===== Buff tu vi =====
+  // cộng trực tiếp
+  if (item.typeUse === "cultivation") {
+    character.cultivation += item.buff?.cultivationBonus?.cultivation ?? 0;
+  }
+
+  // thẻ tăng khi cảnh giới cao
+  if (item.typeUse === "cultivation_card") {
+    const realm = REALM_NAME_LIST.find((r) => r._id === character.realmId);
+
+    const cultivationbouns = item.buff?.cultivationBonus?.cultivation ?? 0;
+
+    const multiple =
+      item.buff?.cultivationBonus?.cultivationMultipleForRealm[
+        (realm?.order ?? 1) - 1
+      ]?.multiple ?? 1;
+
+    character.cultivation += cultivationbouns * multiple;
+  }
 };

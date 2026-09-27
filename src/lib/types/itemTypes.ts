@@ -11,8 +11,8 @@ export const ITEM_USE_TYPE = {
   CULTIVATION_CARD: "cultivation_card", // thẻ tăng tu vi theo cảnh giới
   CULTIVATION: "cultivation", // vật phẩm tăng tu vi cố định
   ATK_PERMANENT: "atk_permanent", // vật phẩm tăng tấn công vĩnh viễn
-  HP_PERMANENT: "HP_permanent", // vật phẩm tăng tấn công vĩnh viễn
-  DEF_PERMANENT: "DEF_permanent", // vật phẩm tăng tấn công vĩnh viễn
+  HP_PERMANENT: "hp_permanent", // vật phẩm tăng tấn công vĩnh viễn
+  DEF_PERMANENT: "def_permanent", // vật phẩm tăng tấn công vĩnh viễn
   MATERIAL: "material", // nguyên liệu nâng cấp,...
 } as const;
 

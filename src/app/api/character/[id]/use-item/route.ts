@@ -7,6 +7,7 @@ import {
   addBreakthroughInfo,
   calculateCharacterStats,
   characterPopulate,
+  consumableItemToCharacter,
 } from "@/lib/helper";
 import "@/lib/models";
 
@@ -50,17 +51,8 @@ export async function POST(
       );
     }
 
-    // ===== Buff chỉ số =====
-
-    character.stats.items.hp += item.buff.statBonus.hp;
-
-    character.stats.items.atk += item.buff.statBonus.atk;
-
-    character.stats.items.def += item.buff.statBonus.def;
-
-    // ===== Buff tu vi =====
-
-    character.cultivation += item.buff?.realmBonus?.realm || 0;
+    // gọi hàm sử dụng riêng cho từng vật phẩm
+    await consumableItemToCharacter(character, item);
 
     // ===== Trừ vật phẩm =====
     inventoryItem.quantity -= 1;

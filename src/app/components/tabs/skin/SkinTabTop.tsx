@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import SkinImage from "./SkinImage";
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
-import TippyCustom from "../../ui/TippyCustom";
+import TooltipCustom from "../../ui/TooltipCustom";
 
 const SkinTabTop = () => {
   const { character } = useCharacterStore();
@@ -27,7 +27,7 @@ const SkinTabTop = () => {
         {/* Độ hiếm */}
         <div className="mb-4 flex items-center justify-between border-b border-zinc-200 pb-3">
           <div className="font-medium text-zinc-500 flex items-center gap-1">
-            Độ hiếm <TippyCustom content={<div></div>} />
+            Độ hiếm <TooltipCustom content={<div></div>} />
           </div>
 
           <span
