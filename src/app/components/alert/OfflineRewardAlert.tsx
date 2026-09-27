@@ -9,6 +9,7 @@ import { rewardCultivationOfflineAPI } from "@/app/axios/characterAPI";
 import { showSuccess, showWarning } from "@/lib/toast";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import CoatingButton from "../ui/CoatingButton";
+import { MAX_TIME_OFFLINE } from "@/lib/constants/numberConstants";
 
 interface OfflineRewardAlertProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -57,7 +58,11 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
               Thưởng Offline
             </h1>
             <TippyCustom
-              content={<div>Nhận thưởng tu vi khi offline tối đa 8h</div>}
+              content={
+                <div>
+                  Nhận thưởng tu vi khi offline tối đa {MAX_TIME_OFFLINE / 60}h
+                </div>
+              }
             />
           </div>
         </div>
