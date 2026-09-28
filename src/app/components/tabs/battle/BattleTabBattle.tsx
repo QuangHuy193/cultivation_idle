@@ -13,7 +13,7 @@ import PauseAlert from "../../alert/PauseAlert";
 const BattleTabBattle = () => {
   const { character } = useCharacterStore();
   const { maps } = useMapStore();
-  const { isOpenPause, setIsOpenPause, tabState, setTabState } =
+  const { setAlertSingle, alertSingle, tabState, setTabState } =
     useToggleStore();
   const { battle, setIsBattlePause } = useBattleStore();
   const { battleSpeed, setBattleSpeed } = useSettingStore();
@@ -28,19 +28,19 @@ const BattleTabBattle = () => {
       <SquarePause
         onClick={() => {
           setIsBattlePause(true);
-          setIsOpenPause(true);
+          setAlertSingle("alertPause");
         }}
         className="fixed w-8 h-8 top-2 right-2 z-99"
       />
-      {isOpenPause && (
+      {alertSingle === "alertPause" && (
         <PauseAlert
           onContinue={() => {
             setIsBattlePause(false);
-            setIsOpenPause(false);
+            setAlertSingle("");
           }}
           onExit={() => {
             setTabState(tabState.prevousTab, "home");
-            setIsOpenPause(false);
+            setAlertSingle("");
           }}
           onRestart={() => {}}
         />
