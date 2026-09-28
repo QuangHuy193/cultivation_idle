@@ -298,7 +298,7 @@ export const isEquipType = (item: Equip | Skill | null): item is Equip => {
 export const isSkillType = (
   item: Equip | Skill | Item | null,
 ): item is Skill => {
-  return !!item && "attackPower" in item;
+  return !!item && "cooldown" in item;
 };
 
 export const isItemType = (item: Equip | Skill | Item | null): item is Item => {

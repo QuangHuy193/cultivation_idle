@@ -15,7 +15,7 @@ const SplitLayout = ({
 }: SplitLayoutProps) => {
   return (
     <div className="gap-1 flex flex-col w-full h-full">
-      <div className={`bg-zinc-50 ${percentTop}`}>{top}</div>
+      <div className={`bg-zinc-50 ${percentTop} overflow-hidden`}>{top}</div>
 
       <div className={`relative bg-zinc-50 ${percentBottom} overflow-hidden`}>{bottom}</div>
     </div>

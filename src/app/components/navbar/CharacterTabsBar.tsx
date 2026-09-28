@@ -6,8 +6,8 @@ const CharacterTabsBar = () => {
   return (
     <div className="my-2 flex justify-center">
       <div
-        className="flex items-center space-x-5 rounded-2xl border border-amber-200 bg-linear-to-b 
-        from-amber-50 to-amber-100 px-5 py-1.5 shadow-md"
+        className="flex items-center space-x-5 rounded-2xl border border-amber-100 bg-linear-to-b 
+        from-amber-100 to-amber-50 px-5 py-1.5 shadow-md w-full justify-center"
       >
         {CHARACTER_TABS.map((tab) => {
           if (!tab.display) return null;

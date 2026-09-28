@@ -74,8 +74,7 @@ export default function GamePage() {
 
   return (
     <main
-      className="h-screen min-h-screen overflow-hidden text-zinc-800 sm:min-h-screen
-    pb-[--height-main-tabbar]"
+      className="h-screen min-h-screen overflow-hidden text-zinc-800 sm:min-h-screen"
     >
       <MainTabsBar />
       <div

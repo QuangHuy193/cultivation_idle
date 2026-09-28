@@ -181,17 +181,7 @@ export default function SkillTab() {
         </div>
       </div>
 
-      {itemInfoToggle.open && itemInfoToggle.item && (
-        <SkillInfo
-          skill={isSkillType(itemInfoToggle.item) ? itemInfoToggle.item : null}
-          isEquipped={itemInfoToggle.state === "equip"}
-          level={itemInfoToggle.levelSKill || 1}
-          shard={itemInfoToggle.shardSKill || 0}
-          onClose={() =>
-            setItemInfoToggle({ open: false, item: null, state: "" })
-          }
-        />
-      )}
+      {itemInfoToggle.open && itemInfoToggle.item && <SkillInfo />}
     </section>
   );
 }

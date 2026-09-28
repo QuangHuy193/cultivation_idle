@@ -130,14 +130,7 @@ export default function Inventory() {
           </div>
         )}
       </div>
-      {itemInfoToggle.open && itemInfoToggle.state === "item" && (
-        <ItemInfo
-          item={isItemType(itemInfoToggle.item) ? itemInfoToggle.item : null}
-          onClose={() =>
-            setItemInfoToggle({ open: false, state: "", item: null })
-          }
-        />
-      )}
+      {itemInfoToggle.open && itemInfoToggle.state === "item" && <ItemInfo />}
     </section>
   );
 }

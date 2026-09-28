@@ -11,7 +11,7 @@ const MainTabsBar = () => {
 
   return (
     <div
-      className="fixed h-16 bottom-2 inset-x-2 z-20 flex items-center justify-between gap-2 
+      className="fixed h-16 bottom-2 inset-x-2 z-1 flex items-center justify-between gap-2 
         border-t border-amber-200 bg-white/90 p-2 shadow-lg shadow-zinc-300/60 rounded-2xl"
     >
       {MAIN_TABS.map((tab) => {

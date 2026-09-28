@@ -25,7 +25,7 @@ const Character = () => {
       <div className="flex h-full flex-col justify-center">
         <div className="text-center">
           <span
-            className={`flex justify-center gap-2 items-center font-bold text-lg
+            className={`flex justify-center gap-2 items-center font-bold text-lg mt-1
               ${realmStyle?.text} ${realmStyle?.glow}`}
           >
             <div>
@@ -49,7 +49,7 @@ const Character = () => {
 
         <div className="flex items-center justify-between">
           {/* Trang bị bên trái (3 ô) */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col space-y-4">
             {EQUIPMENT_SLOTS.slice(0, 3).map((slot) => {
               const equip = character?.equipments?.[slot.key];
 
@@ -84,13 +84,13 @@ const Character = () => {
           </div>
 
           {/* Ảnh nhân vật ở giữa */}
-          <div className="shrink-0">
+          <div>
             <Image
               height={50}
               width={50}
               src={character?.skinId.icon || DEFAULT_IMG_CHARACTER}
               alt="Nhân vật"
-              className="h-full w-full object-contain rounded-lg mb-4"
+              className="w-full h-60 object-contain rounded-lg mb-4"
             />
             <div className="flex justify-between gap-4 items-center text-lg">
               <div className="text-red-400">
@@ -115,7 +115,7 @@ const Character = () => {
           </div>
 
           {/* Trang bị bên phải (3 ô) */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col space-y-4">
             {EQUIPMENT_SLOTS.slice(3, 6).map((slot) => {
               const equip = character?.equipments?.[slot.key];
 

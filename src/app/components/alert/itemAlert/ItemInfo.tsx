@@ -10,15 +10,18 @@ import Image from "next/image";
 import CoatingButton from "../../ui/CoatingButton";
 import { REALM_NAME_LIST } from "@/lib/constants/objConstants";
 import TooltipCustom from "../../ui/TooltipCustom";
+import { isItemType } from "@/lib/helper";
+import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
-interface ItemInfoProps {
-  item: Item | null;
-  onClose?: () => void;
-}
-
-const ItemInfo = ({ item, onClose }: ItemInfoProps) => {
+const ItemInfo = () => {
   const { character, updateCharacter } = useCharacterStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
+
+  const item = isItemType(itemInfoToggle.item) ? itemInfoToggle.item : null;
+
+  const onClose = () =>
+    setItemInfoToggle({ open: false, state: "", item: null });
 
   const useItemApi = async () => {
     try {

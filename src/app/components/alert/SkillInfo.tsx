@@ -3,39 +3,32 @@ import { unequipSkillAPI } from "@/app/axios/characterAPI";
 
 import { RARITY_CSS } from "@/lib/constants/cssConstants";
 import { RARITY_TEXT_MAP } from "@/lib/constants/mapConstants";
-import { Skill } from "@/lib/types/skillTypes";
 
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import Image from "next/image";
 import CoatingButton from "../ui/CoatingButton";
+import { isSkillType } from "@/lib/helper";
 
-interface SkillInfoProps {
-  skill: Skill | null;
-  level: number;
-  shard: number;
-  isEquipped?: boolean;
-  onClose?: () => void;
-}
-
-const SkillInfo = ({
-  skill,
-  level,
-  shard,
-  isEquipped,
-  onClose,
-}: SkillInfoProps) => {
-  const { setEquipSkillSelect } = useToggleStore();
+const SkillInfo = () => {
+  const { setEquipSkillSelect, itemInfoToggle, setItemInfoToggle } =
+    useToggleStore();
   const { character, updateCharacter } = useCharacterStore();
   const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+
+  const skill = isSkillType(itemInfoToggle.item) ? itemInfoToggle.item : null;
+  console.log(itemInfoToggle);
+  const onClose = () => {
+    setItemInfoToggle({ open: false, item: null, state: "" });
+  };
 
   const unequipSkillApi = async () => {
     try {
       setActionLoadingName("unequipSkill");
       const res = await unequipSkillAPI(character?._id ?? "", skill?._id ?? "");
       updateCharacter(res);
-      onClose?.();
+      onClose();
     } catch (error) {
       console.log(error);
     } finally {
@@ -57,10 +50,10 @@ const SkillInfo = ({
       >
         {/* Header */}
         <div
-          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[skill?.rarity ?? ""].text}
+          className={`px-4 py-3 text-center text-lg font-bold ${RARITY_CSS[skill?.rarity ?? "common"].text}
   `}
         >
-          {skill?.name} - {RARITY_TEXT_MAP(skill?.rarity ?? "")}
+          {skill?.name} - {RARITY_TEXT_MAP(skill?.rarity ?? "common")}
         </div>
 
         {/* Body */}
@@ -80,10 +73,13 @@ const SkillInfo = ({
               {skill?.description}
 
               <div>
-                Gây sát thương bằng {skill?.levels[level]?.attackPower} % ATK
+                Gây sát thương bằng{" "}
+                {skill?.levels[itemInfoToggle?.levelSKill ?? 0]?.attackPower ??
+                  0}{" "}
+                % ATK
               </div>
               <div>CD: {skill?.cooldown}</div>
-              <div>Hiện có: {shard} mảnh</div>
+              <div>Hiện có: {itemInfoToggle?.shardSKill ?? 0} mảnh</div>
             </div>
           </div>
 
@@ -94,7 +90,7 @@ const SkillInfo = ({
             >
               Nâng cấp
             </button>
-            {isEquipped ? (
+            {itemInfoToggle?.state === "equip" ? (
               <button
                 onClick={unequipSkillApi}
                 className="flex-1 py-2 rounded-xl bg-amber-600 
