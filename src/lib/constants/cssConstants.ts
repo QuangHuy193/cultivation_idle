@@ -10,6 +10,8 @@ export const CLASS_COATING_XL =
 export const CLASS_X_ALERT = `absolute -right-2 -top-2 flex h-9 w-9 items-center 
 justify-center rounded-full border-2 border-red-300 bg-white shadow-md`;
 
+export const PB_MAIN_TABBAR = "pb-[50px]"
+
 export const RARITY_CSS: Record<
   string,
   { border: string; text: string; bg: string }

@@ -6,7 +6,7 @@ import { MAX_ITEM_SLOTS } from "@/lib/constants/numberConstants";
 import Image from "next/image";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import ItemInfo from "../../alert/itemAlert/ItemInfo";
-import { RARITY_CSS } from "@/lib/constants/cssConstants";
+import { PB_MAIN_TABBAR, RARITY_CSS } from "@/lib/constants/cssConstants";
 import { isItemType } from "@/lib/helper";
 
 export default function Inventory() {
@@ -47,7 +47,7 @@ export default function Inventory() {
           onClick={() => setActiveTab("items")}
           className={`px-4 py-2 font-medium text-sm transition-colors ${
             activeTab === "items"
-              ? "text-blue-600 border-b-2 border-blue-600 -mb-[2px]"
+              ? "text-blue-600 border-b-2 border-blue-600 -mb-0.5"
               : "text-zinc-600 hover:text-zinc-900"
           }`}
         >
@@ -56,7 +56,7 @@ export default function Inventory() {
       </div>
 
       {/* Content */}
-      <div className="overflow-y-scroll pr-1 h-full pb-10">
+      <div className={`overflow-y-scroll pr-1 h-full ${PB_MAIN_TABBAR}`}>
         {/* Equipment Tab */}
         {activeTab === "equipment" && (
           <div className="grid grid-cols-5 gap-3">

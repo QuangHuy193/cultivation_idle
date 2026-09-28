@@ -7,8 +7,9 @@ import SecretRealmTab from "@/app/components/tabs/secretRealm/SecretRealmTab";
 import WildMapTab from "@/app/components/tabs/secretRealm/WildMapTab";
 import SkillTab from "@/app/components/tabs/SkillTab";
 import SkinTab from "@/app/components/tabs/skin/SkinTab";
-import { Shirt } from "lucide-react";
+import { Shirt, Star } from "lucide-react";
 import { CharacterTabType } from "./objConstants";
+import TalentTab from "@/app/components/tabs/TalentTab";
 
 export const RENDER_CONTENT = (activeTab: string) => {
   switch (activeTab) {
@@ -30,19 +31,26 @@ export const RENDER_CONTENT = (activeTab: string) => {
       return <MainStageTab />;
     case "wildMap":
       return <WildMapTab />;
-    default:       
+    case "talent":
+      return <TalentTab />;
+    default:
       return <HomeTab />;
   }
 };
 
-
-
-export const CHARACTER_TABS:CharacterTabType[] = [
+export const CHARACTER_TABS: CharacterTabType[] = [
   {
     key: "skin",
     label: "Trang phục",
-    icon: <Shirt className="w-6 h-6" />,
-    accent: "from-rose-500 to-pink-400",
+    icon: <Shirt className="h-6 w-6 text-pink-600 fill-pink-200" />,
+    accent: "bg-pink-50 border-pink-200",
+    display: true,
+  },
+  {
+    key: "talent",
+    label: "Thiên phú",
+    icon: <Star className="h-6 w-6 text-yellow-600 fill-yellow-300" />,
+    accent: "bg-yellow-50 border-yellow-200",
     display: true,
   },
 ];

@@ -8,6 +8,7 @@ export const MAIN_TABS_LABEL = {
   battle: "battle",
   skin: "skin",
   wildMap: "wildMap",
+  talent: "talent",
 } as const;
 
 export type TabType = (typeof MAIN_TABS_LABEL)[keyof typeof MAIN_TABS_LABEL];

@@ -25,7 +25,7 @@ const Character = () => {
       <div className="flex h-full flex-col justify-center">
         <div className="text-center">
           <span
-            className={`flex justify-center gap-2 items-center font-bold text-lg mt-2
+            className={`flex justify-center gap-2 items-center font-bold text-lg
               ${realmStyle?.text} ${realmStyle?.glow}`}
           >
             <div>

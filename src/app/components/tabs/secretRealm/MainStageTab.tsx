@@ -12,6 +12,7 @@ import { MapsResponse } from "@/lib/types/mapTypes";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
 import { useEffect } from "react";
 import { mapService } from "@/lib/services/map.service";
+import { PB_MAIN_TABBAR } from "@/lib/constants/cssConstants";
 
 export default function MainStageTab() {
   const { character } = useCharacterStore();
@@ -43,7 +44,7 @@ export default function MainStageTab() {
 
   return (
     <section
-      className="h-full w-full"
+      className={`h-full w-full ${PB_MAIN_TABBAR}`}
       style={{
         backgroundImage: `url("${DEFAULT_IMG_THE_GIOI}")`,
         backgroundSize: "cover",

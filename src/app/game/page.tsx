@@ -73,7 +73,10 @@ export default function GamePage() {
   }, [character?._id]);
 
   return (
-    <main className="h-screen min-h-screen overflow-hidden text-zinc-800 sm:min-h-screen">
+    <main
+      className="h-screen min-h-screen overflow-hidden text-zinc-800 sm:min-h-screen
+    pb-[--height-main-tabbar]"
+    >
       <MainTabsBar />
       <div
         className="mx-auto flex h-full w-full flex-col backdrop-blur-sm

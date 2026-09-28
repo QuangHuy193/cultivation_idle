@@ -12,12 +12,13 @@ const CharacterStat = () => {
   const { setAlertSingle } = useToggleStore();
 
   const [isOpen, setIsOpen] = useState({
-    base: true,
-    equips: true,
-    skins: true,
-    items: true,
-    realm: true,
-    class: true,
+    all: true,
+    base: false,
+    equips: false,
+    skins: false,
+    items: false,
+    realm: false,
+    class: false,
   });
 
   const handleToggle = (name: string) => {
@@ -47,10 +48,69 @@ const CharacterStat = () => {
             setAlertSingle("");
           }}
         />
-        <div
-          className="flex h-full w-full flex-col gap-2 overflow-y-auto rounded-xl
-          bg-linear-to-b from-amber-50 to-yellow-50 p-2"
-        >
+        <div className="overflow-y-scroll h-full w-full">
+          <div className="rounded-xl border border-amber-200 bg-white/70 shadow-sm">
+            {/* Title */}
+            <div
+              className="flex items-center justify-between border-b border-amber-200
+                  bg-linear-to-r from-amber-100 to-yellow-100 px-3 py-2 rounded-xl"
+            >
+              <div className="text-sm font-bold tracking-wide text-amber-900">
+                Tổng chỉ số
+              </div>
+
+              <div
+                onClick={() => {
+                  handleToggle("all");
+                }}
+                className="rounded-full border border-amber-300 bg-amber-200 px-1 py-0.5
+                    text-xs font-semibold text-amber-800 shadow-inner"
+              >
+                {isOpen.all ? <ChevronDown /> : <ChevronUp />}
+              </div>
+            </div>
+
+            {/* Stats */}
+            {isOpen.all ? (
+              <div className="flex flex-col gap-1 p-2">
+                <div
+                  className="flex items-center justify-between rounded-lg bg-red-50
+                      px-2 py-1.5 text-sm"
+                >
+                  <div className="font-medium">Tấn công (ATK)</div>
+
+                  <div className="font-bold">
+                    +{character?.finalStats?.atk ?? 1}
+                  </div>
+                </div>
+
+                <div
+                  className="flex items-center justify-between rounded-lg bg-rose-50
+                      px-2 py-1.5 text-sm"
+                >
+                  <div className="font-medium">Máu (HP)</div>
+
+                  <div className="font-bold">
+                    +{character?.finalStats?.hp ?? 1}
+                  </div>
+                </div>
+
+                <div
+                  className="flex items-center justify-between rounded-lg bg-sky-50
+                      px-2 py-1.5 text-sm"
+                >
+                  <div className="font-medium">Phòng thủ (DEF)</div>
+
+                  <div className="font-bold ">
+                    +{character?.finalStats?.def ?? 1}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+
           {Object.entries(character?.stats ?? {}).map(([statName, stat]) => (
             <div
               key={statName}
@@ -59,11 +119,9 @@ const CharacterStat = () => {
               {/* Title */}
               <div
                 className="flex items-center justify-between border-b border-amber-200
-                bg-linear-to-r from-amber-100 to-yellow-100 px-3 py-2"
+                  bg-linear-to-r from-amber-100 to-yellow-100 px-3 py-2 rounded-xl"
               >
-                <div
-                  className="text-sm font-bold tracking-wide text-amber-900"
-                >
+                <div className="text-sm font-bold tracking-wide text-amber-900">
                   {NAME_STAT_TEXT_MAP(statName)}
                 </div>
 
@@ -72,7 +130,7 @@ const CharacterStat = () => {
                     handleToggle(statName);
                   }}
                   className="rounded-full border border-amber-300 bg-amber-200 px-1 py-0.5
-                  text-xs font-semibold text-amber-800 shadow-inner"
+                    text-xs font-semibold text-amber-800 shadow-inner"
                 >
                   {isOpen[statName as keyof typeof isOpen] ? (
                     <ChevronDown />
@@ -87,33 +145,29 @@ const CharacterStat = () => {
                 <div className="flex flex-col gap-1 p-2">
                   <div
                     className="flex items-center justify-between rounded-lg bg-red-50
-                    px-2 py-1.5 text-sm"
+                      px-2 py-1.5 text-sm"
                   >
-                    <div className="font-medium text-red-700">
-                      Tấn công (ATK)
-                    </div>
+                    <div className="font-medium">Tấn công (ATK)</div>
 
-                    <div className="font-bold text-red-600">+{stat.atk}</div>
+                    <div className="font-bold">+{stat.atk}</div>
                   </div>
 
                   <div
                     className="flex items-center justify-between rounded-lg bg-rose-50
-                    px-2 py-1.5 text-sm"
+                      px-2 py-1.5 text-sm"
                   >
-                    <div className="font-medium text-green-700">Máu (HP)</div>
+                    <div className="font-medium">Máu (HP)</div>
 
-                    <div className="font-bold text-green-600">+{stat.hp}</div>
+                    <div className="font-bold">+{stat.hp}</div>
                   </div>
 
                   <div
                     className="flex items-center justify-between rounded-lg bg-sky-50
-                    px-2 py-1.5 text-sm"
+                      px-2 py-1.5 text-sm"
                   >
-                    <div className="font-medium text-sky-700">
-                      Phòng thủ (DEF)
-                    </div>
+                    <div className="font-medium">Phòng thủ (DEF)</div>
 
-                    <div className="font-bold text-sky-600">+{stat.def}</div>
+                    <div className="font-bold ">+{stat.def}</div>
                   </div>
                 </div>
               ) : (
