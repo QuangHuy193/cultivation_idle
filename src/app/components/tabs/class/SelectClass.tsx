@@ -34,7 +34,7 @@ const SelectClass = () => {
   };
 
   const selectClassApi = async (classId: string) => {
-    try {
+    try {      
       setActionLoadingName("selectClass");
       const res = await selectClassAPI(character?._id ?? "", classId);
       updateCharacter(res);

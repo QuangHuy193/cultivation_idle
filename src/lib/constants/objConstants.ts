@@ -8,7 +8,8 @@ export const MAIN_TABS_LABEL = {
   battle: "battle",
   skin: "skin",
   wildMap: "wildMap",
-  talent: "talent",
+  spiritualRoots: "spiritualRoots",
+  realm: "realm",
 } as const;
 
 export type TabType = (typeof MAIN_TABS_LABEL)[keyof typeof MAIN_TABS_LABEL];
@@ -26,6 +27,7 @@ export interface CharacterTabType {
   icon: React.ReactNode;
   accent: string;
   display: boolean;
+  text: string;
 }
 
 export const MAIN_TABS = [

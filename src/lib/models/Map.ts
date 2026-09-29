@@ -14,6 +14,18 @@ export const Droppable = new Schema(
       },
     },
 
+    gold: {
+      amount: {
+        type: Number,
+        default: 0,
+      },
+
+      chance: {
+        type: Number,
+        default: 100,
+      },
+    },
+
     items: [
       {
         itemId: {

@@ -11,8 +11,7 @@ const SkinTab = () => {
     <SplitLayout
       top={<SkinTabTop />}
       bottom={<SkinTabBottom skins={skins} />}
-      percentTop="flex-3/12"
-      percentBottom="flex-9/12"
+  
     />
   );
 };

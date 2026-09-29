@@ -66,7 +66,7 @@ export async function POST(
       );
     }
 
-    if (character.class.classId === "khong") {
+    if (character.class.classId === "") {
       character.class.classId = classId;
       character.class.classLevelCharacter = 1;
 

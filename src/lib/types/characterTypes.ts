@@ -124,6 +124,7 @@ export interface CharacterResponse {
   cultivationOffline: number;
   timeReawrdOffline: number;
   spiritStone: number;
+  gold: number;
   stats: CharacterAllStats;
   finalStats?: CharacterStats;
   equippedSkills: Array<SkillInEquippedSkills>;

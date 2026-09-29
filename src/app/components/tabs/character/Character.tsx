@@ -8,7 +8,7 @@ import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import { DEFAULT_IMG_CHARACTER } from "@/lib/constants/imageConstants";
 import { EQUIPMENT_SLOTS, REALM_NAME_LIST } from "@/lib/constants/objConstants";
 import TooltipCustom from "../../ui/TooltipCustom";
-import { isEquipType } from "@/lib/helper";
+import { displayNumber, isEquipType } from "@/lib/helper";
 import { InfoIcon } from "lucide-react";
 import CharacterStat from "../../alert/CharacterStat";
 
@@ -21,7 +21,7 @@ const Character = () => {
     REALM_CSS[character?.realmId?._id as keyof typeof REALM_CSS];
 
   return (
-    <section className="flex flex-col w-full h-full px-5">
+    <section className="flex flex-col w-full h-full px-5 bg-amber-50">
       <div className="flex h-full flex-col justify-center">
         <div className="text-center">
           <span
@@ -92,26 +92,6 @@ const Character = () => {
               alt="Nhân vật"
               className="w-full h-60 object-contain rounded-lg mb-4"
             />
-            <div className="flex justify-between gap-4 items-center text-lg">
-              <div className="text-red-400">
-                ⚔️ {character?.finalStats?.atk || character?.stats.base.atk}
-              </div>
-              <div className="text-green-400">
-                ❤️ {character?.finalStats?.hp || character?.stats.base.hp}
-              </div>
-              <div className="text-blue-400">
-                🛡️ {character?.finalStats?.def || character?.stats.base.def}
-              </div>
-              <div>
-                <InfoIcon
-                  className="text-gray-500"
-                  size={22}
-                  onClick={() => {
-                    setAlertSingle("characterStat");
-                  }}
-                />
-              </div>
-            </div>
           </div>
 
           {/* Trang bị bên phải (3 ô) */}
@@ -150,6 +130,27 @@ const Character = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+        {/* chỉ số */}
+        <div className="flex justify-between px-5 items-center text-lg">
+          <div className="text-red-400">
+            ⚔️ {displayNumber(character?.finalStats?.atk || 0)}
+          </div>
+          <div className="text-green-400">
+            ❤️ {displayNumber(character?.finalStats?.hp || 0)}
+          </div>
+          <div className="text-blue-400">
+            🛡️ {displayNumber(character?.finalStats?.def || 0)}
+          </div>
+          <div>
+            <InfoIcon
+              className="text-gray-500"
+              size={22}
+              onClick={() => {
+                setAlertSingle("characterStat");
+              }}
+            />
           </div>
         </div>
       </div>

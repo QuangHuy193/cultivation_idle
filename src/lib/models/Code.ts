@@ -5,6 +5,13 @@ export const Rewards = new Schema(
     spiritStone: {
       type: Number,
       default: 0,
+      min: 0,
+    },
+
+    gold: {
+      type: Number,
+      default: 0,
+      min: 0,
     },
 
     cultivation: {

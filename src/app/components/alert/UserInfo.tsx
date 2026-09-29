@@ -11,6 +11,7 @@ import { useClassStore } from "@/lib/useStore/useClassStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import { SquarePen, X } from "lucide-react";
 import Image from "next/image";
+import Avatar from "../ui/Avatar";
 
 const UserInfo = () => {
   const { character } = useCharacterStore();
@@ -44,20 +45,12 @@ const UserInfo = () => {
         {/* Header */}
         <div className="flex items-center gap-4">
           {/* Avatar */}
-          <div
-            className={`
-            h-22 w-22 overflow-hidden rounded-full border-4 shadow-lg
-            ${rarityCtyle.border}
-          `}
-          >
-            <Image
-              height={88}
-              width={88}
-              src={character?.skinId.icon || DEFAULT_IMG_CHARACTER}
-              alt={character?.skinId.name || ""}
-              className="h-full w-full"
-            />
-          </div>
+
+          <Avatar
+            icon={character?.skinId.icon ?? DEFAULT_IMG_CHARACTER}
+            name={character?.skinId.name || ""}
+            border_color={rarityCtyle.border ?? ""}
+          />
 
           {/* Thông tin */}
           <div className="flex-1">

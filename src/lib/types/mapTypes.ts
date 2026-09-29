@@ -32,6 +32,10 @@ export interface Droppable extends RewardItems {
     amount: number;
     chance: number;
   };
+  gold: {
+    amount: number;
+    chance: number;
+  };
 }
 
 export interface StageInMap {

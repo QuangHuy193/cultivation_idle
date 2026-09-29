@@ -7,9 +7,10 @@ import SecretRealmTab from "@/app/components/tabs/secretRealm/SecretRealmTab";
 import WildMapTab from "@/app/components/tabs/secretRealm/WildMapTab";
 import SkillTab from "@/app/components/tabs/SkillTab";
 import SkinTab from "@/app/components/tabs/skin/SkinTab";
-import { Shirt, Star } from "lucide-react";
+import { Orbit, Shirt, Sprout, Star } from "lucide-react";
 import { CharacterTabType } from "./objConstants";
-import TalentTab from "@/app/components/tabs/TalentTab";
+import SpiritualRootsTab from "@/app/components/tabs/SpiritualRootsTab";
+import RealmTab from "@/app/components/tabs/realm/RealmTab";
 
 export const RENDER_CONTENT = (activeTab: string) => {
   switch (activeTab) {
@@ -31,8 +32,10 @@ export const RENDER_CONTENT = (activeTab: string) => {
       return <MainStageTab />;
     case "wildMap":
       return <WildMapTab />;
-    case "talent":
-      return <TalentTab />;
+    case "spiritualRoots":
+      return <SpiritualRootsTab />;
+    case "realm":
+      return <RealmTab />;
     default:
       return <HomeTab />;
   }
@@ -42,15 +45,25 @@ export const CHARACTER_TABS: CharacterTabType[] = [
   {
     key: "skin",
     label: "Trang phục",
-    icon: <Shirt className="h-6 w-6 text-pink-600 fill-pink-200" />,
-    accent: "bg-pink-50 border-pink-200",
+    icon: <Shirt className="h-5 w-5 text-pink-600 fill-pink-200" />,
+    accent: "bg-pink-100 border-pink-200",
+    text: "text-pink-300",
     display: true,
   },
   {
-    key: "talent",
-    label: "Thiên phú",
-    icon: <Star className="h-6 w-6 text-yellow-600 fill-yellow-300" />,
-    accent: "bg-yellow-50 border-yellow-200",
+    key: "spiritualRoots",
+    label: "Linh căn",
+    icon: <Sprout className="h-5 w-5 text-green-600 fill-green-300" />,
+    accent: "bg-green-100 border-green-200",
+    text: "text-green-300",
+    display: true,
+  },
+  {
+    key: "realm",
+    label: "Cảnh giới",
+    icon: <Orbit className="h-5 w-5 text-blue-600 fill-blue-300" />,
+    accent: "bg-blue-50 border-blue-200",
+    text: "text-blue-300",
     display: true,
   },
 ];

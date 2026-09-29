@@ -160,9 +160,7 @@ const BattleTab = () => {
           )}
           <SplitLayout
             top={<BattleTabBattle />}
-            bottom={<BattleTabLog />}
-            percentTop="flex-7"
-            percentBottom="flex-5"
+            bottom={<BattleTabLog />}       
           />
         </>
       )}

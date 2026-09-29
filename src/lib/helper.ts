@@ -340,3 +340,14 @@ export const consumableItemToCharacter = async (
     character.cultivation += cultivationbouns * multiple;
   }
 };
+
+// hiển thị vàng
+export const displayNumber = (number: number) => {
+  if (number > 999999) {
+    return Math.floor(number / 1000000).toLocaleString() + " M";
+  } else if (number > 99999) {
+    return Math.floor(number / 1000).toLocaleString() + " K";
+  } else {
+    return number.toLocaleString();
+  }
+};

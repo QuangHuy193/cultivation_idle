@@ -9,8 +9,6 @@ const ClassMission = () => {
       <SplitLayout
         top={<ClassMissonTop />}
         bottom={<ClassMissonBottom />}
-        percentTop="flex-1/12"
-        percentBottom="flex-11/12"
       />
     </div>
   );

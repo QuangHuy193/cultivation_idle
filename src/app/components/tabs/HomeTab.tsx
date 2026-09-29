@@ -1,7 +1,7 @@
 "use client";
 
 import { breakthroughAPI } from "@/app/axios/characterAPI";
-import { REALM_CSS } from "@/lib/constants/cssConstants";
+import { RARITY_CSS, REALM_CSS } from "@/lib/constants/cssConstants";
 import {
   DEFAULT_IMG_CHARACTER,
   DEFAULT_IMG_HOME,
@@ -10,7 +10,7 @@ import {
 import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import UserInfo from "../alert/UserInfo";
-import { Menu, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import SingleInputForm from "../form/SingleInputForm";
 import OfflineRewardIcon from "../ui/OfflineRewardIcon";
 import { useLoadingStore } from "@/lib/useStore/useLoading";
@@ -22,6 +22,8 @@ import { CHANGE_NAME_COST_ONCE } from "@/lib/constants/numberConstants";
 import FeatureListInHome from "../ui/FeatureListInHome";
 import MailboxAlert from "../alert/featureInHome/mailbox/MailboxAlert";
 import DailyLogin from "../alert/featureInHome/dailyLogin/DailyLogin";
+import { displayNumber } from "@/lib/helper";
+import Avatar from "../ui/Avatar";
 
 export default function HomeTab() {
   const { character, updateCharacter } = useCharacterStore();
@@ -79,72 +81,117 @@ export default function HomeTab() {
 
       {/* Nội dung */}
       <div className="relative z-10">
-        {/* tên nhân vật */}
-        <div className="flex w-fit items-center gap-3 px-3 py-2 rounded-r-2xl">
-          <div className="flex flex-col">
-            <div className="border-b flex justify-center">
+        {/* ================= NHÂN VẬT ================= */}
+        <div
+          className="absolute left-1 top-1 flex max-w-[50%] items-center rounded-xl border 
+          border-amber-200 bg-amber-50/95 p-0.5 shadow-md backdrop-blur-sm transition-all 
+          duration-200 active:scale-[0.98]"
+          onClick={() => setAalertUserInfo("menu")}
+        >
+          {/* Avatar */}
+          <div className="shrink-0">
+            <Avatar
+              icon={character?.skinId.icon ?? DEFAULT_IMG_CHARACTER}
+              name={character?.skinId.name || ""}
+              border_color={
+                RARITY_CSS[character?.skinId?.rarity ?? "common"].text ?? ""
+              }
+              size="size1"
+            />
+          </div>
+
+          {/* Thông tin */}
+          <div className="min-w-0 flex-1 px-1.5">
+            {/* Tên */}
+            <div className="max-w-full truncate text-[11px] font-bold text-amber-900 sm:text-sm">
               {character?.name || "Unknown"}
             </div>
 
-            <span
-              className={`font-bold ${realmStyle?.text} ${realmStyle?.glow}`}
+            {/* Cảnh giới */}
+            <div
+              className={`max-w-full truncate text-[10px] font-semibold leading-tight sm:text-xs
+                ${realmStyle?.text ?? ""}
+                ${realmStyle?.glow ?? ""}`}
             >
-              {character?.realmId?.name} -{" "}
+              {character?.realmId?.name}
+              {" - "}
               {character?.realmId?.levels?.[character.realmLevel - 1]?.name}
-            </span>
-
-            <div className="relative mt-2 h-2 w-full overflow-hidden rounded-full bg-white">
-              <div
-                className="h-full rounded-full bg-blue-400"
-                style={{ width: `${Math.min(percent, 100)}%` }}
-              />
             </div>
 
-            {character?.canBreakthrough && (
-              <div className="flex justify-center">
-                <button
-                  onClick={breakthroughApi}
-                  className="mt-2 w-fit rounded-lg bg-amber-500 px-3 py-2 text-sm text-white"
-                >
-                  Đột phá
-                </button>
-              </div>
-            )}
+            {/* Tu vi */}
+            <div
+              className="mt-1 h-1 w-full min-w-17.5 overflow-hidden rounded-full border 
+              border-blue-200 bg-white/80 sm:h-1.5"
+            >
+              <div
+                className="h-full rounded-full bg-linear-to-r from-blue-400 to-cyan-300
+                transition-all duration-300"
+                style={{
+                  width: `${Math.min(percent, 100)}%`,
+                }}
+              />
+              {/* {character?.canBreakthrough && (
+                <div className="flex justify-center">
+                  <button
+                    onClick={breakthroughApi}
+                    className="mt-2 w-fit rounded-lg bg-amber-500 px-3 py-2 text-sm 
+                    text-white"
+                  >                    
+                    Đột phá
+                  </button>
+                </div>
+              )} */}
+            </div>
           </div>
         </div>
 
-        {/* linh thạch, menu */}
-        <div
-          className="fixed top-2 right-1 z-50 flex items-center gap-2 rounded-2xl border 
-          border-amber-200/60  px-3 py-2 backdrop-blur-sm"
-        >
+        {/* ================= TÀI NGUYÊN ================= */}
+        <div className="absolute right-1 top-1 flex max-w-[47%] flex-col items-end gap-1">
+          {/* Linh thạch */}
           <div
-            className="flex items-center gap-2 rounded-xl border border-cyan-200 
-            bg-white/70 px-3 py-1 shadow-sm"
+            className="w-26 flex items-center gap-1 rounded-lg border border-cyan-200
+          bg-white/95 px-1.5 py-1 shadow-sm"
           >
             <ImageIcon src={SPIRITSTONE_ICON} />
 
-            <span className="min-w-fit text-right text-lg font-bold text-cyan-600">
+            <span
+              className="flex-1 text-end min-w-0 truncate text-[11px] font-semibold
+            text-cyan-600 sm:text-xs"
+            >
               {(character?.spiritStone || 0).toLocaleString()}
             </span>
 
-            <span>
-              <Plus size={20} className="text-green-700" />
-            </span>
+            <Plus
+              size={14}
+              className="shrink-0 text-green-700"
+              strokeWidth={3}
+            />
           </div>
 
-          <button
-            onClick={() => setAalertUserInfo("menu")}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border 
-            border-cyan-200 bg-white/70 text-slate-700 shadow-sm transition-all
-            hover:scale-105 active:scale-95"
+          {/* Vàng */}
+          <div
+            className="w-26 flex items-center gap-1 rounded-lg border border-yellow-200
+          bg-white/95 px-1.5 py-1 shadow-sm"
           >
-            <Menu size={20} />
-          </button>
+            <ImageIcon src={SPIRITSTONE_ICON} />
+
+            <span
+              className="flex-1 text-end min-w-0 truncate text-[11px] font-semibold
+            text-yellow-600 sm:text-xs"
+            >
+              {displayNumber(character?.gold ?? 0)}
+            </span>
+
+            <Plus
+              size={14}
+              className="shrink-0 text-green-700"
+              strokeWidth={3}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="relative flex justify-end z-10 pr-2">
+      <div className="fixed z-10 top-30 right-2">
         <FeatureListInHome />
       </div>
 
