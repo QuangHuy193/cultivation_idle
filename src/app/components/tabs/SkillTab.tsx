@@ -23,7 +23,7 @@ export default function SkillTab() {
     equipSkillSelect,
     setEquipSkillSelect,
   } = useToggleStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   // lấy dl từ equippedSkills để hiện các skill đang trang bị (hiện "eq" ở phần inventory)
   const equippedSkillSet = new Set(
@@ -78,7 +78,7 @@ export default function SkillTab() {
                   if (!equipSkillSelect.active) return;
 
                   try {
-                    setActionLoadingName("equipSkill");
+                    setLoading("equipSkill", true);
                     const res = await equipSkillAPI(
                       character?._id ?? "",
                       equipSkillSelect.skillId,
@@ -94,7 +94,7 @@ export default function SkillTab() {
                   } catch (error) {
                     console.log(error);
                   } finally {
-                    setActionLoadingName("");
+                    setLoading("equipSkill", false);
                   }
                 }}
               >
@@ -117,7 +117,7 @@ export default function SkillTab() {
                 ) : (
                   <span className="text-xs text-zinc-400">Trống</span>
                 )}
-                {actionLoadingName === "equipSkill" && <CoatingButton />}
+                {loading.equipSkill && <CoatingButton />}
               </div>
             );
           })}

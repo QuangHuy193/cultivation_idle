@@ -14,7 +14,7 @@ import { showToast } from "@/lib/toast";
 
 export default function Home() {
   const { formOpen, setFormOpen } = useToggleStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const { email, token, userId } = useUserStore();
@@ -32,7 +32,7 @@ export default function Home() {
       return;
     }
 
-    setActionLoadingName("getUser");
+    setLoading("getUser", true);
     setError(null);
 
     try {
@@ -46,7 +46,7 @@ export default function Home() {
           "Không thể tải dữ liệu nhân vật",
       );
     } finally {
-      setActionLoadingName("");
+      setLoading("getUser", false);
     }
   }
 
@@ -103,14 +103,12 @@ export default function Home() {
           {isLoggedIn ? (
             <button
               onClick={enterWorld}
-              disabled={actionLoadingName === "getUser"}
+              disabled={loading.getUser}
               className="mx-auto rounded-full bg-emerald-500 px-8 py-4 text-center font-semibold 
               text-white shadow-2xl shadow-emerald-600/40 transition hover:bg-emerald-400 
               disabled:cursor-not-allowed disabled:bg-emerald-300"
             >
-              {actionLoadingName === "getUser"
-                ? "Đang tải..."
-                : "Tiến vào thế giới"}
+              {loading.getUser ? "Đang tải..." : "Tiến vào thế giới"}
             </button>
           ) : (
             <button
@@ -124,9 +122,7 @@ export default function Home() {
         </div>
       </div>
 
-      {actionLoadingName === "getUser" ? (
-        <Loading message="Đang tải nhân vật..." />
-      ) : null}
+      {loading.getUser ? <Loading message="Đang tải nhân vật..." /> : null}
 
       {error ? (
         <div

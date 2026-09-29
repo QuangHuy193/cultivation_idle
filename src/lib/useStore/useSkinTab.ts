@@ -6,7 +6,7 @@ interface UserSkinState {
 
   owner: boolean;
 
-  skins: Skin[];
+  skins: Skin[] | null;
 
   setSkins: (data: Skin[]) => void;
 
@@ -18,7 +18,7 @@ export const useSkinStore = create<UserSkinState>()((set) => ({
 
   owner: true,
 
-  skins: [],
+  skins: null,
 
   setSkins: (data) => {
     set({ skins: data });

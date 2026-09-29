@@ -17,7 +17,7 @@ interface SkinImageProps {
 const SkinImage = ({ skin, isHas }: SkinImageProps) => {
   const { setSelectedSkin } = useSkinStore();
   const { character, updateCharacter } = useCharacterStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   const isEQ = character?.skinId._id === skin?._id ? true : false;
 
@@ -25,13 +25,13 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
 
   const equipSkinApi = async () => {
     try {
-      setActionLoadingName(skin?._id ?? "");
+      setLoading("equipSkin", skin?._id ?? "");
       const res = await equipSkinAPI(character?._id ?? "", skin?._id ?? "");
       updateCharacter({ skinId: res });
     } catch (error) {
       console.log(error);
     } finally {
-      setActionLoadingName("");
+      setLoading("equipSkin", "");
     }
   };
 
@@ -41,7 +41,7 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
         if ((character?.spiritStone ?? 0) < (skin?.price.number ?? 0)) {
           showWarning("Bạn không đủ linh thạch mua trang phục này!");
         } else {
-          setActionLoadingName(skin._id);
+          setLoading("buySkin", skin._id);
           const res = await buySkinAPI(character?._id ?? "", skin?._id ?? "");
 
           updateCharacter({ ...res });
@@ -52,7 +52,7 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
     } catch (error) {
       console.log(error);
     } finally {
-      setActionLoadingName("");
+      setLoading("buySkin", "");
     }
   };
 
@@ -93,7 +93,7 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
               className="flex items-center justify-center gap-1.5"
               onClick={buySkinApi}
             >
-              {actionLoadingName === skin?._id && (
+              {loading.buySkin === skin?._id && (
                 <CoatingButton borderRadius="rounded-xl" />
               )}
               {!isEQ && skin?.price.number}
@@ -113,7 +113,7 @@ const SkinImage = ({ skin, isHas }: SkinImageProps) => {
         ) : (
           <button onClick={equipSkinApi}>
             Trang bị
-            {actionLoadingName === skin?._id && (
+            {loading.equipSkin === skin?._id && (
               <CoatingButton borderRadius="rounded-xl" />
             )}
           </button>

@@ -30,7 +30,7 @@ export default function HomeTab() {
 
   const { alertUserInfo, setAalertUserInfo, openFeatureListInHome } =
     useToggleStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   const realmStyle =
     REALM_CSS[character?.realmId?._id as keyof typeof REALM_CSS];
@@ -41,7 +41,7 @@ export default function HomeTab() {
 
   const breakthroughApi = async () => {
     try {
-      setActionLoadingName("break");
+      setLoading("break", true);
       const res = await breakthroughAPI(character?._id ?? "");
 
       updateCharacter(res);
@@ -50,7 +50,7 @@ export default function HomeTab() {
       console.log(error);
       showError("Đột phá thất bại");
     } finally {
-      setActionLoadingName("");
+      setLoading("break", false);
     }
   };
 
@@ -63,9 +63,9 @@ export default function HomeTab() {
         backgroundPosition: "center",
       }}
     >
-      {actionLoadingName === "break" && (
+      {/* {actionLoadingName === "break" && (
         <Loading message="Đang cảm ngộ đại đạo..." />
-      )}
+      )} */}
 
       {/* Nền nhân vật chồng lên */}
       <div

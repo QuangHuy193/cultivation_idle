@@ -5,15 +5,15 @@ import { useLoadingStore } from "../useStore/useLoading";
 export const mapService = {
   async getMaps() {
     try {
-      useLoadingStore.getState().setActionLoadingName("getMaps");
-      
+      useLoadingStore.getState().setLoading("getMaps", true);
+
       const response = await progressMapAPI();
 
       useMapStore.getState().setMaps(response);
     } catch (error) {
-      console.log(error);
+      console.log("mapService.getMaps", error);
     } finally {
-      useLoadingStore.getState().setActionLoadingName("");
+      useLoadingStore.getState().setLoading("getMaps", false);
     }
   },
 };

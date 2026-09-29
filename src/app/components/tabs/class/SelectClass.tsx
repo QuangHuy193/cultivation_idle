@@ -15,7 +15,7 @@ const SelectClass = () => {
   const { classes } = useClassStore();
   const [classSelect, setClassSelect] = useState("");
   const { setComfirmAlert } = useToggleStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   const onSelect = async (classId: string) => {
     const onComfirm = async () => {
@@ -34,14 +34,14 @@ const SelectClass = () => {
   };
 
   const selectClassApi = async (classId: string) => {
-    try {      
-      setActionLoadingName("selectClass");
+    try {
+      setLoading("selectClass", true);
       const res = await selectClassAPI(character?._id ?? "", classId);
       updateCharacter(res);
     } catch (error) {
       console.log(error);
     } finally {
-      setActionLoadingName("");
+      setLoading("selectClass", false);
     }
   };
 
@@ -87,7 +87,7 @@ const SelectClass = () => {
             {/* phải */}
             {classSelect === cls._id && (
               <div className="flex flex-1 flex-col justify-between">
-                {actionLoadingName === "selectClass" && (
+                {loading.selectClass && (
                   <Loading message="Đang gia nhập hệ phái..." />
                 )}
                 <div>

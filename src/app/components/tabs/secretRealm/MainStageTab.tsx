@@ -17,7 +17,7 @@ import { PB_MAIN_TABBAR } from "@/lib/constants/cssConstants";
 export default function MainStageTab() {
   const { character } = useCharacterStore();
   const { maps } = useMapStore();
-  const { actionLoadingName } = useLoadingStore();
+  const { loading } = useLoadingStore();
   const { tabState, setTabState } = useToggleStore();
 
   const pushBattle = (mapId: string) => {
@@ -39,8 +39,8 @@ export default function MainStageTab() {
   };
 
   useEffect(() => {
-    if (!maps || maps.length === 0) mapService.getMaps();
-  }, [maps]);
+    if (maps === null || !loading.getMaps) mapService.getMaps();
+  }, [maps, loading.getMaps]);
 
   return (
     <section
@@ -51,7 +51,7 @@ export default function MainStageTab() {
         backgroundPosition: "center",
       }}
     >
-      {actionLoadingName === "getMaps" ? (
+      {loading.getMaps ? (
         <div>
           <Loading message="Đang tải lộ trình thí luyện..." />
         </div>

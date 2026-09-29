@@ -17,7 +17,7 @@ interface OfflineRewardAlertProps {
 
 const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
   const { character, updateCharacter } = useCharacterStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   const culPerMinute =
     character &&
@@ -28,7 +28,7 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
       showWarning("Bạn chưa có tu vi ngoại tuyến để nhận!");
     } else {
       try {
-        setActionLoadingName("rewardCulOff");
+        setLoading("rewardCulOff", true);
         const res = await rewardCultivationOfflineAPI(character?._id ?? "");
         updateCharacter(res);
         showSuccess("Đã nhận tu vi");
@@ -36,7 +36,7 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
       } catch (error) {
         console.log(error);
       } finally {
-        setActionLoadingName("");
+        setLoading("rewardCulOff", false);
       }
     }
   };
@@ -101,7 +101,7 @@ const OfflineRewardAlert = ({ setIsOpen }: OfflineRewardAlertProps) => {
           py-3 font-bold text-white shadow-lg transition active:scale-95 relative`}
         >
           Nhận thưởng
-          {actionLoadingName === "rewardCulOff" && <CoatingButton />}
+          {loading.rewardCulOff && <CoatingButton />}
         </button>
       </div>
     </div>

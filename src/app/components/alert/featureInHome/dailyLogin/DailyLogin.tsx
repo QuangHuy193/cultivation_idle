@@ -17,7 +17,7 @@ const DailyLogin = () => {
   const { setOpenFeatureListInHome } = useToggleStore();
   const { dailyLogins } = useDailyLoginStore();
   const { character } = useCharacterStore();
-  const { actionLoadingName } = useLoadingStore();
+  const { loading } = useLoadingStore();
 
   const totalClaimed = character?.dailyLogin.total ?? 0;
   const todayReward = character?.dailyLogin.rewardDay ?? 0;
@@ -152,7 +152,7 @@ const DailyLogin = () => {
             >
               NHẬN THƯỞNG
             </button>
-            {actionLoadingName === "rewarDailyLogin" && <CoatingButton />}
+            {loading.rewarDailyLogin && <CoatingButton />}
           </div>
         )}
       </div>

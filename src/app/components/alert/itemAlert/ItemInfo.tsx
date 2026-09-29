@@ -15,7 +15,7 @@ import { useToggleStore } from "@/lib/useStore/useToggleStore";
 
 const ItemInfo = () => {
   const { character, updateCharacter } = useCharacterStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();
 
   const item = isItemType(itemInfoToggle.item) ? itemInfoToggle.item : null;
@@ -25,7 +25,7 @@ const ItemInfo = () => {
 
   const useItemApi = async () => {
     try {
-      setActionLoadingName("useItem");
+      setLoading("useItem", true);
       const res = await takeItemAPI(character?._id ?? "", item?._id ?? "");
       updateCharacter(res);
       if (onClose) {
@@ -35,7 +35,7 @@ const ItemInfo = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setActionLoadingName("");
+      setLoading("useItem", false);
     }
   };
   return (
@@ -114,12 +114,10 @@ const ItemInfo = () => {
                 onClick={useItemApi}
                 className="flex-1 px-8 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700
               text-white font-medium transition shadow-md relative"
-                disabled={actionLoadingName === "useItem"}
+                disabled={loading.useItem}
               >
                 Sử dụng
-                {actionLoadingName === "useItem" && (
-                  <CoatingButton borderRadius="rounded-xl" />
-                )}
+                {loading.useItem && <CoatingButton borderRadius="rounded-xl" />}
               </button>
             )}
           </div>

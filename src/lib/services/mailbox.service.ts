@@ -1,12 +1,30 @@
-import { readMailboxAPI, rewardMailboxAPI } from "@/app/axios/mailboxAPI";
+import {
+  getMailboxAPI,
+  readMailboxAPI,
+  rewardMailboxAPI,
+} from "@/app/axios/mailboxAPI";
 import { useLoadingStore } from "../useStore/useLoading";
 import { useCharacterStore } from "../useStore/useCharacterStore";
 import { useMailboxStore } from "../useStore/useMailBox";
 
 export const mailboxService = {
+  async getMailboxes(characterId: string) {
+    try {
+      useLoadingStore.getState().setLoading("getMailboxes", true);
+
+      const response = await getMailboxAPI(characterId);
+
+      useMailboxStore.getState().setMailboxes(response);
+    } catch (error) {
+      console.log("mailboxService.getMailboxes", error);
+    } finally {
+      useLoadingStore.getState().setLoading("getMailboxes", false);
+    }
+  },
+
   async rewardMailbox(characterId: string, mailboxId: string) {
     try {
-      useLoadingStore.getState().setActionLoadingName("rewardMailbox");
+      useLoadingStore.getState().setLoading("rewardMailbox", true);
 
       const response = await rewardMailboxAPI(characterId, mailboxId);
 
@@ -16,14 +34,14 @@ export const mailboxService = {
 
       useMailboxStore.getState().setSelectedMail(response.mailbox);
     } finally {
-      useLoadingStore.getState().setActionLoadingName("");
+      useLoadingStore.getState().setLoading("rewardMailbox", false);
     }
   },
 
   async readMailbox(mailboxId: string) {
-    try {    
+    try {
       const mailbox = await readMailboxAPI(mailboxId);
-      
+
       useMailboxStore.getState().updateMailboxes(mailbox);
 
       useMailboxStore.getState().setSelectedMail(mailbox);

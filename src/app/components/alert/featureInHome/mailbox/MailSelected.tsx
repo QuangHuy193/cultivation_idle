@@ -14,13 +14,13 @@ import CoatingButton from "../../../ui/CoatingButton";
 const MailSelected = () => {
   const { character } = useCharacterStore();
   const { selectedMail } = useMailboxStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   const hasReward = selectedMail && checkHasReward(selectedMail.reward);
 
   const handleReward = async () => {
     try {
-      setActionLoadingName("rewardMailbox");
+      setLoading("rewardMailbox", true);
       await mailboxService.rewardMailbox(
         character?._id ?? "",
         selectedMail?._id || "",
@@ -29,7 +29,7 @@ const MailSelected = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setActionLoadingName("");
+      setLoading("rewardMailbox", false);
     }
   };
 
@@ -105,7 +105,7 @@ const MailSelected = () => {
           onClick={handleReward}
         >
           Nhận thưởng
-          {actionLoadingName === "rewardMailbox" && <CoatingButton />}
+          {loading.rewardMailbox && <CoatingButton />}
         </button>
       )}
 

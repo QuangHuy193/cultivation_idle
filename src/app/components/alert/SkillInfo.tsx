@@ -15,7 +15,7 @@ const SkillInfo = () => {
   const { setEquipSkillSelect, itemInfoToggle, setItemInfoToggle } =
     useToggleStore();
   const { character, updateCharacter } = useCharacterStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   const skill = isSkillType(itemInfoToggle.item) ? itemInfoToggle.item : null;
   console.log(itemInfoToggle);
@@ -25,14 +25,14 @@ const SkillInfo = () => {
 
   const unequipSkillApi = async () => {
     try {
-      setActionLoadingName("unequipSkill");
+      setLoading("unequipSkill", true);
       const res = await unequipSkillAPI(character?._id ?? "", skill?._id ?? "");
       updateCharacter(res);
       onClose();
     } catch (error) {
       console.log(error);
     } finally {
-      setActionLoadingName("");
+      setLoading("unequipSkill", false);
     }
   };
 
@@ -95,10 +95,10 @@ const SkillInfo = () => {
                 onClick={unequipSkillApi}
                 className="flex-1 py-2 rounded-xl bg-amber-600 
                 text-white transition font-medium relative"
-                disabled={actionLoadingName === "unequipSkill"}
+                disabled={loading.unequipSkill}
               >
                 Gỡ
-                {actionLoadingName === "unequipSkill" && (
+                {loading.unequipSkill && (
                   <CoatingButton borderRadius="rounded-xl" />
                 )}
               </button>

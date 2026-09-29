@@ -17,7 +17,7 @@ const SignUpForm = () => {
     deletePassword,
     updateDataSigninForm,
   } = useAuthStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
   const [showPass, setShowPass] = useState({
     pass: false,
     passAgain: false,
@@ -38,7 +38,7 @@ const SignUpForm = () => {
 
     if (validate.check) {
       try {
-        setActionLoadingName("signup");
+        setLoading("signup", true);
         await signUpAPI({
           email: dataSignupForm.email,
           password: dataSignupForm.password,
@@ -50,7 +50,7 @@ const SignUpForm = () => {
       } catch (err: unknown) {
         setError((err as { message?: string })?.message || "Đăng kí thất bại");
       } finally {
-        setActionLoadingName("");
+        setLoading("signup", false);
       }
     } else {
       setError(validate.mess);
@@ -186,12 +186,12 @@ const SignUpForm = () => {
         <div className="mt-6 flex justify-center items-center gap-3 flex-col">
           <button
             type="submit"
-            disabled={actionLoadingName === "signin"}
+            disabled={loading.signin}
             className="flex items-center justify-center rounded-2xl bg-emerald-500 
               px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 
               transition disabled:cursor-not-allowed disabled:bg-emerald-300 w-[80%]"
           >
-            {actionLoadingName === "signup" ? "Đang đăng kí..." : "Đăng kí"}
+            {loading.signup ? "Đang đăng kí..." : "Đăng kí"}
           </button>
 
           <p>

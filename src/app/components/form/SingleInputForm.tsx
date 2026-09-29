@@ -33,7 +33,7 @@ const SingleInputForm = ({
   const { setAalertUserInfo, setComfirmAlert } = useToggleStore();
   const { character, updateCharacter } = useCharacterStore();
   const { updateMailboxes } = useMailboxStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -82,7 +82,7 @@ const SingleInputForm = ({
         },
         onYes: async () => {
           try {
-            setActionLoadingName("changeName");
+            setLoading("changeName", true);
             const res = await changeNameAPI(character._id, formData);
             updateCharacter(res);
             setAalertUserInfo("menu");
@@ -91,14 +91,14 @@ const SingleInputForm = ({
           } catch (error) {
             console.log(error);
           } finally {
-            setActionLoadingName("");
+            setLoading("changeName", false);
           }
         },
         text: "Bạn chắc chắn muốn dùng linh thạch để đổi tên chứ?",
       });
     } else {
       try {
-        setActionLoadingName("changeName");
+        setLoading("changeName", true);
         const res = await changeNameAPI(character._id, formData);
         updateCharacter(res);
         setAalertUserInfo("menu");
@@ -106,7 +106,7 @@ const SingleInputForm = ({
       } catch (error) {
         console.log(error);
       } finally {
-        setActionLoadingName("");
+        setLoading("changeName", false);
       }
     }
   };
@@ -122,7 +122,7 @@ const SingleInputForm = ({
     }
 
     try {
-      setActionLoadingName("redeemCode");
+      setLoading("redeemCode", true);
       const res = await redeemCodeAPI(userId, formData, character?._id ?? "");
 
       if (res.success) {
@@ -133,7 +133,7 @@ const SingleInputForm = ({
       console.log(error);
     } finally {
       setFormData("");
-      setActionLoadingName("");
+      setLoading("redeemCode", false);
     }
   };
   return (
@@ -177,8 +177,7 @@ const SingleInputForm = ({
           text-white shadow-md transition hover:scale-105 active:scale-95 relative"
         >
           {btnLabel}
-          {(actionLoadingName === "redeemCode" ||
-            actionLoadingName === "changeName") && <CoatingButton />}
+          {(loading.redeemCode || loading.changeName) && <CoatingButton />}
         </button>
       </form>
     </div>

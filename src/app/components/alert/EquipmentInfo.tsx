@@ -17,24 +17,24 @@ interface EquipmentInfoProps {
 
 const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
   const { character, updateCharacter } = useCharacterStore();
-  const { actionLoadingName, setActionLoadingName } = useLoadingStore();
+  const { loading, setLoading } = useLoadingStore();
 
   const unequipApi = async (slot: string) => {
     try {
-      setActionLoadingName("unequip");
+      setLoading("unequip", true);
       const res = await unequipAPI(character?._id ?? "", slot);
       updateCharacter(res);
       if (onClose) onClose();
     } catch (error) {
       console.log("lỗi", error);
     } finally {
-      setActionLoadingName("");
+      setLoading("unequip", false);
     }
   };
 
   const equipApi = async (equipId: string) => {
     try {
-      setActionLoadingName("equip");
+      setLoading("equip", true);
       const res = await equipAPI(
         character?._id ?? "",
         equip?.type ?? "",
@@ -45,7 +45,7 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
     } catch (error) {
       console.log("lỗi", error);
     } finally {
-      setActionLoadingName("");
+      setLoading("equip", false);
     }
   };
 
@@ -117,24 +117,20 @@ const EquipmentInfo = ({ equip, isEquipped, onClose }: EquipmentInfoProps) => {
                 onClick={() => unequipApi(equip?.type ?? "")}
                 className={`flex-1 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 
                 text-white transition font-medium relative`}
-                disabled={actionLoadingName === "unequip"}
+                disabled={loading.unequip}
               >
                 Gỡ
-                {actionLoadingName === "unequip" && (
-                  <CoatingButton borderRadius="rounded-xl" />
-                )}
+                {loading.unequip && <CoatingButton borderRadius="rounded-xl" />}
               </button>
             ) : (
               <button
                 onClick={() => equipApi(equip?._id ?? "")}
                 className={`flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700
                 text-white transition font-medium relative`}
-                disabled={actionLoadingName === "equip"}
+                disabled={loading.equip}
               >
                 Trang bị
-                {actionLoadingName === "equip" && (
-                  <CoatingButton borderRadius="rounded-xl" />
-                )}
+                {loading.equip && <CoatingButton borderRadius="rounded-xl" />}
               </button>
             )}
           </div>
