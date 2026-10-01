@@ -1,4 +1,5 @@
 import { InferSchemaType, Schema, model, models } from "mongoose";
+import { StatSchema } from "./Character";
 
 // các cảnh giới nhỏ
 const RealLevels = new Schema(
@@ -15,20 +16,7 @@ const RealLevels = new Schema(
       type: Number,
     },
 
-    hpBonus: {
-      type: Number,
-      default: 0,
-    },
-
-    atkBonus: {
-      type: Number,
-      default: 0,
-    },
-
-    defBonus: {
-      type: Number,
-      default: 0,
-    },
+    buffs: StatSchema,
   },
   { _id: false },
 );

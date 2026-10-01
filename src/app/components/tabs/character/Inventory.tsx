@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
 import ItemInfo from "../../alert/itemAlert/ItemInfo";
 import { PB_MAIN_TABBAR, RARITY_CSS } from "@/lib/constants/cssConstants";
-import { isItemType } from "@/lib/helper";
 
 export default function Inventory() {
   const { itemInfoToggle, setItemInfoToggle } = useToggleStore();

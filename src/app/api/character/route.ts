@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       const createdCharacter = await Character.create({
         userId,
 
-        name: generateRandomName(),
+        name: generateRandomName(),        
 
         currentMap: {
           map: mapId,

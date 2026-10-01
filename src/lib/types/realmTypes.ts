@@ -1,10 +1,10 @@
+import { CharacterStats } from "./characterTypes";
+
 export interface RealmLevels {
   name: string;
   order: number;
   cultivationRequired: number;
-  hpBonus: number;
-  atkBonus: number;
-  defBonus: number;
+  buffs: CharacterStats;
 }
 
 export interface Realm {

@@ -69,11 +69,11 @@ export async function POST(
 
       // tăng chỉ số cơ bản của tầng mới
       character.stats.realm.atk =
-        currentRealm.levels[character.realmLevel - 1].atkBouns;
+        currentRealm.levels[character.realmLevel - 1].buffs.atk;
       character.stats.realm.hp =
-        currentRealm.levels[character.realmLevel - 1].hpBonus;
+        currentRealm.levels[character.realmLevel - 1].buffs.hp;
       character.stats.realm.def =
-        currentRealm.levels[character.realmLevel - 1].defBonus;
+        currentRealm.levels[character.realmLevel - 1].buffs.def;
     } else {
       // Sang cảnh giới mới
       const nextRealm = await Realm.findOne({

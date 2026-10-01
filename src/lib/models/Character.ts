@@ -43,6 +43,28 @@ const currentMapSchema = new Schema(
   },
 );
 
+export const StatSchema = new Schema(
+  {
+    hp: {
+      type: Number,
+      default: 0,
+    },
+
+    atk: {
+      type: Number,
+      default: 0,
+    },
+
+    def: {
+      type: Number,
+      default: 0,
+    },
+  },
+  {
+    _id: false,
+  },
+);
+
 const InventorySchema = new Schema(
   {
     equips: {
@@ -121,107 +143,17 @@ const InventorySchema = new Schema(
 
 const statsSchema = new Schema(
   {
-    base: {
-      hp: {
-        type: Number,
-        default: 100,
-      },
+    base: StatSchema,
 
-      atk: {
-        type: Number,
-        default: 10,
-      },
+    equips: StatSchema,
 
-      def: {
-        type: Number,
-        default: 5,
-      },
-    },
+    skins: StatSchema,
 
-    equips: {
-      hp: {
-        type: Number,
-        default: 0,
-      },
+    items: StatSchema,
 
-      atk: {
-        type: Number,
-        default: 0,
-      },
+    realm: StatSchema,
 
-      def: {
-        type: Number,
-        default: 0,
-      },
-    },
-
-    skins: {
-      hp: {
-        type: Number,
-        default: 0,
-      },
-
-      atk: {
-        type: Number,
-        default: 0,
-      },
-
-      def: {
-        type: Number,
-        default: 0,
-      },
-    },
-
-    items: {
-      hp: {
-        type: Number,
-        default: 0,
-      },
-
-      atk: {
-        type: Number,
-        default: 0,
-      },
-
-      def: {
-        type: Number,
-        default: 0,
-      },
-    },
-
-    realm: {
-      hp: {
-        type: Number,
-        default: 0,
-      },
-
-      atk: {
-        type: Number,
-        default: 0,
-      },
-
-      def: {
-        type: Number,
-        default: 0,
-      },
-    },
-
-    class: {
-      hp: {
-        type: Number,
-        default: 0,
-      },
-
-      atk: {
-        type: Number,
-        default: 0,
-      },
-
-      def: {
-        type: Number,
-        default: 0,
-      },
-    },
+    class: StatSchema,
   },
   {
     _id: false,
@@ -322,35 +254,35 @@ const CharacterSchema = new Schema(
           def: 5,
         },
 
-        equips: {
-          hp: 0,
-          atk: 0,
-          def: 0,
-        },
+        // equips: {
+        //   hp: 0,
+        //   atk: 0,
+        //   def: 0,
+        // },
 
-        skins: {
-          hp: 0,
-          atk: 0,
-          def: 0,
-        },
+        // skins: {
+        //   hp: 0,
+        //   atk: 0,
+        //   def: 0,
+        // },
 
-        items: {
-          hp: 0,
-          atk: 0,
-          def: 0,
-        },
+        // items: {
+        //   hp: 0,
+        //   atk: 0,
+        //   def: 0,
+        // },
 
-        realm: {
-          hp: 0,
-          atk: 0,
-          def: 0,
-        },
+        // realm: {
+        //   hp: 0,
+        //   atk: 0,
+        //   def: 0,
+        // },
 
-        class: {
-          hp: 0,
-          atk: 0,
-          def: 0,
-        },
+        // class: {
+        //   hp: 0,
+        //   atk: 0,
+        //   def: 0,
+        // },
       },
     },
 

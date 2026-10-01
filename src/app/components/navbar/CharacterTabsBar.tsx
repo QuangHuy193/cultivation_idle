@@ -1,8 +1,11 @@
 import { CHARACTER_TABS } from "@/lib/constants/tsxConstants";
 import { useToggleStore } from "@/lib/useStore/useToggleStore";
+import DotCustom from "../ui/DotCustom";
+import { useCharacterStore } from "@/lib/useStore/useCharacterStore";
 
 const CharacterTabsBar = () => {
   const { tabState, setTabState } = useToggleStore();
+  const { character } = useCharacterStore();
   return (
     <div className="my-2 flex justify-center">
       <div
@@ -23,6 +26,9 @@ const CharacterTabsBar = () => {
               `}
               >
                 {tab.icon}
+                {tab.key === "realm" && character?.canBreakthrough && (
+                  <DotCustom absolute="absolute" position="-top-1 -right-1" />
+                )}
               </button>
               <label className={`text-sm italic ${tab.text}`}>
                 {tab.label}

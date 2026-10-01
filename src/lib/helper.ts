@@ -341,7 +341,7 @@ export const consumableItemToCharacter = async (
   }
 };
 
-// hiển thị vàng
+// hiển thị vàng, linh thạch
 export const displayNumber = (number: number) => {
   if (number > 999999) {
     return Math.floor(number / 1000000).toLocaleString() + " M";
@@ -350,4 +350,14 @@ export const displayNumber = (number: number) => {
   } else {
     return number.toLocaleString();
   }
+};
+
+// đổi label stat sang tiếng Việt
+export const displayStatLabel = (label: string) => {
+  const labelMap: { [key: string]: string } = {
+    hp: "Máu (HP)",
+    atk: "Tấn công (ATK)",
+    def: "Phòng thủ (DEF)",
+  };
+  return labelMap[label] || label;
 };

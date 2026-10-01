@@ -39,21 +39,6 @@ export default function HomeTab() {
     ? (character.cultivation / character.breakthroughRequired) * 100
     : 0;
 
-  const breakthroughApi = async () => {
-    try {
-      setLoading("break", true);
-      const res = await breakthroughAPI(character?._id ?? "");
-
-      updateCharacter(res);
-      showSuccess("Đột phá thành công");
-    } catch (error) {
-      console.log(error);
-      showError("Đột phá thất bại");
-    } finally {
-      setLoading("break", false);
-    }
-  };
-
   return (
     <section
       className="relative h-full w-full overflow-hidden"
@@ -63,10 +48,6 @@ export default function HomeTab() {
         backgroundPosition: "center",
       }}
     >
-      {/* {actionLoadingName === "break" && (
-        <Loading message="Đang cảm ngộ đại đạo..." />
-      )} */}
-
       {/* Nền nhân vật chồng lên */}
       <div
         className="absolute inset-0"
@@ -130,17 +111,7 @@ export default function HomeTab() {
                   width: `${Math.min(percent, 100)}%`,
                 }}
               />
-              {/* {character?.canBreakthrough && (
-                <div className="flex justify-center">
-                  <button
-                    onClick={breakthroughApi}
-                    className="mt-2 w-fit rounded-lg bg-amber-500 px-3 py-2 text-sm 
-                    text-white"
-                  >                    
-                    Đột phá
-                  </button>
-                </div>
-              )} */}
+              
             </div>
           </div>
         </div>
