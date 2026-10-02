@@ -4,6 +4,7 @@ import { Item } from "./itemTypes";
 import { Realm } from "./realmTypes";
 import { Skill } from "./skillTypes";
 import { Skin } from "./skinTypes";
+import { Sprout, SproutStatSchema } from "./sprourtTypes";
 
 export interface CharacterStats {
   atk: number;
@@ -109,6 +110,12 @@ export interface DailyLoginInCharacter {
   lastClaimAt: string;
 }
 
+export interface SproutInCharacter {
+  sproutId: Sprout;
+  currentLevel: number;
+  currentStatLevel: SproutStatSchema;
+}
+
 export interface CharacterResponse {
   _id: string;
   userId: string;
@@ -116,6 +123,7 @@ export interface CharacterResponse {
   countChangeName: number;
   skinId: Skin;
   class: CharacterClass;
+  sprout: SproutInCharacter;
   realmId: Realm;
   realmLevel: number;
   cultivation: number;

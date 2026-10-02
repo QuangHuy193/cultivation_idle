@@ -8,7 +8,7 @@ import {
 import { createHash } from "crypto";
 import { Mailbox } from "./types/mailboxTypes";
 import { Equip } from "./types/equipTypes";
-import { Item, ItemUseType } from "./types/itemTypes";
+import { Item } from "./types/itemTypes";
 import { Skill } from "./types/skillTypes";
 import { IItem } from "./models/Item";
 import { REALM_NAME_LIST } from "./constants/objConstants";
@@ -23,6 +23,7 @@ export const characterPopulate = [
   { path: "currentMap.map" },
   { path: "skinId" },
   { path: "class.classId" },
+  { path: "sprout.sproutId" },
   { path: "equipments.weapon" },
   { path: "equipments.helmet" },
   { path: "equipments.armor" },

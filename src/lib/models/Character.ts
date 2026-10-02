@@ -1,4 +1,5 @@
 import { InferSchemaType, Schema, model, models } from "mongoose";
+import { SproutStatSchema } from "./Sprout";
 
 const cultivationPerMinuteSchema = new Schema(
   {
@@ -197,6 +198,21 @@ const CharacterSchema = new Schema(
       exp: {
         type: Number,
         default: 0,
+      },
+    },
+
+    sprout: {
+      sproutId: {
+        type: String,
+        ref: "Sprout",
+        default: "",
+      },
+      currentLevel: {
+        type: Number,
+        default: 0,
+      },
+      currentStatLevel: {
+        type: SproutStatSchema,
       },
     },
 

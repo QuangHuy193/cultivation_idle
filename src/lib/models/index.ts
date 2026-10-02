@@ -13,6 +13,7 @@ import "./Monster";
 import "./Realm";
 import "./Skill";
 import "./Skin";
+import "./Sprout";
 import "./User";
 
 export {};
